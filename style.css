@@ -357,12 +357,12 @@ ol li .send {
 	margin:16px 0 0 0;
 }
 .fa {
-  padding: 25px;
-  font-size: 35px;
-  width: 50px;
+  padding: 10px;
+  font-size: 20px;
+  width: 30px;
   text-align: center;
   text-decoration: none;
-  margin: 5px 4px;
+  margin: 3px 2px;
 }
 
 .fa:hover {
