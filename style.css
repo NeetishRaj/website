@@ -9,7 +9,7 @@ body {
 html, .main {
 	padding:0;
 	margin:0;
-	background:#eaeaea url(images/main_bg.gif) top repeat-x;
+	background:#eaeaea url(./best6gallery/main_bg.gif) top repeat-x;
 }
 .clr {
 	clear:both;
@@ -94,7 +94,7 @@ a.rm, a.com {
 	padding:0 10px;
 	float:left;
 	width:950px;
-	background:url(images/menu_resize_bg.gif) top no-repeat;
+	background:url(./best6gallery/menu_resize_bg.gif) top no-repeat;
 }
 .menu_nav ul {
 	list-style:none;
@@ -235,12 +235,12 @@ ul.sb_menu li a, ul.ex_menu li a {
 	text-decoration:none;
 	margin-left:-12px;
 	padding-left:25px;
-	background:url(images/li_a_hover.gif) left no-repeat;
+	background:url(./best6gallery/li_a_hover.gif) left no-repeat;
 }
 ul.sb_menu li a:hover, ul.ex_menu li a:hover {
 	color:#2cadff;
 	text-decoration:underline;
-	background:url(images/li_a.gif) left no-repeat;
+	background:url(./best6gallery/li_a.gif) left no-repeat;
 }
 ul.sb_menu li a:hover {
 	text-decoration:underline;
@@ -260,7 +260,7 @@ ul.ex_menu li a:hover {
 }
 .fbg {
 	padding:10px 0 0 0;
-	background:#5194bf url(images/fbg_bg.gif) top repeat-x;
+	background:#5194bf url(./best6gallery/fbg_bg.gif) top repeat-x;
 }
 .fbg_resize {
 	margin:0 auto;
