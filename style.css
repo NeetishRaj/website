@@ -331,10 +331,11 @@ ol {
 	list-style:none;
 }
 .newDiv ol {
-	list-style:lower-alpha inside none;
+	list-style:lower-alpha outside none;
 }
 .newDiv ol li{
-	padding:2px 0px 2px 0px;
+	padding:5px 0px 5px 0px;
+	text-indent:30px;
 	
 }
 ol li {
