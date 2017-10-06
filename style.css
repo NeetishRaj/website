@@ -329,6 +329,13 @@ ul.ex_menu li a:hover {
 ol {
 	list-style:none;
 }
+.newDiv ol {
+	list-style:square inside none;
+}
+.newDiv ol li{
+	padding:15px 0px;
+	
+}
 ol li {
 	display:block;
 	clear:both;
