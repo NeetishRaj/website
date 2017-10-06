@@ -326,14 +326,16 @@ ul.ex_menu li a:hover {
 .footer .rf {
 	float:right;
 }
+/*
+to allow new lists in project
 ol {
 	list-style:none;
-}
+}*/
 .newDiv ol {
 	list-style:square inside none;
 }
 .newDiv ol li{
-	padding:15px 0px;
+	padding:5px 0px;
 	
 }
 ol li {
