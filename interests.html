@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="style.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="./js/radius.js"></script>
+
 </head>
 <body>
 <div class="main">
@@ -52,22 +53,29 @@
       </div>
       <div class="sidebar">
         <div class="gadget">
-          <h2>Relevant links</h2>
-          <div class="clr"></div>
-          <ul class="sb_menu">
-            <li><a href="#">Under Progress</a></li>
-            <li><a href="#">Under Progress</a></li>
-            <li><a href="#">Under Progress</a></li>
-          </ul>
+					<div id="mySidenav" class="sidenav">
+  					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+						<ol>
+							<li><a href="https://www.brilliant.org/">Brilliant.org</a></li>
+							<li><a href="http://caniuse.com/#home">Browser Support stats</a></li>
+							<li><a href="https://git-scm.com/book">Git Online Book</a></li>
+							<li><a href="https://www.w3schools.com/colors/colors_picker.asp">Color Picker</a></li>
+						</ol>
+					</div>
+          <h2 style="cursor:pointer" onclick="openNav()">&#9776; Tools &amp; Stuffs</h2>
         </div>
         <div class="gadget">
           <h2><span>Discussions</span></h2>
-          <div class="clr"></div>
-           <ul class="ex_menu">
-            <li><a href="#">Under Progress</a><br/></li>
-            <li><a href="#">Under Progress</a><br/></li>
-           </ul>
-        </div>
+	        <div class="clr"></div>
+					<div class="dropdown">
+	 						<button class="dropbtn">Check here</button>
+	 							<div class="dropdown-content">
+		 							<a href="#">Link 1</a>
+		 							<a href="#">Link 2</a>
+		 							<a href="#">Link 3</a>
+	 							</div>
+				 </div>
+      </div>
       </div>
       <div class="clr"></div>
       <div class="fbg">
@@ -102,5 +110,15 @@
     <div class="clr"></div>
   </div>
 </div>
-<div align=center>This website is maintained by <a href='http://www.neetishraj.ga'>Neetish Raj</a></div></body>
+<div align=center>This website is maintained by <a href='http://www.neetishraj.ga'>Neetish Raj</a></div>
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+</body>
 </html>
