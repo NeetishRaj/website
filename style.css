@@ -528,3 +528,26 @@ div.panel {
     opacity: 1;
 }
 /*TOOL-TIP ends here*/
+/*Animated buttons start here from w3scools*/
+.pushbutton {
+  padding: 10px 35px;
+	margin-bottom: 5px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #66e0ff;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.pushbutton:hover {background-color: #33d6ff;}
+
+.pushbutton:active {
+  background-color: #33d6ff;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+/*Animated buttons ends here*/
