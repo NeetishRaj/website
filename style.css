@@ -106,13 +106,15 @@ a:hover {
 	display:block;
 	margin:0;
 	padding:12px 10px;
-	color:#959595;
+	color:#858585;
 	text-decoration:none;
 	font:normal 13px Arial, Helvetica, sans-serif;
 }
 .menu_nav ul li.active a, .menu_nav ul li a:hover {
 	color:#78bbe6;
 	text-decoration:none;
+	border-left:1px solid #c0c0c0;
+	border-right:1px solid #c0c0c0;
 }
 .search {
 	float:right;
@@ -177,6 +179,9 @@ a:hover {
 	margin:0 0 20px 0;
 	padding:30px 20px;
 	width:610px;
+}
+.content .mainbar .article p::first-letter{
+	font-size: 1.3em;
 }
 .content .mainbar .article span.butons a {
 	margin:0 5px 0 0;
@@ -349,9 +354,13 @@ ol li textarea {
 ol li .send {
 	margin:16px 0 0 0;
 }
+tr:hover{
+	background-color: linen;
+}
+/*Icons starts here*/
 .fa {
   padding: 10px;
-  font-size: 20px;
+  font-size: 15px;
   width: 30px;
   text-align: center;
   text-decoration: none;
@@ -384,6 +393,7 @@ ol li .send {
   background: #bb0000;
   color: white;
 }
+/*icons ends here*/
 /*Dropdown starts here*/
 .dropbtn {
     background-color: #4dd2ff;
@@ -450,13 +460,13 @@ div.panel {
 /*ACCORDION style ends here */
 /* SIDE-NAV starts here*/
 .sidenav {
-    height: 100%;
+    height: 80%;
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 130px;
     left: 0;
-    background: linear-gradient(deepskyblue,black);
+    background: linear-gradient(#008fb3,linen);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -469,7 +479,7 @@ div.panel {
     font-size: 18px;
     color: #efefef;
     display: block;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 .sidenav a:hover {

@@ -1,10 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>NeetishRaj | ContactMe</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link href="style.css" rel="stylesheet" type="text/css" />
+	<title>NeetishRaj | ContactMe</title>
+	<meta charset="UTF-8">
+	<!--<meta http-equiv="refresh" content="60">-->
+	<meta name="author" content="Neetish Raj">
+	<meta name="keywords" content="neetish, Neetish Raj, Raj, NeetishRaj,Neetish,developer">
+	<meta name="description" content="portfolio">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/radius.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
 <div class="main">
@@ -48,11 +55,11 @@
 						<legend><b>Send mail to <span style="font-size:14px;">neetishraj@gmail.com</span></b></legend>
 						<form action="mailto:neetishraj@gmail.com" method="post" enctype="text/plain">
 							Name:<br>
-							<input type="text" name="name" size="70" style="background-color:#ccf5ff;"><br>
+							<input type="text" name="name" size="70" autofocus title="Your Good Name Please" style="background-color:#ccf5ff;"><br>
 							E-mail:<br>
-							<input type="text" name="mail" size="70" style="background-color:#ccf5ff;"><br>
+							<input type="text" name="email" size="70" title="Your email ID" style="background-color:#ccf5ff;" required><br>
 							Comments:<br>
-							<input type="text" name="comment" size="70" style="background-color:#ccf5ff;"><br><br>
+							<textarea type="text" name="comment" cols="69" rows="5"  title="And your message for me is...." style="background-color:#ccf5ff;"></textarea><br><br>
 							<input class="pushbutton" type="submit" value="Send">
 							<input class="pushbutton" type="reset" value="Reset" style="float:right;">
 						</form>
@@ -110,7 +117,7 @@
     </div>
   </div>
   <div class="footer">
-    <p class="lf">&copy; Copyright <a href="#">neetish</a>.</p>
+    <p class="lf">&copy; Copyright <a href="./LICENSE">NeetishRaj</a>.</p>
     <p class="rf">Contribute <a href="#">here</a></p>
     <div class="clr"></div>
   </div>
