@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
+<html lang="en-US">
 <head>
 	<title>NeetishRaj | MyBlog</title>
 	<meta charset="UTF-8">
@@ -79,6 +79,15 @@
       </div>
       <div class="sidebar">
         <div class="gadget">
+					<span style="font-size:16px; color:2a2a2a; letter-spacing:4px;" id="dateTime"></span>
+					<script>
+						var d = new Date();
+						var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+						document.getElementById("dateTime").innerHTML = days[d.getDay()]+", "+
+						d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear();
+					</script>
+					<hr/>
+					<br/>
           <h2>App suggestions</h2>
           <div class="clr"></div>
           <ul class="sb_menu">

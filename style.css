@@ -239,6 +239,7 @@ ul.sb_menu li a, ul.ex_menu li a {
 }
 ul.sb_menu li a:hover, ul.ex_menu li a:hover {
 	color:#2cadff;
+	text-shadow:3px 3px 45px #000;
 	text-decoration:underline;
 	background:url(./best6gallery/li_a.gif) left no-repeat;
 }
@@ -561,3 +562,39 @@ div.panel {
   transform: translateY(4px);
 }
 /*Animated buttons ends here*/
+/*Image sprite starts here to reduce bandwidth
+by joining all images into single images and using it part by part*/
+.galleryContainer{
+	position:relative;
+}
+#gallery1{
+	position:absolute;
+	display:block;
+	clip:rect(0,220px,165px,0);
+}
+#gallery2{
+	position:absolute;
+	display:block;
+	clip:rect(0px, 220px, 165px, 0px);
+}
+#gallery3{
+	position:absolute;
+	display:block;
+	clip:rect(0px, 220px, 165px, 0px);
+}
+#gallery4{
+	position:absolute;
+	display:block;
+	clip:rect(0px, 220px, 165px, 0px);
+}
+#gallery5{
+	position:absolute;
+	display:block;
+	clip:rect(0px, 220px, 165px, 0px);
+}
+#gallery6{
+	position:absolute;
+	display:block;
+	clip:rect(0px, 220px, 165px, 0px);
+}
+/*Image sprite ends here to reduce bandwidth*/
