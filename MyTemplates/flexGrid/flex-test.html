@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>flextest</title>
+    <link href="https://fonts.googleapis.com/css?family=Acme|Courgette" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <style>
+    @keyframes headerAnimation{
+        0% {text-shadow: 5px 5px 10px #86b300;}
+        20%   {text-shadow: -100px 17px 0px #86b300;}
+        80% {text-shadow: 100px 17px 0px #86b300;}
+        100% {text-shadow: 5px 5px 10px #86b300;}
+    }
+    @media screen only(max-width:480px){
+        header h1{
+            font-size:0.5em;
+        }
+        body{
+            grid-template-areas:
+            "nav"
+            "header"
+            "main"
+            "footer";
+        }
+    }
+    /*Global settings starts here*/
+    *{
+        box-sizing:border-box;
+    }
+    a{
+        color:inherit;
+        text-decoration:none;
+    }
+    figure{
+        margin:1em 0;
+        text-align:center;
+    }
+    figure > figcaption{
+        background-color:linen;
+        border-top:2px solid #bbb;
+        border-bottom:2px solid #bbb;
+    }
+    /*Global settings ends here*/
+    html{
+       background:url("myTexture.png") repeat fixed; 
+    }
+    body{
+       display:grid;
+       grid-template-columns:1fr;
+       grid-template-rows:100px 50px 1fr 100px;
+       grid-gap:10px 0px;
+       grid-template-areas:
+        "header"
+         "nav"
+         "main"
+         "footer"; 
+     }
+    header,footer{
+      text-align:center;
+      text-shadow:5px 5px 10px #86b300;
+      color:#4a4a4a;
+      font-family: 'Russo One', sans-serif;
+      border:10px outset grey;
+      border-radius:90px 0 90px 0;
+      background: linear-gradient(grey, white,grey);
+      animation-play-state:paused; 
+    }
+    header{
+      grid-area:header;
+    }
+    header:hover, footer:hover{
+      background: linear-gradient(#4a4a4a,white,#4a4a4a);
+      animation:headerAnimation 3s 0.3s 1 alternate;
+    }
+    nav{
+        grid-area:nav;
+        font-family:'courgette',cursive;
+    }
+    nav ul{
+      display:flex;
+      flex-flow:row no-wrap;
+         
+      border-bottom: 5px solid grey;
+      border-top: 5px solid grey;
+      padding: 0;
+      list-style: none;
+      background-color: #e8e8e9;
+    }
+    nav li {
+      background-color: #cacaca;
+      margin: 8px;
+      padding: 4px;
+      border-radius:20px;
+      text-decoration:none;
+      flex:0 1 auto;
+      transition: 0.5s;/*background-color 0.6s, color ease-in-out 0.8s, transform 0.6s;
+      transition-timing-function: cubic-bezier(10,5,2,1);*/
+     }
+     nav li:hover{
+       background-color:#4a4a4a;
+       color:#cacaca;
+     }
+     nav li:nth-child(odd):hover{
+         transform:rotate(7deg);
+     }
+
+     nav li:nth-child(even):hover{
+         transform:rotate(-7deg);
+     }
+     nav li:nth-child(1){
+       margin-right:auto;
+     }
+     main{
+         font-family: 'Acme', sans-serif;
+         margin: 1em auto 0 auto;
+         max-width:1000px;
+         grid-area:main;
+         display:grid;
+         grid-template-columns:130px 1fr 1fr 1fr;
+         grid-template-rows:1fr 1fr 1fr 1fr 1fr;
+         grid-gap: 0 10px;
+         grid-template-areas:
+         "aside section section section"
+         "aside section section section"
+         "aside section section section"
+         "aside section section section"
+         "aside section section section";
+     }
+     aside{
+       grid-area:aside;
+       background-color:#e8e8e9;
+       justify-self:stretch;
+     }
+     aside img:first-child{
+         border:5px solid #aaa;
+         transition:0.3s 0;
+     }
+     aside img:first-child:hover{
+         filter:blur(1px);
+         opacity:0.7;
+         transform:scaleX(-1);
+     }
+     aside ul{
+         list-style-type:none;
+         margin:auto;
+     }
+     aside ul li{
+         padding:5px 3px;
+         background:#ececec;
+         border-bottom:2px solid #bbb;
+     }
+     aside ul li:hover{
+         background:#d8d8d8;
+     }
+     section{
+         grid-area:section;
+         background:#e8e8e9;
+     }
+     section a{
+         color:brown;
+     }
+     footer{
+         grid-area:footer;
+     }
+     footer span{
+       color:brown;
+       font-family:'courgette', cursive;
+       font-size:0.5em;
+       text-shadow:none;
+       text-decoration:none;
+     }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Responsive Templates<span></span>
+      </h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Interests</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact Me</a></li>
+      </ul>
+    </nav>
+    <main>
+    <aside>
+      <figure>
+          <img src="Morpheus-Matrix1.jpg" alt="Neetish Raj" width="100%" height="auto"
+           longdesc="http://www.neetishraj.ga/" height="auto"/>
+          <figcaption>Morpheus</figcaption>
+      </figure>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Interests</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact Me</a></li>
+      </ul>
+      </aside>
+      <section>
+        <article>  
+          <h2>About</h2>
+          <p>The new display options flex and grid provided a lot of benefits
+             and ease to the designers for generating responsive layouts. But 
+             the new attribute values can be tricky and take some time getting 
+             used to. After spending some quality time on them, my conclusions
+             and the end results are.</p>
+           <ol type="i">
+            <li>Highly responsive page that won't let you down on different 
+              views, for tips and tricks check <a href="https://philipwalton.github.io/solved-by-flexbox/" target="_blank">here
+              </a> by Philip Walton.</li>
+            <li>Most important would be the power to control to control the grow 
+              and shrink properties of elements.</li>
+            <li>You will definitely be able to predict what will happen if viewport
+               changes unlike the previous floated divs.</li>
+            <li>It will take me some time getting used to it as it challenges your 
+              old practices but totally worth it.</li>
+            <li>Its not a panacea for designers though and have limitations which 
+              are discussed <a href="https://github.com/philipwalton/flexbugs" target="_blank">
+              here</a> by proactive github members.</li>
+          </ol>
+          <p></p>
+        <details>
+          <summary>For detailed idea check out this</summary>
+          <p>Mastering modern layouts in CSS layouts by 
+            <a href="https://ohansemmanuel.github.io/modern_css_layouts.html">Ohans Emmanuel</a>.</p>
+        </details>
+        </article>
+        <article>
+            <p>I recently went through this site that gives straight syntax and styles 
+            for various flex &amp; grid styles, check this out <a href="http://flexboxgrid.com" target="_blank">
+            flexboxgrid.com</a></p>
+        </article>
+      </section>
+    </main>
+    <footer>
+      <h1>Grid &amp; Flex <span>&copy;<a href="http://www.neetishraj.ga/" target="_blank">Neetish Raj</span></h1>
+    </footer>
+  </body>
+</html>
