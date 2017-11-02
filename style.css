@@ -110,7 +110,7 @@ a:hover {
 	text-decoration:none;
 	font:normal 13px Arial, Helvetica, sans-serif;
 }
-.menu_nav ul li.active a, .menu_nav ul li a:hover {
+.menu_nav ul li.active, .menu_nav ul li a:hover {
 	color:#78bbe6;
 	text-decoration:none;
 	border-left:1px solid #c0c0c0;
