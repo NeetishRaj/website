@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Navigation panel Styles</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="navstyle.css">
+  </head>
+  <body>
+    <div id="first" class="box">
+      <h1>Navigation Panel using Bootstrap</h1>
+      <pre>&lt;div class="btn-group btn-group-lg btn-group-justified"&gt;
+          &lt;a href="#" class="btn btn-success">Home&lt;/a&gt;
+          &lt;a href="#" class="btn btn-success btn-md">Interests&lt;/a&gt;
+          &lt;a href="#" class="btn btn-success">Projects&lt;/a&gt;
+          &lt;a href="#" class="btn btn-success">Blog&lt;/a&gt;
+          &lt;a href="#" class="btn btn-success">Contact Me&lt;/a&gt;
+      &lt;/div&gt;
+    </pre>
+    <hr/>
+    <div class="btn-group btn-group-lg btn-group-justified">
+        <a href="#" class="btn btn-success">Home</a>
+        <a href="#" class="btn btn-success btn-md">Interests</a>
+        <a href="#" class="btn btn-success">Projects</a>
+        <a href="#" class="btn btn-success">Blog</a>
+        <a href="#" class="btn btn-success">Contact Me</a>
+    </div>
+    </div>
+
+    <div id="second" class="box">
+      <h1>Navigation Panel using ul li{display:inline;}</h1>
+      <pre>
+        ul{
+          background: #b7a3a1;
+        }
+        ul li{
+          display:inline;
+          border: 3px solid #4c4c4c;
+          padding:5px 20px;
+        }
+      </pre>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+
+    <div id="third" class="box">
+      <h1>Navigation Panel using ul li{display:inline-block;}</h1>
+      <pre>
+        ul{
+          background: #a7b3a1;
+        }
+        ul li{
+          display:inline-block;
+          border: 3px solid #4c4c4c;
+          padding:5px 20px;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+
+    <div id="fourth" class="box">
+      <h1>Navigation Panel using ul li{display:block; float:left;}</h1>
+      <pre>
+        ul{
+          background-color:#c1bcdc;
+        }
+        ul li{
+          display:block;
+          float:left;
+          background: #caacbc;
+          padding:5px 20px;
+          margin-right: 20px;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+        <p id="fourth-para" style="clear:left; display:none;">Note the side effects of float, it has eaten the
+          bottom padding applied to all nav &lt;divs&gt;, to see it press
+           the given button to remove this para and see the difference in bottom
+           padding again on this nav-bar and compare from upper nav-bars. Hence using float should
+           be avoided as much as possible to prevent un-intentional side-effects.
+            Moreover the backgroud-color applied to the ul element wont work normally
+            in the float environment.
+         </p><button class=""type="button" id="fourth-button"
+           name="button">Click to toggle Warning</button>
+    </div>
+
+    <div id="fifth" class="box">
+      <h1>Navigation Panel using ul li{display:block; float:right;}</h1>
+      <p class="label label-warning">Needless to say, this float disaster</p>
+      <pre>
+        ul{
+          background: #caacbc;
+        }
+        ul li{
+          display:block;
+          float:right;
+          background: #caacbc;
+          padding:5px 20px;
+          margin-left:20px;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+
+    <div id="sixth" class="box">
+      <h1>Navigation Panel using table rows &lt;tr&gt; and cols &lt;td&gt;</h1>
+      <pre>
+        table{
+          background-color:#c1bcdc;
+          border-collapse: separate;
+          border-spacing: 15px;
+        }
+        table td{
+          background-color:#bcc7dc;
+          font-size:1.3em;
+          padding:5px 20px;
+          border:3px solid #673f67;
+        }
+      </pre>
+      <hr/>
+        <table>
+        <tr>
+          <td><a href="#">Home</a></td>
+          <td><a href="#">Interests</a></td>
+          <td><a href="#">Projects</a></td>
+          <td><a href="#">Blog</a></td>
+          <td><a href="#">Contact Me</a></td>
+        </tr>
+        </table>
+    </div>
+
+    <div id="seventh" class="box">
+      <h1>Navigation Panel using ul{display:inline-table;}</h1>
+      <pre>
+        ul{
+          display:inline-table;
+
+        }
+        ul li{
+          border-bottom:3px solid #5a6c3d;
+          border-left:3px solid #5a6c3d;
+          padding:5px 20px;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="eighth" class="box">
+      <h1>Navigation Panel using ul{display:run-in;}</h1>
+      <p>"run-in" displays an element as block or inline based on context, so we
+         can see that it is same as the below ul li html element without any explicit
+        display styles on &lt;ul&gt; &amp; &lt;li&gt;</p>
+        <pre>
+          ul{
+            display:run-in;
+          }
+          ul li{
+            padding:5px 20px;
+            border-bottom:3px solid #5a6c3d;
+            border-left:3px solid #5a6c3d;
+          }
+        </pre>
+        <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="nineth" class="box">
+      <h1>Navigation Panel without any explicit {display:} styles just plain &lt;ul&gt;</h1>
+      <pre>
+        ul{
+        }
+        ul li{
+          padding:5px 20px;
+          border-bottom:3px solid #5a6c3d;
+          border-left:3px solid #5a6c3d;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="tenth" class="box">
+      <h1>Navigation Panel using ul{display:flex} &amp; li{flex: 0 1 150px;}</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row wrap;
+          justify-content:space-between;
+          background-color:#ceadea;
+        }
+        ul li{
+          flex: 0 1 150px;
+          border:3px solid #5a6c3d;
+          padding:5px 20px;
+          background-color:#decdea;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="eleventh" class="box">
+      <h1>Navigation Panel using ul{display:flex} &amp; li{flex: 0 1 auto;}</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row wrap;
+          justify-content:space-between;
+          background-color:#ceadea;
+        }
+        ul li{
+          flex: 0 1 auto;
+          border:3px solid #5a6c3d;
+          padding:5px 20px;
+          background-color:#decdea;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="twelveth" class="box">
+      <h1>Navigation Panel using ul{display:flex, padding:10px 10px} &amp; li{flex: 0 1 auto;}</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row wrap;
+          justify-content:space-between;
+          background-color:#ceadea;
+          padding:10px 10px;
+        }
+        ul li{
+          flex: 0 1 auto;
+          border:3px solid #5a6c3d;
+          padding:5px 20px;
+          background-color:#decdea;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="thirteenth" class="box">
+      <h1>Navigation Panel using ul{display:flex}, li{flex: 0 1 auto;} and li:first-child{margin:auto}</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row wrap;
+          justify-content:space-between;
+          background-color:#ceadea;
+        }
+        ul li{
+          flex: 0 1 auto;
+          border:3px solid #5a6c3d;
+          padding:5px 20px;
+          background-color:#decdea;
+        }
+        ul li:first-child{
+          margin:auto;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="fourteenth" class="box">
+      <h1>Navigation Panel using ul{display:flex}, li{flex: 0 1 auto;} and li:last-child{margin-left:auto}</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row wrap;
+          justify-content:space-between;
+          background-color:#ceadea;
+          padding:0 0;
+        }
+        ul li{
+          flex: 0 1 auto;
+          border:3px solid #5a6c3d;
+          padding:5px 20px;
+          background-color:#decdea;
+        }
+        ul li:last-child{
+          margin-left:auto;
+        }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="fifteenth" class="box">
+      <h1>Navigation Panel using ul{display:flex, flex-direction:column} &amp; li{flex: 0 1 auto;}</h1>
+      <p><strong>NOTE:</strong>Flex gets really confusing when you try flex
+        property "flex-direction" as column|col-reverse, specially in align &amp; justify contents.
+        <br>Also Note that if you have used margin on flex items then justify-content no longer works
+        for flex items as in above 2 examples.</p>
+        <pre>
+          ul{
+            width:140px;
+            display:flex;
+            align-content:center;
+            flex-flow:column nowrap;
+            background-color:#ceadea;
+            padding:0 0;
+          }
+          ul li{
+            flex: 0 1 auto;
+            justify-content: space-around;
+            border:3px solid #5a6c3d;
+            padding:5px 20px;
+            background-color:#decdea;
+          }
+        </pre>
+        <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="sixteenth" class="box">
+      <h1>Navigation Panel using ul{display:grid}</h1>
+      <p class="label label-info"><strong>NOTE:</strong>A very powerful and simplified
+      layout technique</p>
+      <pre>
+        ul{
+          display:grid;
+          grid-template-columns: repeat(9, 1fr);
+          grid-template:"hom int . . proj .  . blog contact";
+          justify-items:center;
+          background-color: #dacfaf;
+          padding:5px 5px;
+          border:1px solid #3a1c2b;
+        }
+        ul li{
+          border:3px solid #3d6a5e;
+          padding:5px 10px;
+          margin:0 10px;
+          background-color: #cfdaaf;
+        }
+        ul li:nth-child(1){
+          grid-area:hom;
+        }
+        ul li:nth-child(2){
+          grid-area:int;
+        }
+        ul li:nth-child(3){
+          grid-area:proj;
+        }
+        ul li:nth-child(4){
+          grid-area:blog;
+        }
+        ul li:nth-child(5){
+          grid-area:contact;
+        }
+      </pre>
+      <hr/>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="seventeenth" class="box">
+      <h1>Navigation Panel using bootstrap "glyphicons"</h1>
+      <pre>
+        &lt;div class="btn-group btn-group-justified"&gt;
+          &lt;a href="#" class="btn btn-info btn-md" title="Home"&gt;&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt;&lt;/a&gt;
+          &lt;a href="#" class="btn btn-info btn-md" title="Interests"&gt;&lt;span class="glyphicon glyphicon-heart"&gt;&lt;/span&gt;&lt;/a&gt;
+          &lt;a href="#" class="btn btn-info btn-md" title="Projects"&gt;&lt;span class="glyphicon glyphicon-briefcase"&gt;&lt;/span&gt;&lt;/a&gt;
+          &lt;a href="#" class="btn btn-info btn-md" title="Blog"&gt;&lt;span class="glyphicon glyphicon-user">&lt;/span&gt;&lt;/a&gt;
+          &lt;a href="#" class="btn btn-info btn-md" title="Contact Me"&gt;&lt;span class="glyphicon glyphicon-envelope"&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      </pre>
+      <hr/>
+      <div class="btn-group btn-group-justified">
+        <a href="#" class="btn btn-info btn-md" title="Home"><span class="glyphicon glyphicon-home"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Interests"><span class="glyphicon glyphicon-heart"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Projects"><span class="glyphicon glyphicon-briefcase"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Blog"><span class="glyphicon glyphicon-user"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Contact Me"><span class="glyphicon glyphicon-envelope"></span></a>
+      </div>
+      <hr/>
+      <div class="btn-group btn-group-justified" style="width:300px;">
+        <a href="#" class="btn btn-info btn-md" title="Home"><span class="glyphicon glyphicon-home"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Interests"><span class="glyphicon glyphicon-heart"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Projects"><span class="glyphicon glyphicon-briefcase"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Blog"><span class="glyphicon glyphicon-user"></span></a>
+        <a href="#" class="btn btn-info btn-md" title="Contact Me"><span class="glyphicon glyphicon-envelope"></span></a>
+      </div>
+    </div>
+    <div id="eighteenth" class="box">
+      <h1>Creative navs with flex and transitions</h1>
+      <pre>
+        ul{
+          display:flex;
+          flex-flow:row no-wrap;
+
+          border-bottom: 5px solid grey;
+          border-top: 5px solid grey;
+          padding: 0;
+          list-style: none;
+          background-color: #e8e8e9;
+        }
+        li {
+          background-color: #cacaca;
+          margin: 8px;
+          padding: 4px;
+          border-radius:20px;
+          text-decoration:none;
+          flex:0 1 auto;
+          transition: 0.5s;/*background-color 0.6s, color ease-in-out 0.8s, transform 0.6s;
+          transition-timing-function: cubic-bezier(10,5,2,1);*/
+         }
+         li:hover{
+           background-color:#4a4a4a;
+         }
+         li a:hover{
+           color:#cacaca;
+           list-style-type: none;
+         }
+         li:nth-child(odd):hover{
+             transform:rotate(7deg);
+         }
+
+         li:nth-child(even):hover{
+             transform:rotate(-7deg);
+         }
+         li:nth-child(1){
+           margin-right:auto;
+         }
+      </pre>
+      <hr/>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="nineteenth" class="box">
+      <h1>Navigation Panel using ul{display:flex, padding:10px 10px} &amp; li{flex: 0 1 auto;}</h1>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="twentieth" class="box">
+      <h1>Navigation Panel using ul{display:flex, padding:10px 10px} &amp; li{flex: 0 1 auto;}</h1>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="twentyfirst" class="box">
+      <h1>Navigation Panel using ul{display:flex, padding:10px 10px} &amp; li{flex: 0 1 auto;}</h1>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <div id="twentysecond" class="box">
+      <h1>Navigation Panel using ul{display:flex, padding:10px 10px} &amp; li{flex: 0 1 auto;}</h1>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Interests</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+      var para=document.getElementById('fourth-para');
+      var a=document.getElementById('fourth-button');
+      a.onclick=function(){
+        if(para.style.display==='none')
+          para.style.display='block';
+        else {
+          para.style.display='none';
+        }
+      }
+    </script>
+  </body>
+</html>
