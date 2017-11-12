@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Creative Nav</title>
+    <style media="screen">
+.c1{
+  margin:auto;
+  padding:20px 10%;
+}
+#first ul{
+  display:flex;
+  flex-flow:row wrap;
+  list-style-type: none;
+  background-color:#9caf8a;
+}
+#first ul li{
+  /*background-image:url("nav_icon1.svg");
+  background-size: 100% 100%;
+  border: 0;*/
+  color: white;
+  margin:0 20px;
+}
+#first ul li a{
+  color:white;
+}
+    </style>
+  </head>
+  <body>
+    <div class="c1" id="first">
+    <ul>
+      <li><a href="#" >Home</a></li>
+      <li><a href="#">Interests</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact Me</a></li>
+    </ul>
+    <button id="padInc" type="button" name="button">Increase Padding</button>
+    </div>
+    <script type="text/javascript">
+    var li=getElementsByTagName('li');
+    var a = document.getElementById('padInc');
+    a.onclick=function(){
+      li.style.padding='5px 20px';
+      li.style.height="100px";
+    }
+    </script>
+  </body>
+</html>

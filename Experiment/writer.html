@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>sketchbook</title>
+    <style media="screen">
+@keyframes drawhover{
+  0%{background-color: #fff;}
+  50%{background-color:#000;}
+  100%{background-color: #000;}
+}
+.body{
+  margin:10px 0;
+  padding:10px 10px;
+}
+0%{background-color:#fff;}
+.controls{
+  background-color: #000;
+  width:100%;
+  height:60px;
+  display:grid;
+  grid-template-columns: repeat(3,1fr) 300px repeat(3,1fr);
+  grid-template:". . . bcontain . . .";
+}
+.bcontain{
+  grid-area:bcontain;
+  background-color:#7a6d54;
+  margin:4px;
+  border:1px solid #efefef;
+  display:flex;
+  flex-flow:row nowrap;
+}
+.buttons{
+  height:40px;
+  width:60px;
+  flex:1 1 60px;
+  justify-content: space-between;
+  margin:5px 5px;
+}
+.sketcharea{
+  width:1000px;
+  height:100%;
+  margin:auto;
+  background-color: #efefef;
+}
+span.pixel{
+  display:block;
+  float:left;
+  height:50px;
+  width:50px;
+  border:1px solid #afafaf;
+}
+/*span.pixel:hover{
+  /*animation:drawhover 1s;*/
+  background-color: #000;
+  transition: 0.1s;
+}*/
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <div class="bcontain">
+      <button class="buttons" type="button" name="button">sketch</button>
+      <button class="buttons" type="button" name="button">eraser</button>
+      <button class="buttons" type="button" name="button">color</button>
+      <button class="buttons" type="button" name="button">BG-color</button>
+      <button class="buttons" type="button" name="button">clean</button>
+    </div>
+    </div>
+    <div class="sketcharea">
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+      <span class="pixel"></span>
+    </div>
+    <script type="text/javascript">
+      var a=document.getElementsByClassName('pixel');
+      a.onclick=function(){
+        a.style.backgroundColor="#000";
+      }
+    </script>
+  </body>
+</html>
