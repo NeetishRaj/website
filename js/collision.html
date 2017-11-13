@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Collisions</title>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+		<style>
+			body {
+    background-color: #333;
+    margin: auto;
+    color: #FFF;
+    text-align: center;
+    font-family: Bellefair;
+}
+button {
+    padding: 5px 15px;
+    background: #0C9;
+    color: #FFF;
+    border: 0px none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    font-family: Arial;
+}
+		</style>
+    </head>
+    <body>
+        <h3>Collisions</h3><br>
+
+
+	<script>
+	$(function(){
+var FPS = 60;
+var dim = 700;
+var DIM = window.innerWidth;
+var c = $('<canvas>')[0];
+$(c).attr({
+    'width':dim,
+    'height':dim
+});
+$(c).css({
+    'width':DIM,
+    'height':DIM
+});
+$('body').append(c);
+var ctx = c.getContext('2d');
+var drawLines = false;
+var getDots = function(x1,y1,x2,y2){
+    return {
+        d:Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)),
+        a:Math.atan2(y1-y2,x2-x1)
+    };
+}
+var getDist = function(sh,dir){
+    var ir = sh.r*Math.cos(Math.PI/sh.s);
+    return ir/Math.cos((Math.abs((dir+sh.a+Math.PI/sh.s) % (2*Math.PI))+(Math.PI/sh.s)) % (Math.PI*2/sh.s)-(Math.PI/sh.s));
+}
+var Shapes = [];
+var newShape = function(x,y,hspd,vspd,r,s){
+    var shape = {
+        x:x,
+        y:y,
+        hspd:hspd,
+        vspd:vspd,
+        r:r,
+        s:s,
+        a:Math.random()*Math.PI*2,
+        aspd:-0.05+Math.random()*0.1,
+        col:'#000'
+    };
+    shape.lines = [];
+    shape.addLine = function(x,y,rad,ang){
+        shape.lines.push({
+            x1:x,
+            y1:y,
+            x2:x+rad*Math.cos(ang),
+            y2:y-rad*Math.sin(ang)
+        });
+    }
+    shape.move = function(){
+        with(shape){
+            x += hspd;
+            y += vspd;
+            if(x < r || x > dim-r){
+                hspd *= -1;
+            }
+            if(y < r || y > dim-r){
+                vspd *= -1;
+            }
+            a += aspd;
+        }
+    }
+    shape.collide = function(shape2){
+        if(shape != shape2){
+            var dots = getDots(shape.x,shape.y,shape2.x,shape2.y);
+            if(drawLines){
+                shape.addLine(shape.x,shape.y,getDist(shape,dots.a),dots.a);
+            }
+            if(dots.d < getDist(shape,dots.a)+getDist(shape2,dots.a+Math.PI)){
+                shape.col = '#F00';
+            }
+        }
+    }
+    shape.draw = function(){
+        with(shape){
+            ctx.fillStyle = col;
+            ctx.globalAlpha = 0.5;
+            ctx.beginPath();
+            for(var i = 0; i <= s; i++){
+                var dot1 = {
+                    x:x+r*Math.cos(a+i*Math.PI*2/s),
+                    y:y-r*Math.sin(a+i*Math.PI*2/s)
+                };
+                var dot2 = {
+                    x:x+r*Math.cos(a+(i+1)*Math.PI*2/s),
+                    y:y+r*Math.sin(a+(i+1)*Math.PI*2/s)
+                }
+                if(i == 0){
+                    ctx.moveTo(dot1.x,dot1.y);
+                }
+                ctx.lineTo(dot2.x,dot2.y);
+            }
+            ctx.fill();
+            if(drawLines){
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = '#000';
+                ctx.fillStyle = '#00F';
+                for(var l in lines){
+                    ctx.beginPath();
+                    ctx.moveTo(lines[l].x1,lines[l].y1);
+                    ctx.lineTo(lines[l].x2,lines[l].y2);
+                    ctx.stroke();
+                    ctx.fillRect(lines[l].x2-3,lines[l].y2-3,6,6);
+                }
+            }
+            lines = [];
+        }
+    }
+    shape.update = function(){
+        shape.move();
+        for(var id2 in Shapes){
+            shape.collide(Shapes[id2]);
+        }
+        shape.draw();
+    }
+    Shapes.push(shape);
+}
+var maxSpd = 2;
+for(var n = 3; n < 8; n++){
+    var rad = 50+Math.random()*50;
+    newShape(rad+Math.random()*(dim-2*rad),rad+Math.random()*(dim-2*rad),-maxSpd+Math.random()*2*maxSpd,-maxSpd+Math.random()*2*maxSpd,rad,n);
+}
+var butLines = $('<button>').text('Draw collision lines');
+$('body').append(butLines);
+$(butLines).click(function(){
+    if(drawLines){
+        $(butLines).text('Draw collision lines');
+    }else{
+        $(butLines).text('Hide collision lines');
+    }
+    drawLines = !drawLines;
+});
+setInterval(function(){
+    ctx.clearRect(0,0,dim,dim);
+    for(var id in Shapes){
+        Shapes[id].col = '#0F0';
+        Shapes[id].update();
+    }
+},1000/FPS);
+});
+	</script>
+    </body>
+</html>

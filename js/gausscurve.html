@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gauss curve</title>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+		<style>
+		body {
+    background-color: #333;
+    margin: auto;
+    color: #FFF;
+    text-align: center;
+    font-family: Bellefair;
+}
+		</style>
+    </head>
+    <body>
+        <br>
+        <h3>Gauss curve</h3>
+		<script>
+		$(function(){
+var FPS = 50;
+var dim = 400;
+var DIM = window.innerWidth;
+var c = $('<canvas>').attr({
+    'width':dim,
+    'height':dim
+});
+$(c).css({
+    'width':DIM,
+    'height':DIM,
+    'position':'absolute',
+    'left':0,
+    'top':window.innerHeight-DIM
+});
+var ctx = $(c)[0].getContext('2d');
+$('body').append(c);
+isOverPix = function(p){
+    for(var j in pix){
+        if(p.x == pix[j].x && p.y == pix[j].y){
+            return true;
+        }
+    }
+    return false;
+}
+var pix = [];
+var newPix = function(){
+    var p = {
+        x:dim/2,
+        y:dim-1
+    };
+    for(var j = 0; j < dim*2; j++){
+        if(Math.random() > 0.5){
+            p.x++;
+            continue;
+        }
+        p.x--;
+    }
+    p.draw = function(){
+        ctx.fillRect(p.x,p.y,1,1);
+    }
+    while(isOverPix(p)){
+        p.y--;
+    }
+    pix.push(p);
+}
+ctx.fillStyle = '#0FA';
+setInterval(function(){
+    ctx.clearRect(0,0,dim,dim);
+    for(var i in pix){
+        pix[i].draw();
+    }
+    for(var i = 0; i < 5; i++){
+        newPix();
+    }
+},1000/FPS);
+});
+		</script>
+    </body>
+</html>

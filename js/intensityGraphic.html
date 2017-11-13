@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mandelbrot set</title>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+		<style>
+		body {
+    margin: auto;
+    background-color: #666;
+    text-align: center;
+    padding-top: 20px;
+    color: #FFF;
+    font-family: 'Bellefair', serif;
+}
+.loader {
+    border: 5px solid #BBB;
+    border-radius: 50%;
+    border-top: 5px solid #39D;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+canvas {
+    border-radius: 30px;
+}
+		</style>
+    </head>
+    <body>
+        <h3>Mandelbrot set</h3>
+        <br>
+        <div id='loading'>
+            <br><br><br>
+            <div class='loader'></div>
+            <br>
+            <i>Loading...</i>
+        </div>
+        <script>
+$(function(){setTimeout(function(){
+var dim = parseInt(prompt('Choose the resolution:',500));
+var iterations = parseInt(prompt('Choose the precision:',100));
+alert('The code will loop a bunch of code '+iterations*Math.pow(dim,2)+' times, therefore the loading can take a while so I please you to be patient.');
+var DIM = window.innerWidth-10;
+var c = $('<canvas>')[0];
+$(c).attr({
+    'width':dim,
+    'height':dim
+});
+$(c).css({
+    'width':DIM,
+    'height':DIM
+});
+$('body').append(c);
+var ctx = c.getContext('2d');
+var getSetValue = function(x,y) {
+    var a = x;
+    var b = y;
+    for(var i = 0; i < iterations; i++){
+        var aa = a;
+        a = a*a-b*b+x;
+        b = 2*aa*b+y;
+        if(a*b > 5){
+            return i;
+        }
+    }
+    return 0;
+}
+var X = 2;
+var Y = 1.5;
+var zoom = dim/3;
+for(var x = 0; x < dim; x++){
+    for(var y = 0; y < dim; y++){
+        var value = getSetValue(x/zoom-X,y/zoom-Y);
+        ctx.fillStyle = '#000';
+        if(value){
+            ctx.fillStyle = 'hsl(190,100%,'+value+'%)';
+        }
+        ctx.fillRect(x,y,1,1);
+    } 
+}
+$('#loading').remove();
+},200);});
+        </script>
+    </body>
+</html>

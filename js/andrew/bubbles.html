@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+  
+    <title>Welcome Bubbles</title>
+	<style>
+	    #myCanvas {
+            border-width: 1px;
+            border-style: dotted;
+            border-color: Gray;
+        }
+
+        h1 {
+            font-family: tahoma, serif;
+            font-size: x-large;
+            color: #999999;
+        }
+
+        body {
+            background-color: #F6F6F6;
+            padding: 40px;
+        }
+
+        p {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+        }
+
+        a {
+            color: #3E99CA;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: #E2F0F8;
+            border-radius: 2px;
+        }
+	</style>
+</head>
+
+<body>
+
+    <div id="container">
+        <canvas id="playground" height="400" width="400" ></canvas>
+    </div>
+    
+
+   <script>
+       
+        var mainCanvas = document.getElementById("playground");
+        var mainContext = mainCanvas.getContext('2d');
+
+        var canvasWidth = mainCanvas.width;
+        var canvasHeight = mainCanvas.height;
+        
+
+      
+       
+       
+        var bubbles = new Array();
+       
+
+       
+        function Bubble(rotationRadius, sign, speed, xIncrement, yIncrement, bubbleRadius, initialX, initialY, color) {
+            this.rotationRadius = rotationRadius;
+            this.bubbleRadius = bubbleRadius;
+            this.initialX = this.currentX = initialX;
+            this.initialY = this.currentY = initialY;
+            this.color = color;
+
+            this.counter = 0;
+            this.angle = 0;
+            this.xIncrement = xIncrement;
+            this.yIncrement = yIncrement;
+            this.sign = sign;
+            
+            this.speed = speed;
+        }
+        
+        
+        Bubble.prototype.update = function () {
+            this.counter += 1;
+            this.angle += this.yIncrement;
+
+          
+            this.currentY -= (this.speed + (this.counter * this.yIncrement) / 100 + Math.sin(this.angle) + 1);
+
+           
+            if (this.currentY < canvasHeight) {
+                if (this.sign > 0) {
+                    this.currentX += (this.speed * this.xIncrement + this.rotationRadius * Math.cos(this.angle));
+                } else {
+                    this.currentX -= (this.speed * this.xIncrement - this.rotationRadius * Math.cos(this.angle));
+                }
+            }
+
+         
+            if (this.currentY * 2 < canvasHeight) {
+                this.bubbleRadius *= .95;
+            }
+
+           
+            if (this.bubbleRadius < 2) {
+                this.resetPosition();
+            }
+
+          
+            if (this.currentY < -100) {
+                this.resetPosition();
+            }
+
+       
+            if ((this.currentX > (canvasWidth + 100)) || (this.currentX < -100)) {
+                this.resetPosition();
+            }
+
+       
+            mainContext.beginPath();
+            mainContext.arc(this.currentX, this.currentY, this.bubbleRadius, 0, Math.PI * 2, false);
+            mainContext.closePath();
+            mainContext.fillStyle = this.color;
+            mainContext.fill();
+           
+             
+             mainContext.font = "30px Tahoma";
+            
+            
+             mainContext.fillText("Welcome to Sololearn!!", canvasWidth/6, canvasHeight/2); 
+             
+             
+
+            
+          
+        };
+
+       
+
+
+    
+        Bubble.prototype.resetPosition = function () {
+           this.counter = 0;
+            this.currentY = getYPosition();
+            this.currentX = getXPosition();
+            this.xIncrement = getIncrement();
+            this.yIncrement = getIncrement();
+            this.bubbleRadius = getBubbleRadius();
+            this.speed = getSpeed();
+            this.rotationRadius = getRotationRadius();
+        }
+
+      
+        function createBubbles() {
+         
+            bubbles.push(new Bubble(getRotationRadius(), 1, .1, 4, .09, 7, canvasWidth * .5 - 30, canvasHeight + 140, getColor()));
+            
+            
+           
+            bubbles.push(new Bubble(getRotationRadius(), 1, .3, 3, .11, 8, canvasWidth * .5 - 20, canvasHeight + 140, getColor()));
+            bubbles.push(new Bubble(getRotationRadius(), 1, .6, 2, .19, 9, canvasWidth * .5 - 10, canvasHeight + 140, getColor()));
+            
+      
+             
+            bubbles.push(new Bubble(getRotationRadius(), 1, .8, .5, .23, 5, canvasWidth * .5 - 5, canvasHeight + 140, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), -1, .9, .56, .26, 6, canvasWidth * .5 + 5, canvasHeight + 140, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), -1, .7, 1, .13, 7, canvasWidth * .5 + 10, canvasHeight + 140, getColor()));
+            bubbles.push(new Bubble(getRotationRadius(), -1, .5, 3, .10, 8, canvasWidth * .5 + 20, canvasHeight + 140, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), -1, .2, 4, .07, 9, canvasWidth * .5 + 30, canvasHeight + 140, getColor()));
+        
+            bubbles.push(new Bubble(getRotationRadius(), 1, .1, 4, .09, 7, canvasWidth * .5 - 30, canvasHeight + 240, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), 1, .3, 3, .11, 8, canvasWidth * .5 - 20, canvasHeight + 240, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), 1, .6, 2, .19, 9, canvasWidth * .5 - 10, canvasHeight + 240, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), 1, .8, .5, .23, 5, canvasWidth * .5 - 5, canvasHeight + 240, getColor()));
+            
+            bubbles.push(new Bubble(getRotationRadius(), -1, .9, .56, .26, 6, canvasWidth * .5 + 5, canvasHeight + 240, getColor()));
+            
+           
+          
+            for (var i = 0; i < 50; i++) {
+                var initialX = getXPosition();
+                var initialY = 600 + 100 * i + getYPosition();
+                var speed = getSpeed();
+                var bubbleRadius = getBubbleRadius();
+                var rotationRadius = getRotationRadius();
+                 var color=getColor();
+                
+                var sign; 
+
+                var signHelper = Math.floor(Math.random() * 2);
+
+               
+                if (signHelper == 1) {
+                    sign = -1;
+                } else {
+                    sign = 1;
+                }
+
+                
+                var bubble = new Bubble(rotationRadius, sign, speed, getIncrement(), getIncrement() * .5, bubbleRadius, initialX, initialY, color);
+                bubbles.push(bubble);
+            }
+           
+            setInterval(draw, 20);
+        }
+        
+        createBubbles();
+
+     
+        function draw() {
+            mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
+            mainContext.fillStyle = 'white';
+            mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            for (var i = 0; i < bubbles.length; i++) {
+                var bubble = bubbles[i];
+                bubble.update();
+            }
+        }
+
+     
+      
+       
+        function getColor() {
+            var colors = ['red', 'black', 'gray',
+                          'olive', 'navy', 'cyan',
+                          'brown', 'blue', 'ivory',
+                          'lime', 'magenda', 'yellow',
+                          'silver', 'grey', 'green',
+                          'Fuchsia', 'pupple', 'pink',
+                          'aqua', 'teal', 'maroon',
+                          'violet', 'tomato'];
+
+            return (colors[Math.floor(Math.random() * colors.length)]);
+        }
+
+      
+        function getRotationRadius() {
+            return (1 + Math.random() * 2);
+        }
+
+      
+        function getBubbleRadius() {
+            return (Math.round(3 + Math.random() * 16));
+        }
+
+      
+        function getSpeed() {
+            return (.2 + Math.random() * 3);
+        }
+
+       
+        function getIncrement() {
+            return (.1 + Math.random() * .5);
+        }
+        
+       
+        function getXPosition() {
+            return (Math.round(-20 + Math.random() * (canvasWidth + 40)));
+        }
+
+      
+        function getYPosition() {
+            return (Math.round(canvasHeight + Math.random() * 400));
+        }
+   </script>
+   
+
+</body>
+
+</html>

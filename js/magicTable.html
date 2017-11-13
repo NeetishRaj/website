@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tables are magic!</title>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+	<style>
+	body {
+    margin: auto;
+    background-color: #000;
+    text-align: center;
+}
+h3 {
+    color: #FFF;
+    font-family: 'Bellefair', serif;
+}
+	</style>
+    </head>
+    <body>
+    <h3>Tables are magic!</h3>
+	<script>
+	$(function(){
+var input = $('<input>').val(2);
+input.attr({
+    'type':'number',
+    'placeholder':'Write a number please'
+});
+$('body').append(input);
+var FPS = 60;
+var dim = 1000;
+var DIM;
+var c = $('<canvas>');
+var ctx = c[0].getContext('2d');
+$('body').append(c);
+var rad, cenX, cenY;
+var mod = 0;
+var modIncrement = 0.1;
+var table = input.val();
+var preTable = table;
+var tableIncrement = 0;
+var line = function(x1,y1,x2,y2,c){
+    ctx.beginPath();
+    ctx.strokeStyle = c;
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+}
+var getAngle = function(x){
+    return x*Math.PI*2/mod+Math.PI/2;
+}
+var drawCircle = function(){
+    for(i = 0; i < mod; i++){
+        line(cenX+rad*Math.cos(getAngle(i)),cenY-rad*Math.sin(getAngle(i)),cenX+rad*Math.cos(getAngle(table*i)),cenY-rad*Math.sin(getAngle(table*i)),'#DB1E1E');
+    }
+}
+var resizeCanvas = function(){
+    DIM = window.innerWidth;
+    $(c).attr({
+        'width':dim,
+        'height':dim
+    });
+    $(c).css({
+        'width':DIM,
+        'height':DIM
+    });
+}
+setInterval(function(){
+    resizeCanvas();
+    ctx.clearRect(0,0,DIM,DIM);
+    cenX = dim/2;
+    cenY = cenX;
+    rad = cenX;
+    drawCircle();
+    mod += modIncrement;
+    table += tableIncrement;
+    table = input.val();
+    if(table != preTable){
+        mod = 0;
+    }
+    preTable = table;
+},1000/FPS);
+});
+	</script>
+    </body>
+</html>

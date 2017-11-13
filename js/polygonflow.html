@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Polygons</title>
+    	<style>
+		body {
+    margin: auto;
+}
+canvas {
+    width: 100vmin;
+    height: 100vmin;
+    display: block;
+    margin: auto;
+    border: none !important;
+}
+		</style>
+	</head>
+    <body>
+	<script>
+	window.onload = function(){
+var WIDTH, HEIGHT;
+var canvas = document.createElement('canvas');
+function setCanvasSize(w,h){
+    canvas.setAttribute('width',w);
+    canvas.setAttribute('height',h);
+    WIDTH = w;
+    HEIGHT = h;
+}
+setCanvasSize(300,300);
+canvas.setAttribute('style','border: 1px solid #000');
+document.body.appendChild(canvas);
+var ctx = canvas.getContext('2d');
+var FPS = 60;
+var time = 0;
+function cos(x){
+    return Math.cos(degtorad(x));
+}
+function sin(x){
+    return Math.sin(degtorad(x));
+}
+function degtorad(x){
+    return x*Math.PI/180;
+}
+function radtodeg(x){
+    return x*180/Math.PI;
+}
+function sqr(x){
+    return x*x;
+}
+function sqrt(x){
+    return Math.sqrt(x);
+}
+function point_distance(x1,y1,x2,y2){
+    return sqrt(sqr(x1-x2)+sqr(y1-y2));
+}
+function point_direction(x1,y1,x2,y2){
+    return radtodeg(Math.atan2(y2-y1,x2-x1));
+}
+var ball = [];
+var color = [];
+color[0] = '#F00';
+color[1] = '#0F0';
+color[2] = '#00F';
+color[3] = '#FF0';
+color[4] = '#F0F';
+color[5] = '#0FF';
+var color_n = 5;
+var color_i = 0;
+var speed = 3;
+var angle = Math.random()*360;
+var sides = 3;
+var num_per_side = 10;
+function newShape(){
+    shape(speed,angle,sides++,num_per_side,color_i++);
+}
+function shape(spd,ang,size,num,c){
+    if(c == color_n){
+       color_i = 0; 
+    }
+    var x = WIDTH/2;
+    var y = HEIGHT/2;
+    var scale = 100;
+    var xx = [];
+    var yy = [];
+    var index = 0;
+    for(var i = 0; i <= 360; i += 360/size){
+        xx[index] = x+scale*cos(i);
+        yy[index] = y-scale*sin(i);
+        index += 1;
+    }
+    xx[index] = xx[0];
+    yy[index] = yy[0];
+    for(var i = 0; i <= index-1; i++){
+        var angle = point_direction(xx[i],yy[i],xx[i+1],yy[i+1]);
+        var dist = point_distance(xx[i],yy[i],xx[i+1],yy[i+1]);
+        for(var ii = 0; ii < dist; ii += dist/(num-1)){
+            var xxx = xx[i]+ii*cos(angle);
+            var yyy = yy[i]+ii*sin(angle);
+            var dir2 = point_direction(x,y,xxx,yyy);
+            var spd2 = spd*point_distance(x,y,xxx,yyy)/scale;
+            newBall(x,y,spd2,dir2+ang,color[c]);
+        }
+    }
+}
+function newBall(x,y,spd,dir,col){
+    var idk = -1;
+    for(var i in ball){
+       with(ball[i]){
+          if(x < 0 || y < 0 || x > WIDTH || y > HEIGHT){
+             idk = index;
+             break;
+          }
+       }
+    }
+    if(idk == -1){
+        var n = 0;
+        while(typeof(ball[n]) !== 'undefined'){
+            n++;
+        }
+        var new_ball = {
+            x:x,
+            y:y,
+            s:spd,
+            d:dir,
+            size:5,
+            hspd:0,
+            vspd:0,
+            direction:dir,
+            col:col,
+            index:n,
+        }
+        with(new_ball){
+            hspd = cos(d)*s;
+            vspd = -sin(d)*s;
+        }
+        ball[n] = new_ball;
+    }else{
+       ball[idk].x = x;
+       ball[idk].y = y;
+       ball[idk].hspd = cos(dir)*spd;
+       ball[idk].vspd = -sin(dir)*spd;
+       ball[idk].col = col;
+    }
+}
+function updateBalls(){
+    for(var key in ball){
+        with(ball[key]){
+            x += hspd;
+            y += vspd;
+            ctx.fillStyle = col;
+            ctx.fillRect(x-size,y-size,size,size);
+        }
+    }
+}
+function update(){
+    ctx.clearRect(0,0,WIDTH,HEIGHT);
+    updateBalls();
+    if(time++%60 == 0){
+       newShape();
+    }
+}
+setInterval(update,1000/FPS);
+}
+	</script>
+    </body>
+</html>
+
+<!--
+Simple polygon shapes I made using trigonometry, you can make a shape of any side number with how many bullets you want per side!
+
+Also it starts to lag after several shapes, I may figure out how to avoid that.
+
+I know how to do the same with stars (any kind of star, there are many) but I'm being lazy right now, if someone ask me to do it I'll think about it!
+-->

@@ -1,0 +1,140 @@
+<html>
+    <head>
+        <title>Fractal</title>
+        <script src='https://code.jquery.com/jquery-3.1.1.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+		<style>
+		body {
+    margin: auto;
+    background-color: #222;
+    text-align: center;
+}
+h3 {
+    padding: 20px;
+    color: #FFF;
+    font-family: 'Bellefair', serif;
+}
+		</style>
+    </head>
+    <body>
+        <h3>Koch flake</h3>
+		<script>
+		//Wait until the page to be loaded before executing the javascript stuff
+$(function(){
+
+//Initializing some variables
+var dim = 1000;
+var cenX = dim/2;
+var cenY = dim/2;
+var maxIteration = 5;
+var curIteration = 0;
+
+//Create a canvas and add it to the html document
+var c = $('<canvas>');
+var DIM = window.innerWidth;
+$(c).attr({
+    'width':dim,
+    'height':dim
+});
+$(c).css({
+    'width':DIM,
+    'height':DIM
+});
+$('body').append(c);
+
+//Saves the context of this canvas into a 'ctx' variable in order to draw stuff on it later
+var ctx = c[0].getContext('2d');
+
+//Create an array which will contain every line objects and their datas
+var lines = [];
+
+//Create a function which returns the distance between 2 dots (in px)
+var getDistance = function(x1,y1,x2,y2){
+    return Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
+}
+
+//Create a function which returns the angle between 2 angles (in radians)
+var getAngle = function(x1,y1,x2,y2){
+    return Math.atan2(y1-y2,x2-x1);
+}
+//Create a function which creates a new line object
+var newLine = function(x,y,dir,length,color){
+    
+    //Initializing its variables
+    var self = {
+        x1:x,
+        y1:y,
+        d:dir,
+        l:length,
+        x2:x+length*Math.cos(dir),
+        y2:y-length*Math.sin(dir),
+        c:color,
+        draw:function(){
+            with(self){
+                with(ctx){
+                    strokeStyle = c;
+                    beginPath();
+                    moveTo(x1,y1);
+                    lineTo(x2,y2);
+                    stroke();
+                }
+            }
+        },
+        update:function(){
+            with(self){
+                newLine(x1+l*2/3*Math.cos(d),y1-l*2/3*Math.sin(d),d,l/3,c);
+                l /= 3;
+                x2 = x1+l*Math.cos(d);
+                y2 = y1-l*Math.sin(d);
+                newLine(x2,y2,d+Math.PI/3,l,c);
+                newLine(x2+l*Math.cos(d+Math.PI/3),y2-l*Math.sin(d+Math.PI/3),d-Math.PI/3,l,c);
+            }
+        }
+    }
+    
+    //Saving the object creating into the 'lines' array
+    lines.push(self);
+}
+
+//Execute that code every 0.3 seconds
+setInterval(function(){
+    
+    //Check if there aren't too many lines already
+    if(curIteration++ < maxIteration){
+        
+        //Update all the lines
+        for(var i in lines){
+            lines[i].update();
+        }
+    }
+},500);
+
+//Execute that code 60 times per second
+setInterval(function(){
+    
+    //Clear the current canvas
+    ctx.clearRect(0,0,dim,dim);
+    
+    //Draw all the lines
+    for(var i in lines){
+        lines[i].draw();
+    }
+},100/6);
+
+//Create 3 lines which will become a fractal each
+var color = ['#777','#FFF'];
+for(var j = 1; j <= 2; j++){
+    for(var i = Math.PI/2; i < Math.PI*(2.5); i += Math.PI*2/3){
+        var dist = cenX*0.9;
+        var side = (j-1.5)*2;
+        var x1 = cenX+dist*Math.cos(i);
+        var y1 = cenY+dist*Math.sin(i);
+        var x2 = cenX+dist*Math.cos(i+Math.PI*2/3*side);
+        var y2 = cenY+dist*Math.sin(i+Math.PI*2/3*side);
+    newLine(x1,y1,getAngle(x1,y1,x2,y2),getDistance(x1,y1,x2,y2),color[j-1]);
+}
+}
+});
+		</script>
+    </body>
+</html>

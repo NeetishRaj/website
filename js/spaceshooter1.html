@@ -1,0 +1,490 @@
+<html>
+    <head>
+        <title>TOUHOU東方</title>
+        <script src='https://code.jquery.com/jquery-3.1.1.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+<style>
+body {
+    text-align: center;
+    background-image: url('https://pbs.twimg.com/media/CgpnBvIUYAAqW0A.jpg');
+    background-size: 100%;
+    background-color: #000;
+    background-repeat: no-repeat;
+    color: #FFF;
+    font-family: 'Bellefair', serif;
+}
+p {
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 20px;
+}
+div {
+    padding: 10px;
+}
+canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.but {
+    padding: 5px 15px;
+    background: #09C;
+    color: #FFF;
+    border: 0px none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 10px;
+}
+</style>
+    </head>
+    <body>
+	<script>
+$(function(){
+var message = "<div><h2>TOUHOU東方</h2><br>Hello!<br><br>Welcome into my TOUHOU東方 fangame.<br>Move your character by moving your device.<br>Try avoiding everything!!<br><br>ENJOY!</div>";
+var par = $('<p>').html(message);
+$('body').append(par);
+var audio = $('<audio>');
+var bgm = [
+    'http://66.90.93.122/ost/touhou-chireiden-subterranean-animism/pnyziodaom/-12-gouka-mantle.mp3',
+    'http://66.90.93.122/ost/touhou-10.5-scarlet-weather-rhapsody-zenjinrui-no-tengakuroku-touhou-hisouten-original-soundtrack/zyvcqdewni/204-flowering-night.mp3',
+    'http://66.90.93.122/ost/touhou-chireiden-subterranean-animism/yvtpaokmep/-15-hartmann-no-youkai-shoujo.mp3'
+];
+$(audio).attr({'id':'bgm','loop':'none','controls':'none','src':bgm[Math.floor(Math.random()*bgm.length)]});
+$('body').append(audio);
+$(audio).hide();
+var button = $('<button>').text('Play!');
+$(button).attr({'onclick':'document.getElementById("bgm").play()','class':'but'});
+$(par).append(button);
+var dim = {
+    w:360,
+    h:512
+}
+if($(window).height() > dim.h){
+    var WIDTH = dim.w*$(window).height()/dim.h;
+}else{
+    var WIDTH = $(window).width();
+}
+var HEIGHT = WIDTH*dim.h/dim.w;
+var dimScl = WIDTH/dim.w;
+var FPS = 60;
+var TIME = 0;
+var start = true;
+var end = false;
+var background_color = '#000';
+var X = WIDTH/2;
+var Y = HEIGHT*5/6;
+var canvas = $('<canvas>').text('test');
+$('body').append(canvas);
+$(canvas).attr({'width':WIDTH,'height':HEIGHT});
+$(canvas).hide();
+var ctx = $(canvas)[0].getContext('2d');
+var sign = function(x){
+    if(x == 0){
+        return 1;
+    }
+    return x/Math.abs(x);
+}
+var getDots = function(x1,y1,x2,y2){
+    return {
+        dist:Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)),
+        angle:Math.atan2(y1-y2,x2-x1)
+    }
+}
+var isOutside = function(x,y,l){
+    if(x < -l || x > WIDTH+l || y < -l || y > HEIGHT+l){
+        return true;
+    }
+    return false;
+}
+var drawCircle = function(x,y,radius,color){
+    with(ctx){
+        beginPath();
+        fillStyle = color;
+        arc(x,y,radius,0,2*Math.PI);
+        fill();
+    }
+}
+var gameOver = function(clear){
+    if(!end){
+        end = true;
+        $(canvas).remove();
+        var txt;
+        if(clear){
+            url = 'https://media.discordapp.net/attachments/163311068599287809/341396410366689280/Cirno.full.16350_1.jpg';
+            txt = "<div><h2>CLEAR</h2>Congratulations and thank you for playing!<br>Give me a like if you enjoyed it!";
+        }else{
+            url = 'https://media.discordapp.net/attachments/163311068599287809/341397827680862208/AuWtq6H_1.jpg';
+            txt = "<div><h2>GAME OVER</h2>Don't rage and restart!<br>You can do it!!</div>";
+        }
+        var par2 = $('<p>').html(txt);
+        $('body').append(par2);
+        $('body').css({'background-image':'url('+url+')'});
+    }
+}
+var img = {
+    cirno:'https://www.spriters-resource.com/resources/sheets/44/47316.png',
+    bullets:'https://www.spriters-resource.com/resources/sheets/49/51907.png',
+    flandre:'https://vignette2.wikia.nocookie.net/touhou/images/7/73/Singular_flandre_sprite_by_hilary1998-d4a2vb1.png/revision/latest?cb=20130501224404',
+    background:'https://media.discordapp.net/attachments/162667014903562240/341363540059357194/26210_-_Copie.png'
+}
+var newImage = function(src){
+    var self = new Image();
+    self.src = src;
+    return self;
+}
+var adjustAngle = function(ang){
+    var dir = ang;
+    while(dir < -180){
+        dir += 360;
+    }
+    while(dir > 180){
+        dir -= 360;
+    }
+    dir = dir % 360;
+    var max = 30;
+    if(dir < -max){
+        dir = -max;
+    }
+    if(dir > max){
+        dir = max;
+    }
+    return dir;
+}
+var angleAcc = {
+    x:0,
+    y:0
+}
+window.addEventListener('devicemotion',function(evt){
+    var gx = evt.accelerationIncludingGravity.x;
+    var gy = evt.accelerationIncludingGravity.y;
+    var gz = evt.accelerationIncludingGravity.z;
+    angleAcc.x = adjustAngle(360-Math.floor(Math.atan2(gx,gz)/Math.PI*180));
+    angleAcc.y = adjustAngle(Math.floor(Math.atan2(gy,gz)/Math.PI*180));
+},true);
+var createEntity = function(x,y,size,speed,sprite){
+    var self = {
+        x:x,
+        y:y,
+        size:size,
+        speed:speed,
+        sprite:sprite,
+        img_index:0
+    }
+    return self;
+}
+var bullets = [];
+var createBullet = function(x,y,dir){
+    var self = createEntity(x,y,3,6,'#DDD');
+    self.updatePosition = function(){
+        with(self){
+            x = x+speed*Math.cos(dir);
+            y = y-speed*Math.sin(dir);
+        }
+    }
+    self.draw = function(){
+        with(self){
+            drawCircle(x,y,size*dimScl,sprite);
+        }
+    }
+    self.del = function(){
+        bullets.splice(bullets.indexOf(self),1);
+    }
+    self.update = function(){
+        with(self){
+            if(isOutside(x,y,50)){
+                del();
+            }
+            if(getDots(x,y,flandre.x,flandre.y).dist < size*dimScl+flandre.size*dimScl){
+                if(flandre.hp > 0){
+                    flandre.hp--;
+                }else{
+                    gameOver(true);
+                }
+                del();
+            }
+            updatePosition();
+            draw();
+        }
+    }
+    bullets.push(self);
+}
+var player = createEntity(X,Y,4,1/4,newImage(img.cirno));
+player.draw = function(){
+    with(player){
+        var w = sprite.width/9-4;
+        var h = sprite.height/8;
+        var scale = 1.3*dimScl;
+        img_index += 0.1;
+        img_index = img_index % 2;
+        ctx.drawImage(sprite,w*Math.floor(img_index),0,w,h,x-w*scale/2,y-h*scale/2,w*scale,h*scale);
+        drawCircle(x,y,size*dimScl+1,'#000');
+        drawCircle(x,y,size*dimScl,'#FFF');
+    }
+}
+player.updatePosition = function(){
+    with(player){
+        x += angleAcc.x*speed;
+        y += angleAcc.y*speed;
+        if(x < 0){
+            x = 0;
+        }
+        if(x > WIDTH){
+            x = WIDTH;
+        }
+        if(y < 0){
+            y = 0;
+        }
+        if(y > HEIGHT){
+            y = HEIGHT;
+        }
+    }
+}
+player.update = function(){
+    with(player){
+        updatePosition();
+        if(getDots(x,y,flandre.x,flandre.y).dist < size*dimScl+flandre.size*dimScl){
+            gameOver(false);
+        }
+        draw();
+        if(TIME % 10 == 0){
+            var angle_sep = 7*Math.PI/180;
+            var amount = 5;
+            var min = Math.PI/2-angle_sep;
+            var max = Math.PI/2+angle_sep;
+            for(var i = min; i <= max; i += (max-min)/amount){
+                createBullet(x,y,i);
+            }
+        }
+    }
+}
+var flandre = createEntity(WIDTH/2,HEIGHT*1/5,30,5,newImage(img.flandre));
+flandre.a = 0;
+flandre.origX = flandre.x;
+flandre.origY = flandre.y;
+flandre.y2 = flandre.y;
+flandre.hp = 600;
+flandre.maxhp = flandre.hp;
+flandre.sprite2 = newImage(img.bullets);
+flandre.angle = 0;
+flandre.X = flandre.x;
+flandre.Y = flandre.y;
+flandre.atkNumber = 3;
+flandre.atk = Math.floor(Math.random()*(flandre.atkNumber));
+flandre.n = 0;
+flandre.moveTo = function(x,y){
+    flandre.X = x;
+    flandre.Y = y;
+}
+var imgBullets = newImage(img.bullets);
+var fbullets = [];
+flandre.shootBullet = function(dir,size,spd,sprite){
+    var self = createEntity(flandre.x,flandre.y,size,spd,sprite);
+    self.angle = dir;
+    self.del = function(){
+        fbullets.splice(fbullets.indexOf(self),1);
+    }
+    self.update = function(){
+        with(self){
+            if(isOutside(x,y,50)){
+                del();
+            }
+            x = x+speed*Math.cos(angle);
+            y = y-speed*Math.sin(angle);
+            if(getDots(x,y,player.x,player.y).dist < size*dimScl+player.size*dimScl){
+                gameOver(false);
+            }
+            switch(sprite){
+                case 0:
+                    var x1 = 75;
+                    var y1 = 225;
+                    var x2 = 105;
+                    var y2 = 255;
+                    var scale = 4*dimScl;
+                    ctx.drawImage(imgBullets,x1,y1,x2-x1,y2-y1,x-size*scale/2,y-size*scale/2,size*scale,size*scale);
+                    break;
+                case 1:
+                    var x1 = 139;
+                    var y1 = 32;
+                    var x2 = 153;
+                    var y2 = 48;
+                    var scale = 2*dimScl;
+                    ctx.save();
+                    ctx.translate(x,y);
+                    ctx.rotate(Math.PI/2-angle);
+                    ctx.drawImage(imgBullets,x1,y1,x2-x1,y2-y1,-size*scale/2,-size*scale/2,size*scale,size*scale);
+                    ctx.restore();
+                    break;
+                case 2:
+                    var x1 = 10;
+                    var y1 = 225;
+                    var x2 = 105-75+10;
+                    var y2 = 255;
+                    var scale = 4*dimScl;
+                    ctx.drawImage(imgBullets,x1,y1,x2-x1,y2-y1,x-size*scale/2,y-size*scale/2,size*scale,size*scale);
+                    if(x < 0){
+                        x = WIDTH-1;
+                    }
+                    if(y < 0){
+                        y = HEIGHT-1;
+                    }
+                    x = x % WIDTH;
+                    y = y % HEIGHT;
+                    break;
+            }
+        }
+    }
+    fbullets.push(self);
+}
+flandre.attack = function(index){
+    with(flandre){
+        if(atk == Math.floor(atk)){
+            atk += 0.5;
+            n = 0;
+        }
+        switch(index){
+            case 0:
+                if(TIME % 50 == 0){
+                    n++;
+                    var r = Math.random()*Math.PI*2;
+                    var amount = 30;
+                    for(var i = r; i < r+Math.PI*2; i += Math.PI*2/amount){
+                        shootBullet(i,10,3,0);
+                    }
+                    var angle = Math.random()*Math.PI*2;
+                    var dist = 30;
+                    moveTo(x+dist*Math.cos(angle),y-dist*Math.sin(angle));
+                }
+                if(n == 5){
+                    moveTo(origX,origY);
+                    atk += 0.5;
+                }
+                break;
+            case 1:
+                if(TIME % 20 == 0){
+                    shootBullet(getDots(x,y,player.x,player.y).angle,8,4,1);
+                    n++;
+                }
+                if(n == 20){
+                    atk += 0.5;
+                }
+                break;
+            case 2:
+                if(n == 0){
+                    var r = Math.random()*Math.PI*2;
+                    var amount = 5;
+                    for(var i = r; i < r+Math.PI*2; i += Math.PI*2/amount){
+                        shootBullet(i,10,2,2);
+                    }
+                    n++;
+                }
+                if(TIME % 60 == 0){
+                    n++;
+                    if(n == 7){
+                        fbullets = [];
+                        atk += 0.5;
+                    }
+                }
+                break;
+        }
+    }
+}
+flandre.update = function(){
+    with(flandre){
+        a += 0.05;
+        y2 = y-10*dimScl*Math.sin(a);
+        var dots = getDots(x,y,X,Y);
+        if(dots.dist < speed){
+            x = X;
+            y = Y;
+        }else{
+            x = x+speed*Math.cos(dots.angle);
+            y = y-speed*Math.sin(dots.angle);
+        }
+        var xx1 = 397;
+        var yy1 = 96;
+        var xx2 = 524;
+        var yy2 = 223;
+        var width = xx2-xx1;
+        var height = yy2-yy1;
+        angle += 0.02;
+        ctx.save();
+        ctx.translate(x,y);
+        ctx.rotate(angle);
+        ctx.drawImage(sprite2,xx1,yy1,width,height,-width*dimScl/2,-height*dimScl/2,width*dimScl,height*dimScl);
+        ctx.restore();
+        ctx.drawImage(sprite,0,0,sprite.width,sprite.height,x-sprite.width*dimScl/2,y2-sprite.height*dimScl/2,sprite.width*dimScl,sprite.height*dimScl);
+        hpbar.percent = 100*hp/maxhp;
+        attack(Math.floor(atk));
+        atk = atk % atkNumber;
+    }
+}
+var hpbar = {
+    x:WIDTH/2,
+    y:10,
+    width:Math.round(WIDTH*5/6),
+    height:5,
+    border:2,
+    percent:100
+}
+hpbar.draw = function(){
+    with(hpbar){
+        x1 = x-width/2;
+        y1 = y-height/2;
+        width1 = percent/100*width;
+        with(ctx){
+            fillStyle = '#FFF';
+            fillRect(x1-border,y1-border,width+2*border,height+2*border);
+            fillStyle = '#000';
+            fillRect(x1,y1,width,height);
+            fillStyle = '#09C';
+            fillRect(x1,y1,width1,height);
+        }
+    }
+}
+var imgBG = newImage(img.background);
+var background = {
+    y:0,
+    sprite:imgBG
+}
+background.update = function(){
+    with(background){
+        var h = sprite.height*WIDTH/sprite.width;
+        var n = 2;
+        for(var i = -n; i <= n; i++){
+            ctx.drawImage(sprite,0,0,sprite.width,sprite.height,0,y+h*i,WIDTH,h);
+        }
+        y += 1;
+        if(y > HEIGHT){
+            y = HEIGHT-h;
+        }
+    }
+}
+setInterval(function(){
+    if(!$(audio)[0].paused){
+        $(button).remove();
+        $(par).remove();
+        $(canvas).show();
+        $(canvas).css({
+            'marginLeft':$(window).width()/2-WIDTH/2,
+            'marginTop':$(window).height()/2-HEIGHT/2
+        })
+        if(!end){
+            $('body').css('background-image','none');
+        }
+        dimScl = WIDTH/360;
+        TIME++;
+        background.update();
+        player.update();
+        flandre.update();
+        for(var i in fbullets){
+            fbullets[i].update();
+        }
+        for(var i in bullets){
+            bullets[i].update();
+        }
+        hpbar.draw();
+    }
+},1000/FPS);
+});
+	</script>
+	</body>
+</html>

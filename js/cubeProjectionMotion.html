@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cube projection</title>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
+		<style>
+		body {
+    background-color: #333;
+    margin: auto;
+    color: #FFF;
+    text-align: center;
+    font-family: Bellefair;
+}
+		</style>
+    </head>
+    <body>
+        <br>
+        <h3>Cube</h3>
+	<script>
+	$(function(){
+var FPS = 60;
+var dim = 500;
+var DIM = window.innerWidth;
+var c = $('<canvas>').attr({
+    'width':dim,
+    'height':dim
+});
+$(c).css({
+    'width':DIM,
+    'height':DIM
+});
+$('body').append(c);
+var ctx = c[0].getContext('2d');
+var speed = {x:0,y:0,z:0};
+var axis = {x:0,y:0,z:0};
+var length = 100;
+var vertices3D = [];
+var defineVertices = [1,1,1,-1,1,1,-1,-1,1,1,-1,1,1,1,1,1,1,-1,-1,1,-1,-1,-1,-1,1,-1,-1,1,1,-1,1,-1,-1,1,-1,1,-1,-1,1,-1,-1,-1,-1,1,-1,-1,1,1];
+var i = 0;
+while(i < defineVertices.length){
+    vertices3D.push({
+        x:defineVertices[i++]*length,
+        y:defineVertices[i++]*length,
+        z:defineVertices[i++]*length
+    });
+}
+var adjustAngle = function(delta){
+    var alpha = delta;
+    var step = Math.PI;
+    while(alpha < -step){
+        alpha += 2*step;
+    }
+    while(alpha > step){
+        alpha -= 2*step;
+    }
+    alpha %= 2*step;
+    alpha = Math.max(Math.min(alpha,step/6),-step/6);
+    return alpha;
+}
+$(window).bind('devicemotion',function(e){
+    var acc = e.originalEvent.accelerationIncludingGravity;
+    var ang = {
+        x:adjustAngle(2*Math.PI-Math.atan2(acc.x,acc.z)),
+        y:adjustAngle(Math.atan2(acc.y,acc.z))
+    };
+    var spd = 0.05;
+    speed.x = -ang.y*spd;
+    speed.y = ang.x*spd;
+});
+var projection = function(x,y,z){
+    var c = {};
+    var s = {};
+    for(var j in axis){
+        if(axis.hasOwnProperty(j)){
+            c[j] = Math.cos(axis[j]);
+            s[j] = Math.sin(axis[j]);
+        }
+    }
+    return {
+        x:x*(c.y*c.z-s.x*s.y*s.z)+y*(c.y*s.z-s.x*s.y*c.z)+z*c.x*s.y,
+        y:(y*c.z-x*s.z)*c.x+z*s.x
+    };
+}
+var drawCube = function(){
+    var vertices2D = [];
+    for(var i = 0; i < vertices3D.length; i++){
+        var projected = projection(vertices3D[i].x,vertices3D[i].y,vertices3D[i].z);
+        vertices2D.push({
+            x:dim/2+projected.x,
+            y:dim/2-projected.y
+,
+            z:vertices3D[i].z
+        });
+        ctx.beginPath();
+        if(i > 0){
+            ctx.moveTo(vertices2D[i-1].x,vertices2D[i-1].y);
+            ctx.lineTo(vertices2D[i].x,vertices2D[i].y);
+            ctx.stroke();
+        }
+    }
+}
+var updateCube = function(){
+    for(var i in axis){
+        if(axis.hasOwnProperty(i)){
+            axis[i] += speed[i];
+        }
+    }
+}
+ctx.strokeStyle = '#0AF';
+setInterval(function(){
+    ctx.clearRect(0,0,dim,dim);
+    updateCube();
+    drawCube();
+},1000/FPS);
+$('body').append($('<p>').html('You can rotate the cube by rotating your device!'));
+});
+	</script>
+    </body>
+</html>
