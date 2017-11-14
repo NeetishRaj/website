@@ -1,4 +1,4 @@
-var person=function(n,l,a){
+/*var person=function(n,l,a){
 	this.name=n;
 	this.lname=l;
 	this.age=a;
@@ -23,4 +23,13 @@ var colg=Math.floor(Math.random()*255);
 var colr=Math.floor(Math.random()*255);
 var colb=Math.floor(Math.random()*255);
 var colorstr="rgb("+colr+","+colg+","+colb+")";
-console.log(colorstr);
+console.log(colorstr);*/
+function myValue(n){
+  var local=n;
+  return function(){ return local;};
+}
+var v1=myValue(1);
+var v2=myValue(2);
+console.log(v1,typeof v1);
+console.log(v1(10));
+get

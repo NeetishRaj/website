@@ -4,7 +4,7 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 var c=canvas.getContext('2d');
-// //line
+//line
 // c.beginPath()
 // c.moveTo(1000,10);
 // for(var i=0;i<200;i++){

@@ -83,6 +83,9 @@ a:hover {
 	margin:0 auto;
 	padding:0;
 	width:970px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 .menu_nav {
 	margin:0 auto;
@@ -135,6 +138,9 @@ a:hover {
 	padding:0 10px;
 	height:29px;
 	margin:0;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 .search form .keywords {
 	width:220px;
@@ -164,6 +170,9 @@ a:hover {
 	width:970px;
 	background:#f6f4f4;
 	border:1px solid #e0e0e0;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 .content .mainbar {
 	margin:0;
@@ -304,6 +313,24 @@ ul.ex_menu li a:hover {
 .fbg .c3 img {
 	margin:8px 16px 4px 0;
 	float:left;
+}
+.fbg .gallerybutton{
+	padding: 0 10px;
+	margin:0 10px;
+	font-size: 18px;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	color: #fff;
+	background-color: #3FADFF;
+	border-radius: 10px;
+}
+.gallerybutton:hover {background-color: #4B90FF;}
+
+.gallerybutton:active {
+  background-color: #396BE8;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
 }
 .footer {
 	width:970px;
@@ -557,7 +584,7 @@ div.panel {
 .pushbutton:hover {background-color: #33d6ff;}
 
 .pushbutton:active {
-  background-color: #33d6ff;
+  background-color: #55a6dd;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
