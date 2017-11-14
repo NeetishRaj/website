@@ -1,8 +1,11 @@
 window.onload=function(){
+  //general purpose click counter
   var count=(function(){
     var counter=0;
     return function(){return counter+=1;};
   })();
+
+  //Image toggle function
   document.getElementById('gallerybutton').onclick=function(){
     var imgArr=[
       "https://i.imgur.com/raBDN34.jpg",
@@ -30,5 +33,11 @@ window.onload=function(){
     }
     console.log(c);
   };
-  console.log("button");
+
+  //Night mode function for blog
+  document.getElementById('nightmode').onclick=function(){
+    document.querySelectorAll('.content_resize, .header_resize').style.backgroundColor="#000";
+    document.querySelectorAll('.main').style.color="#fff";
+    console.log("night mode");
+  }
 };
