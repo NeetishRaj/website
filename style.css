@@ -213,6 +213,20 @@ a:hover {
 	color:#fff;
 	text-decoration:none;
 }
+#nightmode{
+	font-weight:bold;
+	outline:none;
+	float:right;
+	color:#4a4a4a;
+	padding:5px 5px;
+	background:linear-gradient(#c7c7c7,#fff);
+	border: 3px outset #ccc;
+	/*box-shadow: 4px 3px 10px #888,4px 3px 15px #888;*/
+}
+#nightmode:hover{
+	background:linear-gradient(#fff,#c7c7c7);
+	cursor: pointer;
+}
 .content .sidebar {
 	margin:0;
 	padding:0;
@@ -385,9 +399,6 @@ ol li textarea {
 }
 ol li .send {
 	margin:16px 0 0 0;
-}
-tr:hover{
-	background-color: linen;
 }
 /*Icons starts here*/
 .fa {
@@ -587,9 +598,7 @@ div.panel {
   border-radius: 15px;
   box-shadow: 0 9px #999;
 }
-
 .pushbutton:hover {background-color: #33d6ff;}
-
 .pushbutton:active {
   background-color: #55a6dd;
   box-shadow: 0 5px #666;
