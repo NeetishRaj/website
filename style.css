@@ -402,14 +402,12 @@ ol li .send {
 }
 /*Icons starts here*/
 .fa {
-  padding: 10px;
-  font-size: 15px;
-  width: 30px;
+  padding: 5px;
+  font-size: 1.4em;
+  width: 25px;
   text-align: center;
   text-decoration: none;
-  margin: 3px 2px;
 }
-
 .fa:hover {
     opacity: 0.7;
 }
@@ -417,19 +415,16 @@ ol li .send {
   background: #3B5998;
   color: white;
 }
-
 .fa-twitter {
   background: #55ACEE;
   color: white;
 }
-
-.fa-google {
-  background: #dd4b39;
-  color: white;
-}
-
 .fa-linkedin {
   background: #007bb5;
+  color: white;
+}
+.fa-google {
+  background: #dd4b39;
   color: white;
 }
 .fa-youtube {
@@ -541,9 +536,86 @@ div.panel {
     margin-left: 50px;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+@media screen and (max-width:450px) {
+	body{
+		margin:0;
+		width:100%;
+	}
+	.main, .header, .content, .footer{
+		margin:0;
+		padding:0;
+		width:100%;
+		box-sizing: border-box;
+	}
+	.logo, .menu_nav, .header img{
+		width:100%;
+	}
+	.main{
+		display:grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas:
+		"header"
+		"content"
+		"footer";
+	}
+	.header{
+		grid-area:header;
+	}
+	.content{
+		grid-area:content;
+	}
+	.footer{
+		grid-area:footer;
+	}
+	.content_resize{
+		display: grid;
+		grid-template-rows: auto auto auto;
+		grid-template-columns: 1fr;
+		grid-template-areas:
+		"sidebar"
+		"mainbar"
+		"fbg";
+	}
+	.sidebar{
+		grid-area:sidebar;
+	}
+	.mainbar{
+		grid-area:mainbar;
+	}
+	.fbg{
+		width:100%
+		grid-area:fbg;
+	}
+	.header_resize{
+		display: grid;
+		grid-template-rows: auto auto auto;
+		grid-template-columns: 1fr;
+		grid-template-areas:
+		"logo"
+		"menu-nav"
+		"img";
+	}
+	.logo{
+		grid-area: logo;
+	}
+	.menu-nav{
+		grid-area:menu-nav;
+	}
+	.header_resize img{
+		width:100%;
+		grid-area:img;
+	}
+	.fbg{
+		width:100%
+		grid-area:fbg;
+	}
+	.mainbar table{
+		display:none;
+	}
+	.c2, .c3{
+		display:none;
+	}
 }
 /* SIDE-NAV ends here*/
 /*TOOL-TIP starts here*/
