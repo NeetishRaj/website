@@ -501,7 +501,8 @@ button.accordion.active{
 div.panel {
     padding: 0 18px;
     display: none;
-    background-color: #f2f2f2;
+		color:wheat;
+    background-color: #323232;
 }
 /*ACCORDION style ends here */
 /* SIDE-NAV starts here*/
@@ -641,3 +642,18 @@ by joining all images into single images and using it part by part*/
 	clip:rect(0px, 220px, 165px, 0px);
 }
 /*Image sprite ends here to reduce bandwidth*/
+
+/*JUMBOTRON TEXT EFFECT*/
+@keyframes textDazzle {
+	from{
+		text-shadow: 0 0 30px white;
+		font-size: 3em;
+	}
+	to{
+		text-shadow: 0 0 0 white;
+		font-size: 0.7em;
+	}
+}
+/*.logo h1 small{
+	text-shadow: 0px 0px 20px white;
+}*/
