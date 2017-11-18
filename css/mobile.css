@@ -208,9 +208,7 @@ a:hover {
 	margin:0 auto;
 	padding:10px 0;
 	width:100%;
-	background-color: #ccd9ce;
 	font-family: 'Lobster', Cursive;
-	color:#7a7a7a;
 }
 .content .mainbar .article p::first-letter{
 	font-size: 1.3em;
@@ -256,7 +254,6 @@ a:hover {
 .content .sidebar {
 	margin:20px 0;
 	padding:0 20px;
-	background-color: #cfd9ce;
 }
 .content .sidebar .gadget {
 	margin:0 auto;

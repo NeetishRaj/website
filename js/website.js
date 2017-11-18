@@ -49,6 +49,10 @@ window.onload=function(){
       document.querySelector('.fbg').style.background="#0a1827";
       document.querySelector('.menu_nav').style.background="#253b40";
       document.querySelector('.search span').style.background="#ccd9ce";
+      var navA = document.querySelectorAll('.menu_nav ul li a');
+      for (var i = 0; i < navA.length; i++) {
+        navA[i].style.color="#ffcc00";
+      }
       nightmode.style.background="linear-gradient(#031727,#211210)";
       nightmode.style.border="3px inset #122a22";
       nightmode.style.color="#fbba42";
@@ -63,6 +67,11 @@ window.onload=function(){
       document.querySelector('.fbg').style.background="#5194bf url(./best6gallery/fbg_bg.gif) top repeat-x";
       document.querySelector('.menu_nav').style.background="url(./best6gallery/menu_resize_bg.gif) top no-repeat";
       document.querySelector('.search span').style.background="#fff";
+      document.querySelector('.search span').style.background="#fff";
+      var navA = document.querySelectorAll('.menu_nav ul li a');
+      for (var i = 0; i < navA.length; i++) {
+        navA[i].style.color="#858585";
+      }
       nightmode.style.background="linear-gradient(#c7c7c7,#fff)";
       nightmode.style.border="3px outset #ccc";
       nightmode.style.color="#4a4a4a";
