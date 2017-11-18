@@ -9,7 +9,7 @@ body {
 html, .main {
 	padding:0;
 	margin:0;
-	background:#eaeaea url(./best6gallery/main_bg.gif) top repeat-x;
+	background:#eaeaea url(../best6gallery/main_bg.gif) top repeat-x;
 	/*background: linear-gradient(DeepSkyBlue,black);*/
 }
 .clr {
@@ -92,7 +92,7 @@ a:hover {
 	padding:0 10px;
 	float:left;
 	width:950px;
-	background:url(./best6gallery/menu_resize_bg.gif) top no-repeat;
+	background:url(../best6gallery/menu_resize_bg.gif) top no-repeat;
 }
 .menu_nav ul {
 	list-style:none;
@@ -188,6 +188,7 @@ a:hover {
 	margin:0 0 20px 0;
 	padding:30px 20px;
 	width:610px;
+	text-align: justify;
 }
 .content .mainbar .article p::first-letter{
 	font-size: 1.3em;
@@ -258,13 +259,13 @@ ul.sb_menu li a, ul.ex_menu li a {
 	text-decoration:none;
 	margin-left:-12px;
 	padding-left:25px;
-	background:url(./best6gallery/li_a_hover.gif) left no-repeat;
+	background:url(../best6gallery/li_a_hover.gif) left no-repeat;
 }
 ul.sb_menu li a:hover, ul.ex_menu li a:hover {
 	color:#2cadff;
 	text-shadow:3px 3px 45px #000;
 	text-decoration:underline;
-	background:url(./best6gallery/li_a.gif) left no-repeat;
+	background:url(../best6gallery/li_a.gif) left no-repeat;
 }
 ul.sb_menu li a:hover {
 	text-decoration:underline;
@@ -284,7 +285,7 @@ ul.ex_menu li a:hover {
 }
 .fbg {
 	padding:10px 0 0 0;
-	background:#5194bf url(./best6gallery/fbg_bg.gif) top repeat-x;
+	background:#5194bf url(../best6gallery/fbg_bg.gif) top repeat-x;
 }
 .fbg_resize {
 	margin:0 auto;
@@ -410,6 +411,7 @@ ol li .send {
 }
 .fa:hover {
     opacity: 0.7;
+		text-decoration: none;
 }
 .fa-facebook {
   background: #3B5998;
@@ -536,87 +538,6 @@ div.panel {
     margin-left: 50px;
 }
 
-@media screen and (max-width:450px) {
-	body{
-		margin:0;
-		width:100%;
-	}
-	.main, .header, .content, .footer{
-		margin:0;
-		padding:0;
-		width:100%;
-		box-sizing: border-box;
-	}
-	.logo, .menu_nav, .header img{
-		width:100%;
-	}
-	.main{
-		display:grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: auto auto auto;
-		grid-template-areas:
-		"header"
-		"content"
-		"footer";
-	}
-	.header{
-		grid-area:header;
-	}
-	.content{
-		grid-area:content;
-	}
-	.footer{
-		grid-area:footer;
-	}
-	.content_resize{
-		display: grid;
-		grid-template-rows: auto auto auto;
-		grid-template-columns: 1fr;
-		grid-template-areas:
-		"sidebar"
-		"mainbar"
-		"fbg";
-	}
-	.sidebar{
-		grid-area:sidebar;
-	}
-	.mainbar{
-		grid-area:mainbar;
-	}
-	.fbg{
-		width:100%
-		grid-area:fbg;
-	}
-	.header_resize{
-		display: grid;
-		grid-template-rows: auto auto auto;
-		grid-template-columns: 1fr;
-		grid-template-areas:
-		"logo"
-		"menu-nav"
-		"img";
-	}
-	.logo{
-		grid-area: logo;
-	}
-	.menu-nav{
-		grid-area:menu-nav;
-	}
-	.header_resize img{
-		width:100%;
-		grid-area:img;
-	}
-	.fbg{
-		width:100%
-		grid-area:fbg;
-	}
-	.mainbar table{
-		display:none;
-	}
-	.c2, .c3{
-		display:none;
-	}
-}
 /* SIDE-NAV ends here*/
 /*TOOL-TIP starts here*/
 .tooltip {
@@ -680,7 +601,7 @@ div.panel {
 /*Animated buttons ends here*/
 /*Image sprite starts here to reduce bandwidth
 by joining all images into single images and using it part by part*/
-.galleryContainer{
+/*.galleryContainer{
 	position:relative;
 }
 #gallery1{
@@ -712,7 +633,7 @@ by joining all images into single images and using it part by part*/
 	position:absolute;
 	display:block;
 	clip:rect(0px, 220px, 165px, 0px);
-}
+}*/
 /*Image sprite ends here to reduce bandwidth*/
 
 /*JUMBOTRON TEXT EFFECT*/
@@ -729,3 +650,12 @@ by joining all images into single images and using it part by part*/
 /*.logo h1 small{
 	text-shadow: 0px 0px 20px white;
 }*/
+sup.label{
+	border:1px solid #ffcc22;
+	border-radius: 10px;
+	padding:0 5px 2px 5px;
+	background-color: #ccd9ce;
+	color:#7a7a7a;
+	font-weight: bold;
+	font-variant: small-caps;
+}
