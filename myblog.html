@@ -178,7 +178,8 @@
 								COLOR palette online</b></a><br/>Picking right colors of right
 								combination and right shade cant be easier than this.</li>
           </ul>
-					<span id="lastModified"></span>
+					<hr/>
+					<span id="lastModified" style="font-size:16px; color:2a2a2a;"></span>
         </div>
         <div class="gadget">
           <h2><span>Blog Threads</span></h2>
@@ -226,14 +227,16 @@
   </div>
 </div>
 <div align=center>This website is maintained by <a href='http://www.neetishraj.ga'>Neetish Raj</a></div>
-<script>
-	var a=document.lastModified;
-	document.getElementById('lastModified').innerHTML="Last modified on:"+a;
-	var d = new Date();
-	var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-	document.getElementById("dateTime").innerHTML = days[d.getDay()]+", "+
-	d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear();
-	document.getElementById('dateTime').style.letterSpacing="2px";
+<script type="text/javascript">
+//date function for blog
+var lastModDate=document.lastModified;
+lastModDate=lastModDate.slice(0,10);
+document.getElementById('lastModified').innerHTML="Last modified on:"+lastModDate;
+var d = new Date();
+var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+document.getElementById("dateTime").innerHTML = days[d.getDay()]+", "+
+d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear();
+document.getElementById('dateTime').style.letterSpacing="2px";
 </script>
 </body>
 </html>

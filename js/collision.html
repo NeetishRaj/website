@@ -3,36 +3,23 @@
     <head>
         <title>Collisions</title>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-        <link href='https://fonts.googleapis.com/css?family=Bellefair' rel='stylesheet'>
 		<style>
 			body {
-    background-color: #333;
-    margin: auto;
-    color: #FFF;
-    text-align: center;
-    font-family: Bellefair;
-}
-button {
-    padding: 5px 15px;
-    background: #0C9;
-    color: #FFF;
-    border: 0px none;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    font-family: Arial;
-}
+        background-color: #333;
+        margin: auto;
+        color: #FFF;
+        text-align: center;
+      }
 		</style>
     </head>
     <body>
         <h3>Collisions</h3><br>
 
-
 	<script>
 	$(function(){
 var FPS = 60;
 var dim = 700;
-var DIM = window.innerWidth;
+var DIM = window.innerHeight;
 var c = $('<canvas>')[0];
 $(c).attr({
     'width':dim,
