@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <title>SVG Animations</title>
+    <style media="screen">
+      h1{
+        text-align: center;
+        padding: 0 10px;
+        font-family:sans-serif;
+        letter-spacing: -3px;
+        color:#5a3d4f;
+        word-spacing: 0.3em;
+        background: linear-gradient(90deg,#1fab9e,#fad02f);
+      }
+      body{
+        margin:0;
+        padding: 0:
+      }
+      svg{
+        background-color: #cebcdc;
+        margin:0;
+        padding:0;
+      }
+      @keyframes hello{
+        from{
+          transform:rotate(10deg);
+          transform-origin: bottom;}
+        to{
+          transform:rotate(-10deg);
+          transform-origin: bottom;}
+      }
+      @keyframes walk {
+        from{
+          transform: scaleY(1.5);
+          transform-origin: top;
+        }
+        to{
+          transform: scaleY(1.0);
+          transform-origin: top;
+        }
+      }
+      @keyframes walkFoot {
+        from{
+          transform: translateY(40px);
+        }
+        to{
+          transform: translateY(-40px);
+        }
+      }
+      #lhand{
+        animation:hello 1s linear Infinite alternate;
+      }
+      #lleg{
+        animation: walk 0.7s linear Infinite alternate;
+      }
+      #rleg{
+        animation: walk 0.7s linear Infinite alternate-reverse;
+      }
+      #lfoot{
+        animation:walkFoot 0.7s linear Infinite alternate;
+      }
+      #rfoot{
+        animation:walkFoot 0.7s linear Infinite alternate-reverse;
+      }
+      .bpanel{
+        margin:0 auto;
+        padding: 5px 20px;
+        text-align: center;
+        background: linear-gradient(180deg,#f16950,#fad02f);
+      }
+      .bpanel button{
+        background: linear-gradient(90deg,#716950,#aad02f);
+        border-radius: 20px 0;
+        padding: 3px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SVG Drawing &amp; Animations By <small><a href="http://www.neetishraj.ga">Neetish Raj</a></small></h1>
+    <div class="bpanel">
+      <button type="button" name="button1">WALK</button>
+      <button type="button" name="button2">SAY "HI"</button>
+      <button type="button" name="button3">SAD FACE</button>
+    </div>
+    <svg
+       xmlns="http://www.w3.org/2000/svg"
+       version="1.1"
+       id="svg2"
+       viewBox="0 0 744.09448819 1052.3622047"
+       height="500px"
+       width="100%">
+        <ellipse
+           ry="177.20146"
+           rx="232.91574"
+           cy="296.64792"
+           cx="368.57141"
+           id="head"
+           style="
+            fill:#ffaaaa;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:12.02564812;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <ellipse
+           ry="44.285713"
+           rx="62.857143"
+           cy="253.79077"
+           cx="268.57141"
+           id="leye"
+           style="
+            fill:#000000;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <ellipse
+           ry="41.42857"
+           rx="57.142857"
+           cy="248.07649"
+           cx="465.71426"
+           id="reye"
+           style="
+            fill:#000000;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <circle
+           r="17.142857"
+           cy="255.21935"
+           cx="265.71429"
+           id="leyeball"
+           style="
+            fill:#cccccc;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <circle
+           r="17.142857"
+           cy="240.93362"
+           cx="462.85715"
+           id="reyeball"
+           style="
+            fill:#cccccc;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="leyebrow"
+           d="m 197.14286,220.93363 c 50.63342,-17.5269 108.90807,-100.00435 145.71428,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="reyebrow"
+           d="m 391.42857,220.93363 c 26.60846,-25.01973 26.41848,-89.01901 131.42857,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="mouth"
+           d="m 242.85714,352.3622 c 75.08764,41.43737 151.08865,78.00338 248.57143,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="760.93365"
+           x="160"
+           height="200"
+           width="171.42857"
+           id="lleg"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="763.79077"
+           x="405.71429"
+           height="191.42857"
+           width="177.14285"
+           id="rleg"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="500.93362"
+           x="160"
+           height="234.28572"
+           width="425.71429"
+           id="stomach"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="lhand"
+           d="m 125.71429,518.07649 2.85714,145.71428 C 2.9295156,733.59463 40.29713,419.83477 45.714286,215.21935 66.145614,351.08963 70.283091,578.20548 125.71429,518.07649 Z"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            fill-rule:evenodd;
+            stroke:none;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="rhand"
+           d="m 600,526.64792 2.85714,134.28572 C 704.96116,720.01054 712.19288,462.84639 725.71429,226.64792 685.96657,330.72233 700.96766,538.21117 600,526.64792 Z"
+           style="
+            fill:#ff5555;
+            fill-rule:evenodd;
+            stroke:none;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-opacity:1;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            fill-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="978.07648"
+           x="145.71428"
+           height="31.428572"
+           width="200"
+           id="lfoot"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="975.21936"
+           x="391.42856"
+           height="34.285713"
+           width="208.57143"
+           id="rfoot"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+      </g>
+    </svg>
+    <script type="text/javascript">
+      window.onload=function(){
+        var walk=document.getElementsByTagName("BUTTON")[0];
+        var hi=document.getElementsByTagName("BUTTON")[1];
+        var sad=document.getElementsByTagName("BUTTON")[2];
+
+        walk.onclick=function(){
+          var lleg=document.getElementById('lleg');
+          var rleg=document.getElementById('rleg');
+          var lfoot=document.getElementById('lfoot');
+          var rfoot=document.getElementById('rfoot');
+          if(lleg.style.animationPlayState==="running"){
+            lleg.style.animationPlayState="paused";
+            rleg.style.animationPlayState="paused";
+            lfoot.style.animationPlayState="paused";
+            rfoot.style.animationPlayState="paused";
+          }else if(lleg.style.animationPlayState==="paused"){
+            lleg.style.animationPlayState="running";
+            rleg.style.animationPlayState="running";
+            lfoot.style.animationPlayState="running";
+            rfoot.style.animationPlayState="running";
+          }
+        };
+      };//wndow.onload
+    </script>
+  </body>
+</html>

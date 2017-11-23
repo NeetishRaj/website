@@ -21,7 +21,8 @@ window.onload=function(){
       "https://i.imgur.com/38QsBeI.jpg",
       "https://i.imgur.com/0R0cMTp.jpg",
       "https://i.imgur.com/Vf079dH.jpg",
-      "https://i.imgur.com/FBkSLJQ.png"
+      "https://i.imgur.com/FBkSLJQ.png",
+      "https://i.imgur.com/ByoD3S8.png"
     ];
     var c=count();
     var arrLen=imgArr.length;
