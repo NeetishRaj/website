@@ -78,19 +78,31 @@
         border-radius: 20px 0;
         padding: 3px 20px;
       }
+      #sadmouth{
+        opacity:0;
+      }
+      #texthi{
+        opacity:0;
+      }
+      @media screen and (max-width:450px){
+        .bpanel button{
+          border-radius: 0;
+          padding: 5px 10px;
+        }
+      }
     </style>
   </head>
   <body>
     <h1>SVG Drawing &amp; Animations By <small><a href="http://www.neetishraj.ga">Neetish Raj</a></small></h1>
     <div class="bpanel">
-      <button type="button" name="button1">WALK</button>
-      <button type="button" name="button2">SAY "HI"</button>
-      <button type="button" name="button3">SAD FACE</button>
+      <button type="button" id="button1">WALK</button>
+      <button type="button" id="button2">SAY "HI"</button>
+      <button type="button" id="button3">SAD FACE</button>
     </div>
     <svg
        xmlns="http://www.w3.org/2000/svg"
        version="1.1"
-       id="svg2"
+       id="svg1"
        viewBox="0 0 744.09448819 1052.3622047"
        height="500px"
        width="100%">
@@ -304,32 +316,76 @@
             stroke-miterlimit:4;
             stroke-dasharray:none;
             stroke-opacity:1" />
-      </g>
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+           d="m 240,392.3622 c 99.72625,-64.61927 186.83972,-78.78745 248.57143,8.57143"
+           id="sadmouth"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cc" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:162.70791626px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9ad248;fill-opacity:1;stroke:#671e46;stroke-width:5.93700218;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           x="11.862983"
+           y="157.97087"
+           id="texthi"
+           sodipodi:linespacing="125%"
+           transform="scale(1.202219,0.83179522)"><tspan
+             sodipodi:role="line"
+             id="tspan4328"
+             x="11.862983"
+             y="157.97087"
+             style="stroke-width:5.93700218;stroke-miterlimit:4;stroke-dasharray:none">HI</tspan></text>
     </svg>
     <script type="text/javascript">
-      window.onload=function(){
-        var walk=document.getElementsByTagName("BUTTON")[0];
-        var hi=document.getElementsByTagName("BUTTON")[1];
-        var sad=document.getElementsByTagName("BUTTON")[2];
+  window.onload=function(){
+    var svg = document.getElementById('svg1');
 
-        walk.onclick=function(){
-          var lleg=document.getElementById('lleg');
-          var rleg=document.getElementById('rleg');
-          var lfoot=document.getElementById('lfoot');
-          var rfoot=document.getElementById('rfoot');
-          if(lleg.style.animationPlayState==="running"){
-            lleg.style.animationPlayState="paused";
-            rleg.style.animationPlayState="paused";
-            lfoot.style.animationPlayState="paused";
-            rfoot.style.animationPlayState="paused";
-          }else if(lleg.style.animationPlayState==="paused"){
-            lleg.style.animationPlayState="running";
-            rleg.style.animationPlayState="running";
-            lfoot.style.animationPlayState="running";
-            rfoot.style.animationPlayState="running";
-          }
-        };
-      };//wndow.onload
+    alert("SVG loaded");
+    var walk=document.getElementById("button1");
+    var hi=document.getElementById("button2");
+    var sad=document.getElementById("button3");
+
+    walk.onclick=function(){
+      console.log("walk");
+      var lleg=svg.getElementById('lleg');
+      var rleg=svg.getElementById('rleg');
+      var lfoot=svg.getElementById('lfoot');
+      var rfoot=svg.getElementById('rfoot');
+      if(lleg.style.animationPlayState=="running"){
+        lleg.style.animationPlayState="paused";
+        rleg.style.animationPlayState="paused";
+        lfoot.style.animationPlayState="paused";
+        rfoot.style.animationPlayState="paused";
+      }else {
+        lleg.style.animationPlayState="running";
+        rleg.style.animationPlayState="running";
+        lfoot.style.animationPlayState="running";
+        rfoot.style.animationPlayState="running";
+      }
+    };
+    hi.onclick=function(){
+      console.log("HI");
+      var text=svg.getElementById('texthi');
+      if(text.style.opacity==0){
+        text.style.opacity=1;
+      }else if(text.style.opacity==1){
+        text.style.opacity=0;
+      }
+    };
+    sad.onclick=function(){
+      console.log("SAD FACE");
+      var sm=svg.getElementById('sadmouth');
+      var m=svg.getElementById('mouth');
+      if(sm.style.opacity==0){
+        sm.style.opacity=1;
+        m.style.opacity=0;
+      }else if(sm.style.opacity==1){
+        sm.style.opacity=0;
+        m.style.opacity=1;
+      }
+    };
+
+  };//wndow.onload
     </script>
   </body>
 </html>
