@@ -493,14 +493,14 @@ button.accordion:hover {
 }
 button.accordion.active{
 	background: linear-gradient(90deg,#ccc,#eee);
-	border-right:3px solid #cfcfcf;
 }
 
 div.panel {
     padding: 0 18px;
-    display: none;
-		color:wheat;
-    background-color: #323232;
+		height:0%;
+		overflow: hidden;
+		transition:height 0.6s;
+    /*display: none;*/
 }
 /*ACCORDION style ends here */
 /* SIDE-NAV starts here*/

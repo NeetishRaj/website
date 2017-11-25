@@ -504,7 +504,7 @@ button.accordion {
     background-color: #eee;
     color: #444;
     cursor: pointer;
-    padding: 18px;
+    padding: 8px 5px;
     width: 100%;
     border: 1px solid #cfcfcf;
     text-align: left;
@@ -516,14 +516,14 @@ button.accordion:hover {
 }
 button.accordion.active{
 	background: linear-gradient(90deg,#ccc,#eee);
-	border-right:3px solid #cfcfcf;
 }
 
 div.panel {
-    padding: 0 18px;
-    display: none;
-		color:wheat;
-    background-color: #323232;
+    padding: 0 7px;
+		height: 0%;
+		overflow: hidden;
+		transition:height 0.6s;
+    /*display: none;*/
 }
 /*ACCORDION style ends here */
 /* SIDE-NAV starts here*/
