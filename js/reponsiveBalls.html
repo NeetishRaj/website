@@ -10,28 +10,82 @@
     <title>Responsive Balls</title>
     <style media="screen">
     canvas{
-      background: linear-gradient(black, pink);
+
     }
     </style>
   </head>
   <body>
 
-  </body>
+
   <script type="text/javascript">
-    var canvas = document.createElement('canvas');
+  window.onload=function(){
+    var canvas = document.createElement('CANVAS');
     document.body.appendChild(canvas);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+    //var canvas=document.getElementById('canvas');
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
     var c = canvas.getContext('2d');
 
-    c.arc(300,400,40,2*Math.PI,false);
-    c.stroke();
+    var iw = innerWidth;
+    var ih = innerHeight;
+    var radius = 1;
+    var d = 5;
 
-    function animate(){
-      requestAnimationFrame(animate);
-      console.log("hi");
+    var mouse = {
+      x:undefined,
+      y:undefined
     }
-    // animate();
+    window.addEventListener('click',function(event){
+      mouse.x = event.x;
+      mouse.y = event.y;
+      waveId();
+    });
 
+    var wave = function(rad){
+      if(radius < iw && radius < ih){
+        c.clearRect(0,0,iw,ih);
+        c.beginPath();
+        c.lineWidth = 5;
+        c.arc(mouse.x, mouse.y, radius, 0 , Math.PI*2, true);
+        c.stroke();
+
+        radius += d;
+
+      }else{
+        radius = 1;
+        c.clearRect(0,0,iw,ih);
+        //window.removeEventListener('click',waveId);
+        //clearInterval(waveId);
+      }
+    };
+    var waveId = setInterval(wave, 50);
+
+    //window.addEventListener('click',waveId());
+
+
+    // var r = 1;
+    // var d = 5;
+    // //var circleCount = ;
+    // setInterval(function(){
+    //   c.clearRect(0,0,iw,ih);
+    //   c.beginPath();
+    //   c.lineWidth = 5;
+    //   for (var i = 0; i<1000; i+=20) {
+    //     c.arc(iw/2, ih/2, r+i, 0, 2*Math.PI, true);
+    //   }
+    //   c.fill('evenodd');
+    //   if(r > ih/2 || r > iw/2){
+    //     r = 1;
+    //   }
+    //   r += d;
+    // }, 20);
+
+
+
+  };//window.onload end
   </script>
+  </body>
 </html>

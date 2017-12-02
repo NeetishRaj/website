@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <title>Balls Tile</title>
+    <style media="screen">
+    canvas{
+      background: black;
+    }
+    </style>
+  </head>
+  <body>
+
+
+  <script type="text/javascript">
+  window.onload=function(){
+    var canvas = document.createElement('CANVAS');
+    document.body.appendChild(canvas);
+
+    //var canvas=document.getElementById('canvas');
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    var c = canvas.getContext('2d');
+
+    c.shadowOffsetX = 5;
+    c.shadowOffsetY = 5;
+    c.shadowBlur = 10;
+    c.shadowColor = '#56a4ef';
+
+    setInterval(function(){
+      c.clearRect(0,0,innerWidth, innerHeight);
+      for (var i = 0; i < innerWidth; i+=30) {
+        for (var j = 0; j < innerHeight; j+=30) {
+          c.fillStyle = 'white';
+          c.beginPath();
+          c.arc(i+Math.random()*10,j+Math.random()*10,10,0,Math.PI*2,false);
+          c.fill();
+      }
+
+    }},200);
+  };//window.onload end
+  </script>
+  </body>
+</html>

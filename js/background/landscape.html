@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <title>Gradient Landscape</title>
+    <style media="screen">
+    canvas{
+      /*background: linear-gradient(black, pink);*/
+    }
+    </style>
+  </head>
+  <body>
+
+
+  <script type="text/javascript">
+  window.onload=function(){
+    var canvas = document.createElement('CANVAS');
+    document.body.appendChild(canvas);
+
+    //var canvas=document.getElementById('canvas');
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    var c = canvas.getContext('2d');
+
+    var lg = c.createLinearGradient(0,0,0,innerHeight);
+    lg.addColorStop(0,'skyblue');
+    lg.addColorStop(0.5, 'white');
+    lg.addColorStop(0.5, 'green');
+    lg.addColorStop(1,'white');
+
+    c.fillStyle = lg;
+    c.fillRect(0,0,innerWidth, innerHeight);
+
+    //sun
+    var rg = c.createRadialGradient(100,100,1,100,100,100);
+    rg.addColorStop(0,'red');
+    rg.addColorStop(0.9,'orange');
+    rg.addColorStop(0.9,'#efaaca');
+    rg.addColorStop(1,'white');
+    c.fillStyle = rg;
+    c.beginPath();
+    c.arc(100,100,100,0,Math.PI*2,false);
+    c.fill();
+
+    //tree
+    var iw = innerWidth;
+    var ih = innerHeight;
+    var rg2 = c.createRadialGradient((iw/2)-45,(ih/2)-45,10,(iw/2)-52,(ih/2)-50,30);
+    rg2.addColorStop(0,'#a7d30c');
+    rg2.addColorStop(0.9,'#019f62');
+    rg2.addColorStop(1,'rgba(1,159,98,0)');
+    c.fillStyle = rg2;
+    c.fillRect(iw/2-150,ih/2-150,150,150);
+    c.beginPath();
+    c.moveTo(iw/2-50,ih/2-20);
+    c.lineWidth=10;
+    c.strokeStyle="#6a6a6a";
+    c.lineTo(iw/2-50,ih/2);
+    c.stroke();
+
+
+
+
+
+    //moving frame
+    /*var offset=0;
+    function draw(){
+      c.clearRect(0,0,innerWidth,innerHeight);
+      c.setLineDash([4,3]);
+      c.lineDashOffset = offset;
+      c.lineWidth=4;
+      c.strokeRect(100,100,300,300);
+    }
+    function move(){
+      offset+=1;
+      if(offset > 10){
+        offset=0;
+      }
+      draw();
+      setTimeout(move, 20);
+    }
+    move();*/
+
+  };//window.onload end
+  </script>
+  </body>
+</html>

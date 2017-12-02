@@ -52,9 +52,9 @@ function Ball(x,y,r,dx,dy,colorstr){
   this.draw=function(){
     c.beginPath();
     c.arc(this.x,this.y,this.r,0,Math.PI*2,false);
-    c.strokeStyle=this.colorstr;
+    c.fillStyle=this.colorstr;
     c.lineWidth=10;
-    c.stroke();
+    c.fill();
   }
 
   this.update=function(){

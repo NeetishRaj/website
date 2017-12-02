@@ -4,6 +4,10 @@
     80% {text-shadow: 100px 17px 0px #86b300;}
     100% {text-shadow: 5px 5px 10px #86b300;}
 }
+@keyframes imgturn {
+  from{transform: scaleX(-1);}
+  to{transform:scaleX(1);}
+}
 /*Global settings starts here*/
 *{
     box-sizing:border-box;
@@ -117,12 +121,13 @@ nav li {
  }
  aside img:first-child{
      border:5px solid #aaa;
-     transition:0.3s;
+     transition:opacity 0.3s;
  }
  aside img:first-child:hover{
      filter:blur(1px);
      opacity:0.7;
-     transform:scaleX(-1);
+     /*transform:scaleX(-1);*/
+     animation: imgturn 0.5s 1;
  }
  aside ul{
      list-style-type:none;

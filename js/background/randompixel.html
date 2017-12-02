@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <title>Responsive Balls</title>
+    <style media="screen">
+    canvas{
+      /*background: linear-gradient(black, pink);*/
+    }
+    </style>
+  </head>
+  <body>
+
+
+  <script type="text/javascript">
+  window.onload=function(){
+    var canvas = document.createElement('CANVAS');
+    document.body.appendChild(canvas);
+
+    //var canvas=document.getElementById('canvas');
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    var c=canvas.getContext('2d');
+
+    for (var i = 0; i < innerWidth; i +=10) {
+      for (var j = 0; j < innerHeight; j +=10) {
+        c.fillRect(i,j,10,10);
+        c.fillStyle='rgb('+Math.ceil(Math.random()*256)+','+Math.ceil(Math.random()*256)+','+Math.ceil(Math.random()*256)+')';
+      }
+    }
+  };//window.onload end
+  </script>
+  </body>
+</html>

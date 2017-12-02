@@ -57,7 +57,7 @@ window.onload=function(){
     }
   }
   var lines=[];
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 10; i++) {
     var x1=Math.floor(Math.random()*(innerWidth/2));
     var x2=Math.floor(Math.random()*(innerWidth/2))+(innerWidth/2);
     var y=Math.floor(Math.random()*innerHeight);
