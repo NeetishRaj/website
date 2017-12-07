@@ -1,0 +1,180 @@
+html, body{
+    margin:0;
+    padding: 0;
+}
+.container{
+    max-width: 600px;
+    margin: 0 auto;
+    padding-left: 3px;
+    position:relative;
+}
+
+.ip {
+    display: block;
+    margin: 10px auto;
+    background-color: linen;
+}
+
+#ipr, #ipg, #ipb {
+    padding: 0;
+    float: right;
+    margin-right: 20px;
+}
+
+#ipr {
+    background-color: #f00;
+    color: #fff;
+}
+
+#ipg {
+    background-color: #0f0;
+    color: #000;
+}
+
+#ipb {
+    background-color: #00f;
+    color: #fff;
+}
+
+.btn {
+    display: inline-block;
+    margin: 20px auto;
+    border: 4px outset black;
+    animation: bttn 1.3s infinite alternate;
+    outline: none;
+    border-radius: 10px;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+
+#btn {
+    float: right;
+    margin-right: 20px;
+    animation-direction: alternate-reverse;
+}
+
+#rand {
+    float: right;
+    margin-right: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 5px;
+}
+
+#hex {
+    background-color: white;
+    border: 1px solid #000;
+}
+
+@keyframes bttn {
+    from {
+        border-color: #efefef;
+    }
+    to {
+        border-color: #989898;
+    }
+}
+
+.post {
+    width: 0%;
+    height: 20px;
+    color: white;
+    background-color: #000;
+    /*padding: 20px 5px;*/
+    overflow: hidden;
+    animation: none;
+}
+
+@keyframes posts {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+#dig {
+    border-radius: 10px;
+    background-color: linen;
+    padding: 3px 6px;
+    border: 1px solid black;
+    color: #000;
+    cursor: pointer;
+}
+
+#img {
+    display: none;
+    top: 40px;
+    left: 30px;
+    width: 300px;
+    height: 370px;
+    z-index: 1;
+    position: absolute;
+    margin: 0 auto;
+    background-color: #efefef;
+}
+
+#img>img {
+    position: absolute;
+    width: 300px;
+    /*height:330px;*/
+    height: auto;
+    padding: 0;
+    display: block;
+    margin: 0 auto;
+}
+
+#close, #next {
+    display: inline-block;
+    width: 300px;
+    padding-top: 10px;
+    text-align: center;
+    height: 30px;
+    color: #3a2a1a;
+    background-color: #efafaf;
+    border: 1px solid black;
+    margin: 0;
+    cursor: pointer;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0%;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+    background: linear-gradient(90deg, #008fb3, linen);
+    overflow-x: hidden;
+    transition: 0.5s;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.sidenav a {
+    padding: 10px 0 10px 10px;
+    margin: 0;
+    text-decoration: none;
+    font-size: 18px;
+    color: #efefef;
+    display: block;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 36px;
+    color: #2a2a2a;
+}
+
+#refs {
+    font-size: 30px;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    cursor: pointer;
+}
