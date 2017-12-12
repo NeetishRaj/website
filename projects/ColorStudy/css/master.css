@@ -1,12 +1,20 @@
+
 html, body{
     margin:0;
     padding: 0;
+    height:100%;
+    max-height:700px;
 }
 .container{
     max-width: 600px;
     margin: 0 auto;
     padding-left: 3px;
     position:relative;
+    height:100%;
+}
+h2{
+    text-align:center;
+    margin-top:5px;
 }
 
 .ip {
@@ -39,12 +47,19 @@ html, body{
 .btn {
     display: inline-block;
     margin: 20px auto;
-    border: 4px outset black;
+    border: 4px outset gray;
     animation: bttn 1.3s infinite alternate;
     outline: none;
     border-radius: 10px;
     padding: 3px 6px;
     cursor: pointer;
+}
+.btn:active{
+    outline:none;
+}
+#btn:hover, #rand:hover, #switch:hover{
+    animation:btnshake 0.05s 3 alternate;
+    outline:none;
 }
 
 #btn {
@@ -58,14 +73,10 @@ html, body{
     margin-right: 20px;
 }
 
-h2 {
-    text-align: center;
-    margin-top: 5px;
-}
-
 #hex {
     background-color: white;
     border: 1px solid #000;
+    text-align:none;
 }
 
 @keyframes bttn {
@@ -98,15 +109,18 @@ h2 {
 
 #dig {
     border-radius: 10px;
-    background-color: linen;
+    background-color: #000;
     padding: 3px 6px;
     border: 1px solid black;
-    color: #000;
+    color: #fff;
     cursor: pointer;
+    animation:letter 0.4s infinite linear alternate;
 }
 
 #img {
-    display: none;
+    display: block;
+    transform:scale(0);
+    transform-origin: 50% 50%;
     top: 40px;
     left: 30px;
     width: 300px;
@@ -115,6 +129,8 @@ h2 {
     position: absolute;
     margin: 0 auto;
     background-color: #efefef;
+    transition: transform 0.6s;
+    box-shadow:3px 3px 5px black, 3px 5px 10px black;
 }
 
 #img>img {
@@ -147,13 +163,16 @@ h2 {
     z-index: 1;
     top: 0px;
     right: 0px;
-    background: linear-gradient(90deg, #008fb3, linen);
+    background: linear-gradient(270deg, deepskyblue , black);
     overflow-x: hidden;
     transition: 0.5s;
     margin: 0;
     opacity: 0.9;
 }
-
+.sidenav li{
+  color: yellow;
+  border-bottom:1px solid yellow;
+}
 .sidenav a {
     padding: 10px 0 10px 10px;
     margin: 0;
@@ -174,7 +193,27 @@ h2 {
 #refs {
     font-size: 30px;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     right: 10px;
     cursor: pointer;
+}
+@keyframes letter{
+    from{
+        text-shadow:1px 0 0 yellow;
+    }
+    to{
+        text-shadow:-1px 0 0 red;
+    }
+}
+@keyframes btnshake{
+    from{
+        transform:rotate(3deg);
+    }
+    to{
+        transform:rotate(-3deg);
+    }
+}
+#ipr:focus, #ipg:focus, #ipb:focus{
+    font-size:1.1em;
+    transition: font-size 0.2s;
 }
