@@ -13,6 +13,31 @@ window.onload = function() {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/HSV-RGB-comparison.svg/300px-HSV-RGB-comparison.svg.png",
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Hsl-and-hsv.svg/300px-Hsl-and-hsv.svg.png"
     ];
+    //HSL to RGB function by Luke McClean (Stackoverflow)
+    function hslToRgb(h, s, l){
+        var r, g, b;
+
+        if(s == 0){
+            r = g = b = l; // achromatic
+        }else{
+            var hue2rgb = function hue2rgb(p, q, t){
+                if(t < 0) t += 1;
+                if(t > 1) t -= 1;
+                if(t < 1/6) return p + (q - p) * 6 * t;
+                if(t < 1/2) return q;
+                if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                return p;
+            }
+
+            var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            var p = 2 * l - q;
+            r = hue2rgb(p, q, h + 1/3);
+            g = hue2rgb(p, q, h);
+            b = hue2rgb(p, q, h - 1/3);
+        }
+
+        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
     var next = document.getElementById("next");
     var images = document.querySelector("#img img");
     var imgPtr = 0;
@@ -90,29 +115,31 @@ window.onload = function() {
             clr = "hsl(" + ipr.value + "," + ipg.value + "%," + ipb.value + "%)";
             b.style.background = clr;
 
+            var rgbArr = hslToRgb(ipr.value/360, ipg.value/100, ipb.value/100);
+            //console.log(rgbArr[0]+"\t"+rgbArr[1]+"\t"+rgbArr[2]);
             var hex = document.getElementById("hex");
-            var hr = parseInt(ipr.value).toString(16);
-            var hg = parseInt(ipg.value).toString(16);
-            var hb = parseInt(ipb.value).toString(16);
-            // console.log(hr+hg+hb);
-            if (ipr.value <= 15 && ipg.value <= 15 && ipb.value <= 15) {
+            var hr = parseInt(rgbArr[0]).toString(16);
+            var hg = parseInt(rgbArr[1]).toString(16);
+            var hb = parseInt(rgbArr[2]).toString(16);
+
+            if (rgbArr[0] <= 15 && rgbArr[1] <= 15 && rgbArr[2] <= 15) {
                 hr = "0" + hr;
                 hg = "0" + hg;
                 hb = "0" + hb;
-            } else if (ipr.value <= 15 && ipg.value <= 15) {
+            } else if (rgbArr[0] <= 15 && rgbArr[1] <= 15) {
                 hr = "0" + hr;
                 hg = "0" + hg;
-            } else if (ipr.value <= 15 && ipb.value <= 15) {
+            } else if (rgbArr[0] <= 15 && rgbArr[2] <= 15) {
                 hr = "0" + hr;
                 hb = "0" + hb;
-            } else if (ipg.value <= 15 && ipb.value <= 15) {
+            } else if (rgbArr[1] <= 15 && rgbArr[2] <= 15) {
                 hb = "0" + hb;
                 hg = "0" + hg;
-            } else if (ipr.value <= 15) {
+            } else if (rgbArr[0] <= 15) {
                 hr = "0" + hr;
-            } else if (ipg.value <= 15) {
+            } else if (rgbArr[1] <= 15) {
                 hg = "0" + hg;
-            } else if (ipb.value <= 15) {
+            } else if (rgbArr[2] <= 15) {
                 hb = "0" + hb;
             }
             hex.textContent = " # " + hr + " " + hg + " " + hb + " ";
@@ -189,6 +216,46 @@ window.onload = function() {
         }
     };
 
+    var cnameArr = {
+      Honeydew: "#F0FFF0",
+      HotPink: "#FF69B4",
+      IndianRed: "#CD5C5C",
+      Indigo: "#4B0082",
+      Ivory: "#FFFFF0",
+      Linen: "#FAF0E6",
+      Magenta: "#FF00FF",
+      Maroon: "#800000",
+      MediumAquamarine: "#66CDAA",
+      MediumBlue: "#0000CD",
+      MintCream: "#F5FFFA",
+      MistyRose: "#FFE4E1",
+      Moccasin: "#FFE4B5",
+      NavajoWhite: "#FFDEAD",
+      PaleTurquoise: "#AFEEEE",
+      PaleVioletRed: "#DB7093",
+      PapayaWhip: "#FFEFD5",
+      PeachPuff: "#FFDAB9",
+      Peru: "#CD853F"
+    };
+    var cNameUl = document.querySelector('#colorNames ul');
+    for (let key in cnameArr) {
+      var li = document.createElement("LI");
+      var colorName = document.createTextNode(key);
+      var colorValue = document.createTextNode(cnameArr[key]);
+      var cbox = document.createElement("SPAN");
+      cbox.setAttribute("ID","cbox");
+      //var attr = document.createAttribute("ID");
+      cbox.appendChild(colorValue);
+      li.appendChild(colorName);
+      li.appendChild(cbox);
+      cNameUl.appendChild(li);
 
+      li.style.background = cnameArr[key];
+
+      li.addEventListener("click", function(){
+        document.body.style.background = cnameArr[key];
+      },false);
+      //console.log(cnameArr[key]);
+    }
 
 };

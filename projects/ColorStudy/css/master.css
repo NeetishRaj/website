@@ -114,7 +114,7 @@ h2{
     border: 1px solid black;
     color: #fff;
     cursor: pointer;
-    animation:letter 0.4s infinite linear alternate;
+    animation:letter 2s infinite linear;
 }
 
 #img {
@@ -169,9 +169,32 @@ h2{
     margin: 0;
     opacity: 0.9;
 }
+#colorNames{
+  background: linear-gradient(90deg, deepskyblue , black);
+  left:0px;
+  right:auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  opacity: 1;
+}
+#colorNames ul{
+  margin:60px 0 0 0;
+  padding: 0 5px;
+}
 .sidenav li{
   color: yellow;
   border-bottom:1px solid yellow;
+}
+#colorNames li{
+  background-color: #afd8dc;
+  list-style-type: none;
+  border:none;
+  height:28px;
+  color: #152f36;
+  margin:4px 0;
+  padding: 2px 0 2px 5px;
+  font-size: 18px;
+
 }
 .sidenav a {
     padding: 10px 0 10px 10px;
@@ -181,7 +204,16 @@ h2{
     color: #efefef;
     display: block;
 }
-
+#colorNames #cbox{
+  border:1px solid #000;
+  border-radius: 10px 0 10px 0;
+  display: inline-block;
+  float: right;
+  background-color: #afd8dc;
+  padding: 3px 5px 3px 5px;
+  margin:1px 0;
+  color:#152f36;
+}
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -189,20 +221,35 @@ h2{
     font-size: 36px;
     color: #2a2a2a;
 }
-
-#refs {
+#colorNames .closebtn{
+  color: yellow;
+}
+#refs ,#cnames{
     font-size: 30px;
     position: absolute;
     bottom: 10px;
     right: 10px;
     cursor: pointer;
 }
+#cnames{
+    right:auto;
+    left:10px;
+}
 @keyframes letter{
-    from{
-        text-shadow:1px 0 0 yellow;
+    0%{
+        text-shadow:-1px -1px 0 white;
     }
-    to{
-        text-shadow:-1px 0 0 red;
+    25%{
+        text-shadow:-1px 1px 0 white;
+    }
+    50%{
+        text-shadow:1px 1px 0 white;
+    }
+    75%{
+        text-shadow:1px -1px 0 white;
+    }
+    100%{
+        text-shadow:-1px -1px 0 white;
     }
 }
 @keyframes btnshake{

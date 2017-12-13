@@ -14,62 +14,75 @@
 
 <body>
   <div class="container">
-    <h2>Test your color, in rgb() format a number between 0 - 255</h2>
-    <div class="ip">
-        <span id="ip1">RED</span><input id="ipr" type="number" max="255" min="0" value="10" />
-    </div>
-    <div class="ip">
-        <span id="ip2">GREEN</span><input id="ipg" type="number" max="255" min="0" value="200" />
-    </div>
-    <div class="ip">
-        <span id="ip3">BLUE</span><input id="ipb" type="number" max="255" min="0" value="255" />
-    </div>
-    <input id="switch" class="btn" type="button" value="HSL/HSV mode" />
-    <input id="btn" class="btn" type="button" value="submit" />
-    <input id="rand" class="btn" type="button" value="random" />
+         <h2>Test your color, in rgb() format a number between 0 - 255</h2>
+         <div class="ip">
+         <span id="ip1" >RED</span><input id="ipr" type="number"
+         max="255" min="0" value="10"/>
+         </div>
+         <div class="ip">
+         <span id="ip2" >GREEN</span><input id="ipg" type="number"
+         max="255" min="0" value="200"/>
+         </div>
+         <div class="ip">
+         <span id="ip3" >BLUE</span><input id="ipb" type="number"
+         max="255" min="0" value="255"/>
+         </div>
+         <input id="switch" class="btn" type="button" value="HSL/HSV mode"/>
+         <input id="btn" class="btn" type="button" value="submit"/>
+         <input id="rand" class="btn" type="button" value="random"/>
 
-    <div class="hex">
-        <hr/> Same color in hexadecimal format is <span id="hex"># 0a c8 ff</span>
-    </div>
-    <hr/>
-    <h2>Mixing colors <span id="dig">Diagrams</span></h2>
-    <ul>
-        <li>when all 3 same then different shades of grey( and i am sure its more than 50😅)</li>
-        <li>RED + GREEN = YELLOW</li>
-        <li>RED + BLUE = MAGENTA</li>
-        <li>BLUE + GREEN = CYAN</li>
-    </ul>
-    <div class="post">
-        Any suggestions for better learning experience ?
-    </div>
-    <div id="img">
-        <div id="next">NEXT</div>
-        <div id="close">CLOSE</div>
-        <img src="http://www.color-theory-phenomena.nl/06-color-mixing/06-00-01-color-mixing-RGB.gif" alt="colors" />
-    </div>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <ol>
-            <li><a href="https://color.adobe.com/create/color-wheel/" target="_blank">Adobe Color Palate</a></li>
-            <li><a href="https://www.w3schools.com/colors/colors_picker.asp" target="_blank">W3 school Color Picker</a></li>
-            <li><a href="http://www.flatuicolorpicker.com/" target="_blank">Cool UI color Collections</a></li>
-            <li><a href="http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF" target="_blank">Palette On</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool" target="_blank">Mozilla Color Palette</a></li>
-        </ol>
-    </div>
-    <span id="refs" onclick="openNav()">&#9776;</span>
+         <div class="hex">
+         <hr/>
+             Same color in hexadecimal format is <span id="hex"># 0a c8 ff</span>
+         </div>
+         <hr/>
+         <h2>Mixing colors <span id="dig">Diagrams</span></h2>
+         <ul>
+             <li>when all 3 same then different shades of grey</li>
+             <li>RED + GREEN = YELLOW</li>
+             <li>RED + BLUE = MAGENTA</li>
+             <li>BLUE + GREEN = CYAN</li>
+         </ul>
+         <div class="post">
+             Any suggestions for better learning experience ?
+         </div>
+         <div id="img">
+             <div id="next">NEXT</div>
+             <div id="close">CLOSE</div>
+             <img src="http://www.color-theory-phenomena.nl/06-color-mixing/06-00-01-color-mixing-RGB.gif" alt="colors"/>
+         </div>
+         <div id="mySidenav" class="sidenav">
+             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+             <ol>
+                 <li><a href="https://color.adobe.com/create/color-wheel/" target="_blank">Adobe Color Palate</a></li>
+                 <li><a href="https://www.w3schools.com/colors/colors_picker.asp" target="_blank">W3 school Color Picker</a></li>
+                 <li><a href="http://www.flatuicolorpicker.com/" target="_blank">Cool UI color Collections</a></li>
+                 <li><a href="http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF" target="_blank">Palette On</a></li>
+                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool" target="_blank">Mozilla Color Palette</a></li>
+             </ol>
+         </div>
+         <span id="refs" onclick="openNav()">&#9776;</span>
+         <div id="colorNames" class="sidenav">
+               <a href="javascript:void(0)" class="closebtn" onclick="closeCNav()">&times;</a>
+             <ul>
+             </ul>
+         </div>
+         <span id="cnames" onclick="openCNav()">&#9776;</span>
 
-  </div>
-
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "80%";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0%";
-        }
-    </script>
-</body>
-
-</html>
+     </div>
+     <script>
+ function openNav() {
+     document.getElementById("mySidenav").style.width = "80%";
+ }
+ function closeNav() {
+     document.getElementById("mySidenav").style.width = "0%";
+ }
+ function openCNav() {
+     document.getElementById("colorNames").style.width = "80%";
+ }
+ function closeCNav() {
+     document.getElementById("colorNames").style.width = "0%";
+ }
+ </script>
+ </body>
+ </html>
