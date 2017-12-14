@@ -138,6 +138,9 @@ h2 {
     margin-right: 20px;
 }
 
+#switch {
+    margin-left: 20px;
+}
 #hex {
     background-color: white;
     border: 1px solid #000;
