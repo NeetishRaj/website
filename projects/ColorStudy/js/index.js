@@ -225,6 +225,8 @@ window.onload = function() {
     var ip3 = document.getElementById('ip3');
     var h2 = document.querySelector('h2');
     var ipbg = document.querySelectorAll('.ip');
+    var notesRGB = document.getElementById("notesRGB");
+    var notesHSL = document.getElementById("notesHSL");
 
     sch.onclick = function() {
         if (sch.value == "HSL/HSV mode") {
@@ -243,8 +245,12 @@ window.onload = function() {
             ipb.style.background = "linear-gradient(270deg,#000,#fff)";
             ipb.style.color = "black";
             slider1.style.background = "linear-gradient(90deg,#f00 0%,#0f0 33.33%,#00f  66.66%, #f00 100%)";
+            // var saturation = "hsl("++",100%,50%)";
             slider2.style.background = "linear-gradient(90deg,#555,#aaa)";
-            slider3.style.background = "linear-gradient(90deg,#fff,#000000)";
+            slider3.style.background = "linear-gradient(270deg,#fff,#000000)";
+
+            notesHSL.style.display = "block";
+            notesRGB.style.display = "none";
 
         } else {
             mode = "RGB";
@@ -261,9 +267,11 @@ window.onload = function() {
             ipg.style.background = "#0f0";
             ipb.style.background = "#00f";
             ipb.style.color = "white";
-            slider1.style.background = "linear-gradient(90deg,#fff,#ff0000)";
-            slider2.style.background = "linear-gradient(90deg,#fff,#00ff00)";
-            slider3.style.background = "linear-gradient(90deg,#fff,#0000ff)";
+            slider1.style.background = "linear-gradient(90deg,#000,#ff0000)";
+            slider2.style.background = "linear-gradient(90deg,#000,#00ff00)";
+            slider3.style.background = "linear-gradient(90deg,#000,#0000ff)";
+            notesHSL.style.display = "none";
+            notesRGB.style.display = "block";
         }
     };
 

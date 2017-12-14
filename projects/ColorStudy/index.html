@@ -41,19 +41,28 @@
         <input id="rand" class="btn" type="button" value="random" />
 
         <div class="hex">
-            <hr/>
-             Same color in hexadecimal format is <span id="hex"># 0a c8 ff</span>
+            <hr/> Same color in hexadecimal format is <span id="hex"># 0a c8 ff</span>
             <hr/>
         </div>
-        
+
         <div id="lowerBlock">
-          <h2>Mixing colors <span id="dig">Diagrams</span></h2>
-          <ul>
-              <li>when all 3 same then different shades of grey</li>
-              <li>RED + GREEN = YELLOW</li>
-              <li>RED + BLUE = MAGENTA</li>
-              <li>BLUE + GREEN = CYAN</li>
-          </ul>
+            <h2>Mixing colors <span id="dig">Diagrams</span></h2>
+            <div id="notesRGB">
+                <ul>
+                    <li>when all 3 same then different shades of grey</li>
+                    <li>RED + GREEN = YELLOW</li>
+                    <li>RED + BLUE = MAGENTA</li>
+                    <li>BLUE + GREEN = CYAN</li>
+                </ul>
+            </div>
+            <div id="notesHSL">
+                <ul>
+                    <li>Change HUE to change color</li>
+                    <li>Keep LIGHTNESS at 50% and tweak SATURATION for shades</li>
+                    <li>LIGHTNESS = 0% is BLACK</li>
+                    <li>LIGHTNESS = 100% is WHITE</li>
+                </ul>
+            </div>
         </div>
         <div class="post">
             Any suggestions for better learning experience ?
