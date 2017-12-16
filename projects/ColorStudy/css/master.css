@@ -1,22 +1,31 @@
 html, body {
-    margin: 0 auto;
-    padding: 0;
+    /*margin: 0 auto;*/
+    /*padding: 0;
     height: 100%;
     max-height: 700px;
-    /*position:fixed;*/
+    max-width: 700px;
+    /*position:fixed;*/*/
 }
 
 body {
-    margin: 0 auto;
+    /*margin: 0 auto;*/
+    width: 100%;
+    height:100%;
+    background-color: #f1fefe;
+    margin: 0;
+    padding: 0;
+    font-size: 17px;
 }
 
 .container {
+    display: block;
     max-width: 600px;
     margin: 0 auto;
     padding-left: 3px;
     padding-right:3px;
     position: fixed;
     height: 100%;
+    border: 1px solid #000;
 }
 
 h2 {
@@ -33,7 +42,7 @@ h2 {
     text-shadow: 2px 2px 20px #fff,1px 1px 5px #fff;
     padding:10px 0 5px 0;
     border: 5px outset #999;
-    border-radius: 30px 0 30px 0;
+    border-radius: 100px 0 100px 0;
     background: linear-gradient(90deg,hsla(80, 30%, 50%, 0.5),hsla(280, 30%, 100%, 1));
 }
 
@@ -159,14 +168,17 @@ h2 {
 
 .hex{
       text-shadow: 1px 1px 0px #fff;
+      text-align: center;
+      font-size: 15px;
 }
 
 #hex {
     display:inline-block;
-    background-color: white;
+    background-color: #fafafe;
     border: 1px solid #000;
-    text-align: none;
     padding:1px 2px;
+    /*font-size: 20px;*/
+    font-weight: bold;
 }
 
 @keyframes bttn {
@@ -199,7 +211,7 @@ h2 {
 
 #lowerBlock {
     margin: auto 30px;
-    text-shadow: 1px 1px 0px #fff;
+    /*text-shadow: 1px 1px 0px #fff;*/
 }
 #notesRGB{
   display:block;
@@ -216,7 +228,7 @@ h2 {
 #dig {
     border-radius: 10px;
     background-color: #000;
-    padding: 3px 6px;
+    padding: 0 6px;
     border: 1px solid black;
     color: #fff;
     animation: letter 2s infinite linear alternate;
@@ -388,4 +400,9 @@ h2 {
 #ipr:focus, #ipg:focus, #ipb:focus {
     font-size: 1.09em;
     transition: font-size 0.2s;
+}
+@media (min-width:600px) {
+    .container{
+      position:relative;
+    }
 }
