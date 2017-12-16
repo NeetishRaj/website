@@ -51,6 +51,8 @@ window.onload = function() {
     };
     var b = document.body;
     var mode = "RGB";
+    const repeatCount = 2;
+    var animationCount = 0;
     var ipr = document.getElementById("ipr");
     var ipg = document.getElementById("ipg");
     var ipb = document.getElementById("ipb");
@@ -65,10 +67,12 @@ window.onload = function() {
             slider1.min = "0";
             slider1.max = "255";
             ipr.value = slider1.value;
+            submit.click();
         } else if (mode === "HSL") {
             slider1.min = "0";
             slider1.max = "360";
             ipr.value = slider1.value;
+            submit.click();
         }
     };
     slider2.oninput = function() {
@@ -76,10 +80,12 @@ window.onload = function() {
             slider2.min = "0";
             slider2.max = "255";
             ipg.value = slider2.value;
+            submit.click();
         } else if (mode === "HSL") {
             slider2.min = "0";
             slider2.max = "100";
             ipg.value = slider2.value;
+            submit.click();
         }
     };
     slider3.oninput = function() {
@@ -87,10 +93,12 @@ window.onload = function() {
             slider3.min = "0";
             slider3.max = "255";
             ipb.value = slider3.value;
+            submit.click();
         } else if (mode === "HSL") {
             slider3.min = "0";
             slider3.max = "100";
             ipb.value = slider3.value;
+            submit.click();
         }
     };
     // if(slider1.oninput){
@@ -137,11 +145,6 @@ window.onload = function() {
                     hb = "0" + hb;
                 }
                 hex.textContent = " # " + hr + " " + hg + " " + hb + " ";
-                var post = document.querySelector(".post");
-                setTimeout(function() {
-                    post.style.animation = "posts 3s 0.6s 2 alternate forwards";
-                }, 300);
-                post.style.animation = "none";
             }
         } else if (mode === "HSL") {
             if (ipr.value > 360 || ipr.value < 0) {
@@ -184,18 +187,18 @@ window.onload = function() {
                     hb = "0" + hb;
                 }
                 hex.textContent = " # " + hr + " " + hg + " " + hb + " ";
-                var post = document.querySelector(".post");
-                setTimeout(function() {
-                    post.style.animation = "posts 3s 0.6s 2 alternate forwards";
-                }, 300);
-                post.style.animation = "none";
             }
         }
     };
     var dig = document.getElementById("dig");
     var img = document.getElementById("img");
+    var post = document.querySelector(".post");
     dig.onclick = function() {
         img.style.transform = "scale(1.0)";
+        setTimeout(function() {
+            post.style.animation = "posts 3s 0.6s 2 alternate forwards";
+        }, 300);
+        post.style.animation = "none";
     };
     var close = document.getElementById("close");
     close.onclick = function() {
@@ -210,6 +213,7 @@ window.onload = function() {
             slider1.value = ipr.value;
             slider2.value = ipg.value;
             slider3.value = ipb.value;
+            submit.click();
         } else if (mode === "HSL") {
             ipr.value = Math.floor(Math.random() * 360);
             ipg.value = Math.floor(Math.random() * 100);
@@ -217,6 +221,7 @@ window.onload = function() {
             slider1.value = ipr.value;
             slider2.value = ipg.value;
             slider3.value = ipb.value;
+            submit.click();
         }
     };
     var sch = document.getElementById('switch');
@@ -236,7 +241,7 @@ window.onload = function() {
             ip1.textContent = "HUE";
             ip2.textContent = "SATURATION";
             ip3.textContent = "LIGHTNESS";
-            h2.textContent = "Test your color in hsl() format,(0 to 360 deg, 0-100%, 0-100%)";
+            // h2.textContent = "Test your color in hsl() format,(0 to 360 deg, 0-100%, 0-100%)";
             // ipbg[0].style.background = "linear-gradient(270deg,blue,green,red)";
             // ipbg[1].style.background = "linear-gradient(270deg,#444, #aaa)";
             // ipbg[2].style.background = "linear-gradient(270deg,#000,#fff)";
@@ -251,15 +256,17 @@ window.onload = function() {
 
             notesHSL.style.display = "block";
             notesRGB.style.display = "none";
+            notesHSL.style.opacity = "1";
+            notesRGB.style.opacity = "0";
 
-        } else {
+        } else if (sch.value == "RGB mode") {
             mode = "RGB";
             alert("In RGB mode the 3 parameters are\n1.Red (0-255) in decimal\n2.Green (0-255) in decimal\n3.Blue (0-255) in decimal\n\nNote that in Hexadecimal representation of rgb color we convert 0-255 decimal to 00-ff hexadecimal for each color\n\nExample-\n color:rgb(45,250,180);");
             sch.value = "HSL/HSV mode";
             ip1.textContent = "RED";
             ip2.textContent = "GREEN";
             ip3.textContent = "BLUE";
-            h2.textContent = "Test your color in rgb() format, values between 0 to 255";
+            // h2.textContent = "Test your color in rgb() format, values between 0 to 255";
             // ipbg[0].style.background = "linen";
             // ipbg[1].style.background = "linen";
             // ipbg[2].style.background = "linen";
@@ -270,8 +277,11 @@ window.onload = function() {
             slider1.style.background = "linear-gradient(90deg,#000,#ff0000)";
             slider2.style.background = "linear-gradient(90deg,#000,#00ff00)";
             slider3.style.background = "linear-gradient(90deg,#000,#0000ff)";
+
             notesHSL.style.display = "none";
             notesRGB.style.display = "block";
+            notesHSL.style.opacity = "0";
+            notesRGB.style.opacity = "1";
         }
     };
 

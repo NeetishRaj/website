@@ -20,8 +20,21 @@ body {
 }
 
 h2 {
+    font-size: 25px;
     text-align: center;
-    margin-top: 5px;
+    margin:8px 0 14px 0;
+    text-shadow: 2px 2px 20px #fff,1px 1px 5px #fff;
+}
+
+#heading{
+    height: 35px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 20px #fff,1px 1px 5px #fff;
+    padding:10px 0 5px 0;
+    border: 5px outset #999;
+    border-radius: 30px 0 30px 0;
+    background: linear-gradient(90deg,hsla(80, 30%, 50%, 0.5),hsla(280, 30%, 100%, 1));
 }
 
 .ip {
@@ -109,7 +122,7 @@ h2 {
 
 .btn {
     display: inline-block;
-    margin: 20px auto;
+    margin: 10px 0 10px 0;
     border: 4px outset gray;
     animation: bttn 1.3s infinite alternate;
     outline: none;
@@ -129,22 +142,31 @@ h2 {
 
 #submit {
     float: right;
-    margin-right: 20px;
+    width:76px;
+    margin-right: 3px;
     animation-direction: alternate-reverse;
 }
 
 #rand {
+    width:76px;
     float: right;
-    margin-right: 20px;
+    margin-right: 5px;
+}
+#switch{
+    margin-left:2px;
+    width:130px;
 }
 
-#switch {
-    margin-left: 20px;
+.hex{
+      text-shadow: 1px 1px 0px #fff;
 }
+
 #hex {
+    display:inline-block;
     background-color: white;
     border: 1px solid #000;
     text-align: none;
+    padding:1px 2px;
 }
 
 @keyframes bttn {
@@ -177,12 +199,19 @@ h2 {
 
 #lowerBlock {
     margin: auto 30px;
+    text-shadow: 1px 1px 0px #fff;
 }
 #notesRGB{
   display:block;
+  opacity: 1;
+  overflow: hidden;
+  transition: opacity 1s linear 0;
 }
 #notesHSL{
   display:none;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 1s linear 0;
 }
 #dig {
     border-radius: 10px;
@@ -190,8 +219,13 @@ h2 {
     padding: 3px 6px;
     border: 1px solid black;
     color: #fff;
-    cursor: pointer;
     animation: letter 2s infinite linear alternate;
+}
+
+#dig:hover{
+    cursor:pointer;
+    background-color:#fff;
+    color:#000;
 }
 
 #img {
@@ -212,12 +246,13 @@ h2 {
 
 #img>img {
     position: absolute;
-    width: 300px;
+    width: 294px;
     /*height:330px;*/
     height: auto;
-    padding: 0;
+    padding: 3px;
     display: block;
-    margin: 0 auto;
+    margin: 0;
+    object-fit:scale-down;
 }
 
 #close, #next {
@@ -315,6 +350,7 @@ h2 {
     bottom: 10px;
     right: 10px;
     cursor: pointer;
+    text-shadow: 2px 2px 20px #fff,1px 1px 5px #fff;
 }
 
 #cnames {
@@ -350,6 +386,6 @@ h2 {
 }
 
 #ipr:focus, #ipg:focus, #ipb:focus {
-    font-size: 1.1em;
+    font-size: 1.09em;
     transition: font-size 0.2s;
 }
