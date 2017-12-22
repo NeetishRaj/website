@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(white, deepskyblue, black);
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: #fff;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 30px 1fr 1fr 1fr 1fr 100px 30px;
+    grid-template-columns: 1fr 50px;
+    grid-template-areas: "header header" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "controlPanel controlPanel" "footer footer";
+    max-width: 600px;
+    /*max-height: 768px;*/
+    height: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+    border-left: 5px solid #000;
+    border-right: 5px solid #000;
+    background-color: #222;
+}
+
+header {
+    grid-area: header;
+    border-top: 5px solid #000;
+    border-bottom: 5px solid #000;
+    background-color: deepskyblue;
+}
+
+h1 {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 0 0 0;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    line-height: 0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#mainImage {
+    grid-area: mainImage;
+    position: relative;
+    /*width:300px;
+    height:400px;*/
+    box-sizing: border-box;
+    background-color: #fff;
+    /*box-shadow: 10px 10px 20px #fff,5px 5px 10px #fff;*/
+}
+
+#mainImage>img {
+    /*width:300px;
+    height:400px;*/
+    display: block;
+    box-sizing: border-box;
+    object-fit: cover;
+    cursor: crosshair;
+}
+
+#controller {
+    width: 99%;
+    height: 25px;
+    position: absolute;
+    bottom: 20px;
+    /*left:3px;
+    right:-3px;*/
+    margin: 0 3px 0 3px;
+    border: 3px solid #000;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#controller #filterText {
+    display: inline-block;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    height: 25px;
+    width: 20%;
+    max-width: 80px;
+    font-size: 15px;
+    padding: 4px 2px;
+    text-align: center;
+    /*margin:0 0 0 2px;*/
+    letter-spacing: 0;
+    border-radius: 20px 0 0 20px;
+    background-color: #000;
+}
+
+#controller #slider {
+    /*float: right;*/
+    position: absolute;
+    top: -3px;
+    right: 0;
+    display: inline-block;
+    width: 80%;
+    min-width: 250px;
+    border: 3px solid #000;
+    border-radius: 0 20px 20px 0;
+}
+
+#sidePanel {
+    grid-area: sidePanel;
+    background-color: #071930;
+    color: #f57c17;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sidePanelButton {
+    flex: 0 0 0;
+    border: 3px solid #f57c17;
+    margin: 3px 3px;
+    ;
+    padding: 2px 4px 0 4px;
+    border-radius: 10px;
+    font-size: 20px;
+    align-self: center;
+}
+
+.sidePanelButton:hover {
+    cursor: pointer;
+    border-color: #ccc;
+}
+
+.sidePanelButton:nth-child(7) {
+    /*margin-top: auto;*/
+    /*margin-bottom: auto;*/
+}
+
+#controlPanel {
+    grid-area: controlPanel;
+    background-color: #2e112d;
+}
+
+#filterStrip {
+    height: 50px;
+    overflow-x: hidden;
+}
+
+.controlPanelButton {
+    display: inline-block;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    color: #42011c;
+    width: 100px;
+    margin: 5px 5px;
+    padding: 4px 5px;
+    border: 5px solid #071930;
+    border-radius: 20px;
+    box-shadow: 0 5px 0 #555;
+    background: #f06060;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.controlPanelButton:hover {
+    cursor: pointer;
+    border-color: hsl(240, 30%, 30%);
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #555;
+}
+
+#filterTypeText {
+    height: 50px;
+    background-color: yellow;
+    color: #000;
+    padding: 3px;
+}
+
+footer {
+    grid-area: footer;
+    margin: 0;
+    padding: 0;
+    border-top: 5px solid #000;
+    border-bottom: 5px solid #000;
+    text-align: center;
+    background-color: pink;
+}
+
+footer h6 {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 0 0 0;
+    line-height: 0;
+    vertical-align: middle;
+    text-align: center;
+    color: #3a5d1e;
+}
+
+@media (max-width:450px) {
+    .container {
+        position: fixed;
+    }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/master.css">
+    <script type="text/javascript" src="./js/index.js"></script>
+    <title>Image Editor | Neetish Raj</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>IMAGE EDITOR</h1>
+        </header>
+        <div id="mainImage">
+            <img src="https://i.imgur.com/XfVH7XM.jpg" alt="Morpheus">
+            <div id="controller">
+                <span id="filterText">Grayscale</span>
+                <input type="range" id="slider" value="50" min="0" max="100" />
+            </div>
+        </div>
+        <div id="sidePanel">
+            <span class="sidePanelButton" id="nextImage">
+            <i class="material-icons">collections</i>
+          </span>
+            <span class="sidePanelButton" id="rotate">
+            <i class="material-icons">settings_backup_restore</i>
+          </span>
+            <span class="sidePanelButton" id="mirror">
+            <i class="material-icons">compare</i>
+          </span>
+            <span class="sidePanelButton" id="skew">
+            <i class="material-icons">leak_add</i>
+          </span>
+            <span class="sidePanelButton" id="uploadImage">
+            <i class="material-icons">add_a_photo</i>
+          </span>
+            <span class="sidePanelButton" id="about">
+            <i class="material-icons">texture</i>
+          </span>
+            <span class="sidePanelButton" id="about">
+            <i class="material-icons">face</i>
+          </span>
+        </div>
+        <div id="controlPanel">
+            <div id="filterStrip">
+                <span class="controlPanelButton" id="grayscale">Grayscale</span>
+                <span class="controlPanelButton" id="blur">Blur</span>
+                <span class="controlPanelButton" id="brightness">Brightness</span>
+                <span class="controlPanelButton" id="contrast">Contrast</span>
+                <span class="controlPanelButton" id="invert">Invert</span>
+                <span class="controlPanelButton" id="opacity">Opacity</span>
+                <span class="controlPanelButton" id="saturation">Saturation</span>
+                <span class="controlPanelButton" id="sepia">Sepia</span>
+                <span class="controlPanelButton" id="rgb">RGB Tone</span>
+            </div>
+            <div id="filterTypeText">
+                Loading...
+            </div>
+        </div>
+        <div id="aboutPage">
+          <h3>Designing webpages is easy <br>Designing beautiful webpages is hard <br>
+          But designing responsive layouts is Headache <hr/></h3>
+          <p>To make your beautiful layout to hold good for every devices is a
+          nightmare, offcourse there are Bootstrap classes available for that, but
+          what I felt in my learning was that a good designer must be able to create
+           his own Bootstrap equivalent classes.</p>
+           <p>This project has nothing fancy but hard work and detailed designing,
+            its still not that good looking and requires further refinement in:-
+            <ul>
+              <li>color combinations</li>
+              <li>Layout alignments</li>
+              <li>Icon selections</li>
+              <li>Transitions</li>
+              <li>Ease of use</li>
+              <li>Lesser dependence on script</li>
+            </ul>
+            </p>
+        </div>
+        <footer>
+            <h6>&copy;Morpheus, But all rights reserved for you too!</h6>
+        </footer>
+    </div>
+</body>
+
+</html>
