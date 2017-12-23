@@ -23,7 +23,8 @@ window.onload=function(){
       "https://i.imgur.com/Vf079dH.jpg",
       "https://i.imgur.com/FBkSLJQ.png",
       "https://i.imgur.com/ByoD3S8.png",
-      "https://i.imgur.com/3hdKXMQ.png"
+      "https://i.imgur.com/3hdKXMQ.png",
+      "https://i.imgur.com/yRTdXNo.png"
     ];
     var c=count();
     var arrLen=imgArr.length;
