@@ -2,8 +2,11 @@
     margin: 0;
     padding: 0;
     border: none;
-    outline: none;
     box-sizing: border-box;
+}
+
+:focus{
+    outline:none;
 }
 
 body {
@@ -88,7 +91,6 @@ h1 {
     left: -3px;
     height: 25px;
     width: 24%;
-    max-width: 80px;
     font-size: 13px;
     padding: 4px 2px;
     text-align: center;
@@ -125,7 +127,7 @@ h1 {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #0;
+    background: radial-gradient(#fff, #000);
     cursor: pointer;
 }
 
@@ -225,7 +227,7 @@ footer {
 }
 
 footer h6 {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     padding: 10px 0 0 0;
     line-height: 0;
@@ -238,8 +240,8 @@ footer h6 {
     position: absolute;
     opacity: 0;
     z-index: -1;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     padding: 70px 60px;
@@ -252,7 +254,7 @@ footer h6 {
     position: relative;
     background-color: #000;
     padding: 20px;
-    box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;
+    /*box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;*/
 }
 
 #aboutClose {
@@ -271,8 +273,8 @@ footer h6 {
     font-family: 'Courgette', cursive;
     font-size: 17px;
     color: #fff;
-    text-shadow: -3px -3px brown;
-    box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;
+     text-shadow: -3px -3px brown;
+    /*box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;*/
 }
 
 #aboutBody div, #aboutBody ul {

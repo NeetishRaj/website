@@ -32,59 +32,66 @@ $(function() {
     $("#mainImage img").width((OUTER_WIDTH < IMAGE_WIDTH) ? OUTER_WIDTH - SIDE_PANEL_WIDTH : IMAGE_WIDTH);
     $("#mainImage img").height(IMAGE_HEIGHT);
 
-    var imageArray =[
-      "https://i.imgur.com/wQ3uqBb.jpg",
-      "https://i.imgur.com/iTqQSgO.jpg",
-      "https://i.imgur.com/Vu0ZS6K.jpg",
-      "https://i.imgur.com/bX7iKXj.jpg",
-      "https://i.imgur.com/uFEPpjh.jpg",
-      "https://i.imgur.com/mW0hKXZ.jpg"
+    var imageArray = [
+        "https://i.imgur.com/wQ3uqBb.jpg",
+        "https://i.imgur.com/iTqQSgO.jpg",
+        "https://i.imgur.com/Vu0ZS6K.jpg",
+        "https://i.imgur.com/bX7iKXj.jpg",
+        "https://i.imgur.com/mW0hKXZ.jpg",
+        "https://i.imgur.com/iR5AD4R.jpg",
+        "https://i.imgur.com/fdgsTvT.jpg",
+        "https://i.imgur.com/8Zcv3z1.jpg",
+        "https://i.imgur.com/Ng7ON5g.jpg",
+        "https://i.imgur.com/Lmmq9GA.jpg"
     ];
 
     var counter = 0;
-    $("#nextImage").on("click", function(){
-      if(counter >= imageArray.length){
-        counter =0;
-      }else{
-        $("#mainImage img").attr("src",imageArray[counter++]);
-      }
+    $("#nextImage").on("click", function() {
+        if (counter >= imageArray.length) {
+            counter = 0;
+        } else {
+            $("#mainImage img").attr("src", imageArray[counter++]);
+        }
     });
 
-    $("#rotate").on("click", function(){
-      $("#mainImage img").css("filter",GRAYSCALE + BLUR + BRIGHTNESS + CONTRAST + INVERT + OPACITY + SATURATE + SEPIA + HUE_ROTATE);
+    $("#rotate").on("click", function() {
+        cssFiltersObject.setDefaultFilterValues();
     });
 
     var flag = 0;
-    $("#mirror").on("click", function(){
-      if(flag === 0){
-        $("#mainImage img").css({"transform": "scaleX(-1)"});
-        $("#filterTypeText").html("transform: scaleX(-1);");
-        flag = 1;
-      }
-      else{
-        $("#mainImage img").css({"transform": "scaleX(1)"});
-        $("#filterTypeText").html("transform: scaleX(1);");
-        flag = 0;
-      }
+    $("#mirror").on("click", function() {
+        if (flag === 0) {
+            $("#mainImage img").css({
+                "transform": "scaleX(-1)"
+            });
+            $("#filterTypeText").html("transform: scaleX(-1);");
+            flag = 1;
+        } else {
+            $("#mainImage img").css({
+                "transform": "scaleX(1)"
+            });
+            $("#filterTypeText").html("transform: scaleX(1);");
+            flag = 0;
+        }
     });
 
-    $("#about").on("click", function(){
-      $("#aboutPage").css({
-        "z-index":"1",
-        "opacity":"1"
-      });
+    $("#about").on("click", function() {
+        $("#aboutPage").css({
+            "z-index": "1",
+            "opacity": "1"
+        });
     });
 
-    $("#aboutClose").on("click", function(){
-      $("#aboutPage").css({
-        "z-index":"-1",
-        "opacity":"0"
-      });
+    $("#aboutClose").on("click", function() {
+        $("#aboutPage").css({
+            "z-index": "-1",
+            "opacity": "0"
+        });
     });
 
-    $("#filterStripShift").on("click", function(){
-      // console.log(" hi");
-      // document.querySelector("#RGB").scrollIntoView({behavoiur:'smooth'});
+    $("#filterStripShift").on("click", function() {
+        // console.log(" hi");
+        // document.querySelector("#RGB").scrollIntoView({behavoiur:'smooth'});
     });
 
     function cssFilterStringValue(str, value) {
@@ -100,102 +107,116 @@ $(function() {
     }
 
     var cssFiltersObject = {
-        grayscale : GRAYSCALE,
-        blur : BLUR,
-        brightness : BRIGHTNESS,
-        contrast : CONTRAST,
-        invert : INVERT,
-        opacity : OPACITY,
-        saturate : SATURATE,
-        sepia : SEPIA,
-        hueRotate : HUE_ROTATE,
+        grayscale: GRAYSCALE,
+        blur: BLUR,
+        brightness: BRIGHTNESS,
+        contrast: CONTRAST,
+        invert: INVERT,
+        opacity: OPACITY,
+        saturate: SATURATE,
+        sepia: SEPIA,
+        hueRotate: HUE_ROTATE,
 
-        changeGrayscale : function(value) {
+        changeGrayscale: function(value) {
             this.grayscale = cssFilterStringValue("grayscale", value);
             this.applyChangesToImage();
         },
 
-        changeBlur : function(value) {
+        changeBlur: function(value) {
             this.blur = cssFilterStringValue("blur", value);
             this.applyChangesToImage();
         },
 
-        changeBrightness : function(value) {
+        changeBrightness: function(value) {
             this.brightness = cssFilterStringValue("brightness", value);
             this.applyChangesToImage();
         },
 
-        changeContrast : function(value) {
+        changeContrast: function(value) {
             this.contrast = cssFilterStringValue("contrast", value);
             this.applyChangesToImage();
         },
 
-        changeInvert : function(value) {
+        changeInvert: function(value) {
             this.invert = cssFilterStringValue("invert", value);
             this.applyChangesToImage();
         },
 
-        changeOpacity : function(value) {
+        changeOpacity: function(value) {
             this.opacity = cssFilterStringValue("opacity", value);
             this.applyChangesToImage();
         },
 
-        changeSaturate : function(value) {
+        changeSaturate: function(value) {
             this.saturate = cssFilterStringValue("saturate", value);
             this.applyChangesToImage();
         },
 
-        changeSepia : function(value) {
+        changeSepia: function(value) {
             this.sepia = cssFilterStringValue("sepia", value);
             this.applyChangesToImage();
         },
 
-        changeHueRotate : function(value) {
+        changeHueRotate: function(value) {
             this.hueRotate = cssFilterStringValue("hue-rotate", value);
             this.applyChangesToImage();
         },
 
-        applyChangesToImage : function(){
+        setDefaultFilterValues: function() {
+            this.grayscale = GRAYSCALE;
+            this.blur = BLUR;
+            this.brightness = BRIGHTNESS;
+            this.contrast = CONTRAST;
+            this.invert = INVERT;
+            this.opacity = OPACITY;
+            this.saturate = SATURATE;
+            this.sepia = SEPIA;
+            this.hueRotate = HUE_ROTATE;
+            this.applyChangesToImage();
+        },
+
+        applyChangesToImage: function() {
             var fullFilterString = this.grayscale +
-            this.blur +
-            this.brightness +
-            this.contrast +
-            this.invert +
-            this.opacity +
-            this.saturate +
-            this.sepia +
-            this.hueRotate;
+                this.blur +
+                this.brightness +
+                this.contrast +
+                this.invert +
+                this.opacity +
+                this.saturate +
+                this.sepia +
+                this.hueRotate;
             $("#filterTypeText").html("filter: " + fullFilterString + ";");
-            $("#mainImage img").css("filter",fullFilterString);
+            $("#mainImage img").css("filter", fullFilterString);
         }
+
     };
 
+    var mode = "";
     $(".controlPanelButton").on("click", function() {
-        $("#filterText").text($(this).text());
-        //console.log($(this).text());
-        var mode = $(this).text();
-        $("#slider").on("input", function() {
-              var sliderValue = $("#slider").val();
-              if(mode === "Grayscale"){
-                  cssFiltersObject.changeGrayscale(sliderValue);
-              }else if(mode === "Blur"){
-                  cssFiltersObject.changeBlur(sliderValue);
-              }else if (mode === "Brightness") {
-                  cssFiltersObject.changeBrightness(sliderValue);
-              }else if (mode === "Contrast") {
-                  cssFiltersObject.changeContrast(sliderValue);
-              }else if (mode === "Invert") {
-                  cssFiltersObject.changeInvert(sliderValue);
-              }else if (mode === "Opacity") {
-                  cssFiltersObject.changeOpacity(sliderValue);
-              }else if (mode === "Saturate") {
-                  cssFiltersObject.changeSaturate(sliderValue);
-              }else if (mode === "Sepia") {
-                  cssFiltersObject.changeSepia(sliderValue);
-              }else if (mode === "RGB") {
-                  cssFiltersObject.changeHueRotate(sliderValue);
-              }
+        mode = $(this).text();
+        $("#filterText").text(mode);
+    });
 
-        });
+    $("#slider").on("input", function() {
+        var sliderValue = $("#slider").val();
+        if (mode === "Grayscale") {
+            cssFiltersObject.changeGrayscale(sliderValue);
+        } else if (mode === "Blur") {
+            cssFiltersObject.changeBlur(sliderValue);
+        } else if (mode === "Brightness") {
+            cssFiltersObject.changeBrightness(sliderValue);
+        } else if (mode === "Contrast") {
+            cssFiltersObject.changeContrast(sliderValue);
+        } else if (mode === "Invert") {
+            cssFiltersObject.changeInvert(sliderValue);
+        } else if (mode === "Opacity") {
+            cssFiltersObject.changeOpacity(sliderValue);
+        } else if (mode === "Saturation") {
+            cssFiltersObject.changeSaturate(sliderValue);
+        } else if (mode === "Sepia") {
+            cssFiltersObject.changeSepia(sliderValue);
+        } else if (mode === "RGB") {
+            cssFiltersObject.changeHueRotate(sliderValue);
+        }
     });
 });
