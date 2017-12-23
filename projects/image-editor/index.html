@@ -9,6 +9,7 @@
     <meta name="description" content="project">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     <link rel="stylesheet" href="./css/master.css">
     <script type="text/javascript" src="./js/index.js"></script>
     <title>Image Editor | Neetish Raj</title>
@@ -20,9 +21,9 @@
             <h1>IMAGE EDITOR</h1>
         </header>
         <div id="mainImage">
-            <img src="https://i.imgur.com/XfVH7XM.jpg" alt="Morpheus">
+            <img src="https://i.imgur.com/mW0hKXZ.jpg" alt="Morpheus">
             <div id="controller">
-                <span id="filterText">Grayscale</span>
+                <span id="filterText">Select</span>
                 <input type="range" id="slider" value="50" min="0" max="100" />
             </div>
         </div>
@@ -42,7 +43,7 @@
             <span class="sidePanelButton" id="uploadImage">
             <i class="material-icons">add_a_photo</i>
           </span>
-            <span class="sidePanelButton" id="about">
+            <span class="sidePanelButton" id="texture">
             <i class="material-icons">texture</i>
           </span>
             <span class="sidePanelButton" id="about">
@@ -59,30 +60,54 @@
                 <span class="controlPanelButton" id="opacity">Opacity</span>
                 <span class="controlPanelButton" id="saturation">Saturation</span>
                 <span class="controlPanelButton" id="sepia">Sepia</span>
-                <span class="controlPanelButton" id="rgb">RGB Tone</span>
+                <span class="controlPanelButton" id="rgb">RGB</span>
+                <span id="filterStripShift"><i class="material-icons">unfold_more</i></span>
             </div>
             <div id="filterTypeText">
-                Loading...
+                Loading...<br>Slide down above to get more filters.<br>There are 9 CSS based image filters and many transform methods on side panel for editing images.  
             </div>
         </div>
         <div id="aboutPage">
-          <h3>Designing webpages is easy <br>Designing beautiful webpages is hard <br>
-          But designing responsive layouts is Headache <hr/></h3>
-          <p>To make your beautiful layout to hold good for every devices is a
-          nightmare, offcourse there are Bootstrap classes available for that, but
-          what I felt in my learning was that a good designer must be able to create
-           his own Bootstrap equivalent classes.</p>
-           <p>This project has nothing fancy but hard work and detailed designing,
-            its still not that good looking and requires further refinement in:-
-            <ul>
-              <li>color combinations</li>
-              <li>Layout alignments</li>
-              <li>Icon selections</li>
-              <li>Transitions</li>
-              <li>Ease of use</li>
-              <li>Lesser dependence on script</li>
-            </ul>
-            </p>
+            <h3>
+              <span id="aboutClose">&times;</span>
+              Designing webpages is easy <br>Designing beautiful webpages is hard <br>
+          But designing responsive layouts is Headache <hr><br></h3>
+            <div id="aboutBody">
+
+                <div>To make your beautiful layout to hold good for every devices &amp; browser versions is a nightmare, offcourse there are Bootstrap classes available for that, but what I felt in my learning was that a good designer must be able to create
+                    his own Bootstrap equivalent classes.
+                </div>
+                <div>In this design I have used many of the latest layout techniques and practices like:-
+                    <ul>
+                        <li>CSS Grid layout over the whole layout</li>
+                        <li>CSS Flex layout in side panel icons</li>
+                        <li>Responsive page elements for different views</li>
+                        <li>Media queries for some troublesome small dimension phones</li>
+                        <li>Used jQuery for better readability and saves me a lot of typing too</li>
+                        <li>Used the CSS image filters for editing, it looks complicated but actually it was the easisest part</li>
+                        <li>Used few transform methods for side panel editing elements</li>
+                        <li>Linking 1 input slider with 9 filters and retaining their values over time was a bit tricky</li>
+                        <li>You can upload images for editing and download your edited versions but not in sololearn's built in browser, it does not provides File system API (this is what I know, maybe experts can help me in that) </li>
+                    </ul>
+                </div>
+                <div>If anyone interested to work with me for design supports, I would gladly accept it, just send me your github link and if you like my design in git branches you can merge them with your master.<br> Or if you want to tweak this project,
+                    then I ll share the github link with you and you can do the same
+                </div>
+                <div>This project has nothing fancy but hard work and detailed designing, its still not that good looking and requires further refinement in:-
+                    <ul>
+                        <li>color combinations</li>
+                        <li>Layout alignments</li>
+                        <li>Icon selections and size</li>
+                        <li>Transitions</li>
+                        <li>Ease of use</li>
+                        <li>Lesser dependence on scripts</li>
+                        <li>proper organisation of codes for maintainability</li>
+                    </ul>
+                </div>
+                <div>
+                    Which will keep happening slowly and steadily, By your feedbacks so please comment your likes and dislikes, or any advice for some new stuffs
+                </div>
+            </div>
         </div>
         <footer>
             <h6>&copy;Morpheus, But all rights reserved for you too!</h6>
