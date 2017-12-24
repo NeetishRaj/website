@@ -1,6 +1,9 @@
 $(function() {
     const BLUR_CONSTANT = 0.25;
     const HUE_CONSTANT = 3.6;
+    const BRIGHTNESS_CONSTANT = 3;
+    const CONTRAST_CONSTANT = 3;
+    const SATURATE_CONSTANT = 3;
 
     const GRAYSCALE = "grayscale(0%) ";
     const BLUR = "blur(0px) ";
@@ -54,7 +57,7 @@ $(function() {
         }
     });
 
-    $("#rotate").on("click", function() {
+    $("#transform").on("click", function() {
         cssFiltersObject.setDefaultFilterValues();
     });
 
@@ -64,20 +67,20 @@ $(function() {
             $("#mainImage img").css({
                 "transform": "scaleX(-1)"
             });
-            $("#filterTypeText").html("transform: scaleX(-1);");
+            $("#filterTypeText").html("img { transform: scaleX(-1); }");
             flag = 1;
         } else {
             $("#mainImage img").css({
                 "transform": "scaleX(1)"
             });
-            $("#filterTypeText").html("transform: scaleX(1);");
+            $("#filterTypeText").html("img { transform: scaleX(1); }");
             flag = 0;
         }
     });
 
     $("#about").on("click", function() {
         $("#aboutPage").css({
-            "z-index": "1",
+            "z-index": "2",
             "opacity": "1"
         });
     });
@@ -99,8 +102,12 @@ $(function() {
             return str + "(" + parseInt(value * HUE_CONSTANT) + "deg) ";
         } else if (str === "blur") {
             return str + "(" + parseInt(value * BLUR_CONSTANT) + "px) ";
-        } else if (str === "grayscale") {
-            return str + "(" + value + "%) ";
+        } else if (str === "brightness" ) {
+            return str + "(" + value * BRIGHTNESS_CONSTANT + "%) ";
+        } else if ( str === "contrast" ) {
+            return str + "(" + value * CONTRAST_CONSTANT + "%) ";
+        } else if ( str === "saturate" ) {
+            return str + "(" + value * SATURATE_CONSTANT + "%) ";
         } else {
             return str + "(" + value + "%) ";
         }
@@ -185,10 +192,14 @@ $(function() {
                 this.saturate +
                 this.sepia +
                 this.hueRotate;
-            $("#filterTypeText").html("filter: " + fullFilterString + ";");
+            $("#filterTypeText").html("img { filter: " + fullFilterString + ";}");
             $("#mainImage img").css("filter", fullFilterString);
         }
 
+    };
+
+    var transformFunctionsObject = {
+        scaleX : "scaleX(-1)"
     };
 
     var mode = "";

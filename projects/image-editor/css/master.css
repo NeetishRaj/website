@@ -175,7 +175,7 @@ h1 {
 .controlPanelButton {
     display: inline-block;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bold;
     color: #42011c;
     width: 100px;
@@ -284,6 +284,14 @@ footer h6 {
     background: radial-gradient(deepskyblue, black);
 }
 
+#transform{
+  position: absolute;
+  opacity: 1;
+  z-index: 1;
+
+
+
+}
 
 @media (max-width:450px) {
     .container {

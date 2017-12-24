@@ -28,27 +28,13 @@
             </div>
         </div>
         <div id="sidePanel">
-            <span class="sidePanelButton" id="nextImage">
-            <i class="material-icons">collections</i>
-          </span>
-            <span class="sidePanelButton" id="rotate">
-            <i class="material-icons">settings_backup_restore</i>
-          </span>
-            <span class="sidePanelButton" id="mirror">
-            <i class="material-icons">compare</i>
-          </span>
-            <span class="sidePanelButton" id="skew">
-            <i class="material-icons">leak_add</i>
-          </span>
-            <span class="sidePanelButton" id="uploadImage">
-            <i class="material-icons">add_a_photo</i>
-          </span>
-            <span class="sidePanelButton" id="texture">
-            <i class="material-icons">texture</i>
-          </span>
-            <span class="sidePanelButton" id="about">
-            <i class="material-icons">face</i>
-          </span>
+            <span class="sidePanelButton" id="nextImage"><i class="material-icons">collections</i></span>
+            <span class="sidePanelButton" id="transform"><i class="material-icons">transform</i></span>
+            <span class="sidePanelButton" id="mirror"><i class="material-icons">compare</i></span>
+            <span class="sidePanelButton" id="skew"><i class="material-icons">leak_add</i></span>
+            <span class="sidePanelButton" id="uploadImage"><i class="material-icons">add_a_photo</i></span>
+            <span class="sidePanelButton" id="texture"><i class="material-icons">texture</i></span>
+            <span class="sidePanelButton" id="about"><i class="material-icons">face</i></span>
         </div>
         <div id="controlPanel">
             <div id="filterStrip">
@@ -106,6 +92,49 @@
                 </div>
                 <div>
                     Which will keep happening slowly and steadily, By your feedbacks so please comment your likes and dislikes, or any advice for some new stuffs
+                </div>
+            </div>
+        </div>
+        <div id="transform">
+            <div class="transformIconStrip" id="scale">
+                <div id="scaleY" class="transformIcons">
+                    <i class="material-icons" style="transform:rotate(90deg)">compare_arrows</i>
+                    <span class="iconText">Mirror-Y</span>
+                </div>
+                <div id="scaleX" class="transformIcons">
+                    <i class="material-icons">compare_arrows</i>
+                    <span class="iconText">Mirror-X</span>
+                </div>
+                <div id="translate" class="transformIcons">
+                    <i class="material-icons">Move Image</i>
+                </div>
+            </div>
+            <div class="transformIconStrip" id="rotate">
+                <div id="rotate_left" class="transformIcons">
+                    <i class="material-icons">rotate_left</i>
+                    <span class="iconText">Rotate Left</span>
+                </div>
+                <div id="rotate_right" class="transformIcons">
+                    <i class="material-icons">rotate_right</i>
+                    <span class="iconText">Rotate Right</span>
+                </div>
+                <div id="rotate_twice" class="transformIcons">
+                    <i class="material-icons">refresh</i>
+                    <span class="iconText">Rotate 180</span>
+                </div>
+            </div>
+            <div class="transformIconStrip" id="skew">
+                <div id="skewX" class="transformIcons">
+                    <i class="material-icons">panorama_vertical</i>
+                    <span class="iconText">Stretch-X</span>
+                </div>
+                <div id="skewY" class="transformIcons">
+                    <i class="material-icons">panorama_horizontal</i>
+                    <span class="iconText">Stretch-Y</span>
+                </div>
+                <div id="skewXY" class="transformIcons">
+                    <i class="material-icons">compare</i>
+                    <span class="iconText">Stretch-XY</span>
                 </div>
             </div>
         </div>
