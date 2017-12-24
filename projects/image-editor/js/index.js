@@ -57,25 +57,43 @@ $(function() {
         }
     });
 
-    $("#transform").on("click", function() {
-        cssFiltersObject.setDefaultFilterValues();
+    $("#default").on("click", function() {
+      cssFiltersObject.setDefaultFilterValues();
+      transformFunctionsObject.setDefaultTransformValues();
     });
 
-    var flag = 0;
-    $("#mirror").on("click", function() {
-        if (flag === 0) {
-            $("#mainImage img").css({
-                "transform": "scaleX(-1)"
-            });
-            $("#filterTypeText").html("img { transform: scaleX(-1); }");
-            flag = 1;
-        } else {
-            $("#mainImage img").css({
-                "transform": "scaleX(1)"
-            });
-            $("#filterTypeText").html("img { transform: scaleX(1); }");
-            flag = 0;
-        }
+    $("#transform").on("click", function() {
+        $(".transformFunctionsContainer").css({
+            "z-index": "1",
+            "opacity": "1"
+        });
+    });
+    $("#scaleY").on("click",function(){
+      transformFunctionsObject.scaleY();
+    });
+    $("#scaleX").on("click",function (){
+      transformFunctionsObject.rotate_right();
+    });
+    $("#translate").on("click",function(){
+      transformFunctionsObject.translate();
+    });
+    $("#rotate_left").on("click",function(){
+      transformFunctionsObject.rotate_left();
+    });
+    $("#rotate_right").on("click",function(){
+      transformFunctionsObject.rotate_right();
+    });
+    $("#rotate_twice").on("click",function(){
+      transformFunctionsObject.rotate_twice();
+    });
+    $("#skewX").on("click",function(){
+      transformFunctionsObject.skewX();
+    });
+    $("#skewY").on("click",function(){
+      transformFunctionsObject.skewY();
+    });
+    $("#skewXY").on("click",function(){
+      transformFunctionsObject.skewXY();
     });
 
     $("#about").on("click", function() {
@@ -85,16 +103,11 @@ $(function() {
         });
     });
 
-    $("#aboutClose").on("click", function() {
-        $("#aboutPage").css({
+    $(".closeButton").on("click", function() {
+        $(".overlay").css({
             "z-index": "-1",
             "opacity": "0"
         });
-    });
-
-    $("#filterStripShift").on("click", function() {
-        // console.log(" hi");
-        // document.querySelector("#RGB").scrollIntoView({behavoiur:'smooth'});
     });
 
     function cssFilterStringValue(str, value) {
@@ -193,13 +206,56 @@ $(function() {
                 this.sepia +
                 this.hueRotate;
             $("#filterTypeText").html("img { filter: " + fullFilterString + ";}");
-            $("#mainImage img").css("filter", fullFilterString);
+            $("#mainImage img").css({
+              "filter": fullFilterString
+            });
         }
 
     };
 
     var transformFunctionsObject = {
-        scaleX : "scaleX(-1)"
+        scaleX : function(){
+          $("#mainImage img").css({"transform" : "scaleX(-1)"});
+          $("#filterTypeText").html("img { transform: scaleX(-1);}");
+        },
+        scaleY : function(){
+          $("#mainImage img").css({"transform" : "scaleY(-1)"});
+          $("#filterTypeText").html("img { transform: scaleY(-1);}");
+        },
+        translate : function(){
+          $("#mainImage img").css({"transform" : "scaleX(-1) scaleY(-1)"});
+          $("#filterTypeText").html("img { transform: scaleX(-1) scaleY(-1);}");
+        },
+        rotate_left : function(){
+          $("#mainImage img").css({"transform" : "rotate(-90deg)"});
+          $("#filterTypeText").html("img { transform: rotate(-90deg);}");
+        },
+        rotate_right : function(){
+          $("#mainImage img").css({"transform" : "rotate(90deg)"});
+          $("#filterTypeText").html("img { transform: rotate(90deg);}");
+        },
+        rotate_twice : function(){
+          $("#mainImage img").css({"transform" : "rotate(180deg)"});
+          $("#filterTypeText").html("img { transform: rotate(180deg);}");
+        },
+        skewX : function(){
+          $("#mainImage img").css({"transform" : "skewX(30deg)"});
+          $("#filterTypeText").html("img { transform: skewX(30deg);}");
+        },
+        skewY : function(){
+          $("#mainImage img").css({"transform" : "skewY(30deg)"});
+          $("#filterTypeText").html("img { transform: skewY(30deg);}");
+        },
+        skewXY : function(){
+          $("#mainImage img").css({"transform" : "skewX(30deg) skewY(30deg)"});
+          $("#filterTypeText").html("img { transform: skewX(30deg) skewY(30deg);}");
+        },
+        setDefaultTransformValues : function(){
+          $("#mainImage img").css({"transform" : "none"});
+          $("#filterTypeText").append("img { transform: none;}");
+
+        }
+
     };
 
     var mode = "";

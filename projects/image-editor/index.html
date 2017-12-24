@@ -30,7 +30,7 @@
         <div id="sidePanel">
             <span class="sidePanelButton" id="nextImage"><i class="material-icons">collections</i></span>
             <span class="sidePanelButton" id="transform"><i class="material-icons">transform</i></span>
-            <span class="sidePanelButton" id="mirror"><i class="material-icons">compare</i></span>
+            <span class="sidePanelButton" id="default"><i class="material-icons">reply_all</i></span>
             <span class="sidePanelButton" id="skew"><i class="material-icons">leak_add</i></span>
             <span class="sidePanelButton" id="uploadImage"><i class="material-icons">add_a_photo</i></span>
             <span class="sidePanelButton" id="texture"><i class="material-icons">texture</i></span>
@@ -53,13 +53,12 @@
                 Loading...<br>Slide down above to get more filters.<br>There are 9 CSS based image filters and many transform methods on side panel for editing images.
             </div>
         </div>
-        <div id="aboutPage">
+        <div class="overlay" id="aboutPage">
             <h3>
-              <span id="aboutClose">&times;</span>
+              <span class="closeButton" id="aboutClose">&times;</span>
               Designing webpages is easy <br>Designing beautiful webpages is hard <br>
           But designing responsive layouts is Headache <hr><br></h3>
-            <div id="aboutBody">
-
+            <div  id="aboutBody">
                 <div>To make your beautiful layout to hold good for every devices &amp; browser versions is a nightmare, offcourse there are Bootstrap classes available for that, but what I felt in my learning was that a good designer must be able to create
                     his own Bootstrap equivalent classes.
                 </div>
@@ -95,7 +94,9 @@
                 </div>
             </div>
         </div>
-        <div id="transform">
+        <div class="transformFunctionsContainer overlay">
+          <span class="closeButton" id="transformFunctionsClose">&times;</span>
+          <div class="transformFunctions">
             <div class="transformIconStrip" id="scale">
                 <div id="scaleY" class="transformIcons">
                     <i class="material-icons" style="transform:rotate(90deg)">compare_arrows</i>
@@ -106,7 +107,8 @@
                     <span class="iconText">Mirror-X</span>
                 </div>
                 <div id="translate" class="transformIcons">
-                    <i class="material-icons">Move Image</i>
+                    <i class="material-icons">touch_app</i>
+                    <span class="iconText">scroll</span>
                 </div>
             </div>
             <div class="transformIconStrip" id="rotate">
@@ -123,20 +125,21 @@
                     <span class="iconText">Rotate 180</span>
                 </div>
             </div>
-            <div class="transformIconStrip" id="skew">
+            <div class="transformIconStrip" id="skewStrip">
                 <div id="skewX" class="transformIcons">
-                    <i class="material-icons">panorama_vertical</i>
+                    <i class="material-icons">panorama_horizontal</i>
                     <span class="iconText">Stretch-X</span>
                 </div>
                 <div id="skewY" class="transformIcons">
-                    <i class="material-icons">panorama_horizontal</i>
+                    <i class="material-icons">panorama_vertical</i>
                     <span class="iconText">Stretch-Y</span>
                 </div>
                 <div id="skewXY" class="transformIcons">
-                    <i class="material-icons">compare</i>
+                    <i class="material-icons" >settings_overscan</i>
                     <span class="iconText">Stretch-XY</span>
                 </div>
             </div>
+          </div>
         </div>
         <footer>
             <h6>&copy;Morpheus, But all rights reserved for you too!</h6>

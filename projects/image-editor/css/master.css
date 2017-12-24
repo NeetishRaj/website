@@ -1,65 +1,67 @@
 * {
-    margin: 0;
-    padding: 0;
     border: none;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-:focus{
-    outline:none;
+:focus {
+    outline: none;
 }
 
 body {
     background: radial-gradient(white, deepskyblue, black);
+    border: none;
+    color: #fff;
     font-size: 1em;
     margin: 0;
     padding: 0;
-    border: none;
-    color: #fff;
 }
 
 .container {
-    display: grid;
-    grid-template-rows: 30px 1fr 1fr 1fr 1fr 100px 30px;
-    grid-template-columns: 1fr 50px;
-    grid-template-areas: "header header" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "controlPanel controlPanel" "footer footer";
-    max-width: 600px;
-    /*max-height: 768px;*/
-    height: 100%;
-    position: relative;
-    padding: 0;
-    margin: 0 auto;
+    background-color: #222;
     border-left: 5px solid #000;
     border-right: 5px solid #000;
-    background-color: #222;
+    display: grid;
+    grid-template-areas: "header header" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "mainImage sidePanel" "controlPanel controlPanel" "footer footer";
+    grid-template-columns: 1fr 50px;
+    grid-template-rows: 30px 1fr 1fr 1fr 1fr 100px 30px;
+    height: 100%;
+    margin: 0 auto;
+    /*max-height: 768px;*/
+    max-width: 600px;
+    padding: 0;
+    position: relative;
 }
 
 header {
-    grid-area: header;
-    border-top: 5px solid #000;
-    border-bottom: 5px solid #000;
     background-color: deepskyblue;
+    border-bottom: 5px solid #000;
+    border-top: 5px solid #000;
+    grid-area: header;
 }
 
 h1 {
     font-size: 15px;
     font-weight: bold;
-    padding: 10px 0 0 0;
     letter-spacing: 3px;
-    word-spacing: 10px;
     line-height: 0;
-    vertical-align: middle;
+    padding: 10px 0 0 0;
     text-align: center;
+    vertical-align: middle;
+    word-spacing: 10px;
 }
 
 #mainImage {
-    grid-area: mainImage;
-    position: relative;
-    /*width:300px;
-    height:400px;*/
-    box-sizing: border-box;
-    background-color: #fff;
+    background: #fff;
+    background: linear-gradient(#fff,deepskyblue,#fff);
     /*box-shadow: 10px 10px 20px #fff,5px 5px 10px #fff;*/
+    box-sizing: border-box;
+    grid-area: mainImage;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    /*width:300px;*/
 }
 
 #mainImage>img {
@@ -94,7 +96,7 @@ h1 {
     font-size: 13px;
     padding: 4px 2px;
     text-align: center;
-    color:#f5bc17;
+    color: #f5bc17;
     letter-spacing: 0;
     border-radius: 20px 0 0 20px;
     background-color: #000;
@@ -104,7 +106,7 @@ h1 {
     -webkit-appearance: none;
     position: absolute;
     top: 5px;
-    right: 0;
+    right: 3px;
     background: #f57c17;
     display: inline-block;
     width: 76%;
@@ -132,33 +134,33 @@ h1 {
 }
 
 #sidePanel {
-    grid-area: sidePanel;
+    align-items: center;
     background-color: #071930;
     color: #f57c17;
     display: flex;
     flex-flow: column nowrap;
+    grid-area: sidePanel;
     justify-content: flex-start;
-    align-items: center;
 }
 
 .sidePanelButton {
-    flex: 0 0 0;
+    align-self: center;
     border: 3px solid #f57c17;
+    border-radius: 10px;
+    flex: 0 0 0;
+    font-size: 10px;
     margin: 3px 3px;
     padding: 2px 4px 0 4px;
-    border-radius: 10px;
-    font-size: 10px;
-    align-self: center;
 }
 
 .sidePanelButton:hover {
-    cursor: pointer;
     border-color: #ccc;
+    cursor: pointer;
 }
 
 .sidePanelButton:nth-child(7) {
-    margin-top: auto;
     margin-bottom: auto;
+    margin-top: auto;
 }
 
 #controlPanel {
@@ -173,19 +175,19 @@ h1 {
 }
 
 .controlPanelButton {
-    display: inline-block;
+  background: #f06060;
+  border: 5px solid #071930;
+  border-radius: 20px;
+  box-shadow: 0 5px 0 #555;
+  color: #42011c;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 5px 0 5px 5px;
+  padding: 4px 5px;
     text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    color: #42011c;
-    width: 100px;
-    margin: 5px 0 5px 5px;
-    padding: 4px 5px;
-    border: 5px solid #071930;
-    border-radius: 20px;
-    box-shadow: 0 5px 0 #555;
-    background: #f06060;
     transition: transform 0.3s, box-shadow 0.3s;
+    width: 100px;
 }
 
 .controlPanelButton:hover {
@@ -257,40 +259,90 @@ footer h6 {
     /*box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;*/
 }
 
-#aboutClose {
+.closeButton {
+  color: #fff;
+  cursor: pointer;
+  font-size: 30px;
     position: fixed;
-    top: 0;
     right: 0;
-    font-size: 30px;
-    color: #fff;
-    cursor:pointer;
+    top: 0;
 }
 
 #aboutPage #aboutBody {
-    padding: 0;
-    font-size: 20px;
     background: rgba(0, 0, 0, 0);
+    color: #fff;
     font-family: 'Courgette', cursive;
     font-size: 17px;
-    color: #fff;
-     text-shadow: -3px -3px brown;
+    padding: 0;
+    text-shadow: -3px -3px brown;
     /*box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;*/
 }
 
 #aboutBody div, #aboutBody ul {
+    background: radial-gradient(deepskyblue, black);
+    list-style: square inside;
     margin: 10px 0;
     padding: 15px 15px;
-    list-style:square inside;
-    background: radial-gradient(deepskyblue, black);
 }
 
-#transform{
-  position: absolute;
-  opacity: 1;
-  z-index: 1;
+.transformFunctionsContainer {
+    background: white;
+    background: rgba(10, 20, 40, 0.5);
+    color: #f57c17;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
 
+.transformFunctions {
+    background: white;
+    background: rgba(10, 20, 40, 0.7);
+    border: 5px solid rgb(10, 20, 40);
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 50%;
+    justify-content: space-around;
+    margin: 50px 30px;
+    width: 70%;
+}
 
+.transformIconStrip {
+    align-content: center;
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    width: 100%;
+}
 
+.transformIcons {
+    display: inline-block;
+}
+
+.transformIcons .material-icons{
+    align-self: center;
+    background: black;
+    background: rgba(10, 10, 40, 0.4);
+    border-radius: 10px;
+    font-size: 20px;
+    padding:10px;
+}
+
+.transformIcons .material-icons:hover{
+    color:white;
+}
+
+.iconText {
+  text-align: center;
+    display: block;
+    font-size: 10px;
+    /*width:60px;*/
 }
 
 @media (max-width:450px) {
