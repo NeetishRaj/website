@@ -30,10 +30,10 @@ $(function() {
     // console.log(OUTER_WIDTH);
     // console.log(INNER_HEIGHT);
 
-    $("#mainImage").width((OUTER_WIDTH < IMAGE_WIDTH) ? OUTER_WIDTH - SIDE_PANEL_WIDTH : IMAGE_WIDTH);
-    $("#mainImage").height(IMAGE_HEIGHT);
-    $("#mainImage img").width((OUTER_WIDTH < IMAGE_WIDTH) ? OUTER_WIDTH - SIDE_PANEL_WIDTH : IMAGE_WIDTH);
-    $("#mainImage img").height(IMAGE_HEIGHT);
+    $("#mainImageId").width((OUTER_WIDTH < IMAGE_WIDTH) ? OUTER_WIDTH - SIDE_PANEL_WIDTH : IMAGE_WIDTH);
+    $("#mainImageId").height(IMAGE_HEIGHT);
+    $("#mainImageId img").width((OUTER_WIDTH < IMAGE_WIDTH) ? OUTER_WIDTH - SIDE_PANEL_WIDTH : IMAGE_WIDTH);
+    $("#mainImageId img").height(IMAGE_HEIGHT);
 
     var imageArray = [
         "https://i.imgur.com/wQ3uqBb.jpg",
@@ -44,8 +44,8 @@ $(function() {
         "https://i.imgur.com/iR5AD4R.jpg",
         "https://i.imgur.com/fdgsTvT.jpg",
         "https://i.imgur.com/8Zcv3z1.jpg",
-        "https://i.imgur.com/Ng7ON5g.jpg",
-        "https://i.imgur.com/Lmmq9GA.jpg"
+        "https://i.imgur.com/Lmmq9GA.jpg",
+        "https://i.imgur.com/Ng7ON5g.jpg"
     ];
 
     var counter = 0;
@@ -53,7 +53,7 @@ $(function() {
         if (counter >= imageArray.length) {
             counter = 0;
         } else {
-            $("#mainImage img").attr("src", imageArray[counter++]);
+            $("#mainImageId img").attr("src", imageArray[counter++]);
         }
     });
 
@@ -72,7 +72,7 @@ $(function() {
       transformFunctionsObject.scaleY();
     });
     $("#scaleX").on("click",function (){
-      transformFunctionsObject.rotate_right();
+      transformFunctionsObject.scaleX();
     });
     $("#translate").on("click",function(){
       transformFunctionsObject.translate();
@@ -94,6 +94,41 @@ $(function() {
     });
     $("#skewXY").on("click",function(){
       transformFunctionsObject.skewXY();
+    });
+
+    var objectFitmode = "cover";
+    $("#objectFit").click(function(){
+      // console.log("hi");
+      if (objectFitmode === "cover"){
+        $("#filterTypeText").html("img { object-fit: contain ;}");
+        $("#fit").text("fullscreen_exit");
+        $("#mainImageId img").css({
+          "objectFit" : "contain"
+        });
+        objectFitmode = "contain";
+      }else if (objectFitmode === "contain") {
+        $("#filterTypeText").html("img { object-fit: fill ;}/* this is default object-fit for images*/");
+        $("#fit").text("fullscreen");
+        $("#mainImageId img").css({
+          "objectFit" : "fill"
+        });
+        objectFitmode = "fill";
+      }else if (objectFitmode === "fill") {
+        $("#filterTypeText").html("img { object-fit: scale-down ;}");
+        $("#fit").text("select_all");
+        $("#mainImageId img").css({
+          "objectFit" : "scale-down"
+        });
+        objectFitmode = "scale-down";
+      }else if (objectFitmode === "scale-down") {
+        $("#filterTypeText").html("img { object-fit: cover;}/*My favourite*/");
+        $("#fit").text("wallpaper");
+        $("#mainImageId img").css({
+          "objectFit" : "cover"
+        });
+        objectFitmode = "cover";
+      }
+
     });
 
     $("#about").on("click", function() {
@@ -206,7 +241,7 @@ $(function() {
                 this.sepia +
                 this.hueRotate;
             $("#filterTypeText").html("img { filter: " + fullFilterString + ";}");
-            $("#mainImage img").css({
+            $("#mainImageId img").css({
               "filter": fullFilterString
             });
         }
@@ -215,43 +250,43 @@ $(function() {
 
     var transformFunctionsObject = {
         scaleX : function(){
-          $("#mainImage img").css({"transform" : "scaleX(-1)"});
+          $("#mainImageId img").css({"transform" : "scaleX(-1)"});
           $("#filterTypeText").html("img { transform: scaleX(-1);}");
         },
         scaleY : function(){
-          $("#mainImage img").css({"transform" : "scaleY(-1)"});
+          $("#mainImageId img").css({"transform" : "scaleY(-1)"});
           $("#filterTypeText").html("img { transform: scaleY(-1);}");
         },
         translate : function(){
-          $("#mainImage img").css({"transform" : "scaleX(-1) scaleY(-1)"});
+          $("#mainImageId img").css({"transform" : "scaleX(-1) scaleY(-1)"});
           $("#filterTypeText").html("img { transform: scaleX(-1) scaleY(-1);}");
         },
         rotate_left : function(){
-          $("#mainImage img").css({"transform" : "rotate(-90deg)"});
+          $("#mainImageId img").css({"transform" : "rotate(-90deg)"});
           $("#filterTypeText").html("img { transform: rotate(-90deg);}");
         },
         rotate_right : function(){
-          $("#mainImage img").css({"transform" : "rotate(90deg)"});
+          $("#mainImageId img").css({"transform" : "rotate(90deg)"});
           $("#filterTypeText").html("img { transform: rotate(90deg);}");
         },
         rotate_twice : function(){
-          $("#mainImage img").css({"transform" : "rotate(180deg)"});
+          $("#mainImageId img").css({"transform" : "rotate(180deg)"});
           $("#filterTypeText").html("img { transform: rotate(180deg);}");
         },
         skewX : function(){
-          $("#mainImage img").css({"transform" : "skewX(30deg)"});
+          $("#mainImageId img").css({"transform" : "skewX(30deg)"});
           $("#filterTypeText").html("img { transform: skewX(30deg);}");
         },
         skewY : function(){
-          $("#mainImage img").css({"transform" : "skewY(30deg)"});
+          $("#mainImageId img").css({"transform" : "skewY(30deg)"});
           $("#filterTypeText").html("img { transform: skewY(30deg);}");
         },
         skewXY : function(){
-          $("#mainImage img").css({"transform" : "skewX(30deg) skewY(30deg)"});
+          $("#mainImageId img").css({"transform" : "skewX(30deg) skewY(30deg)"});
           $("#filterTypeText").html("img { transform: skewX(30deg) skewY(30deg);}");
         },
         setDefaultTransformValues : function(){
-          $("#mainImage img").css({"transform" : "none"});
+          $("#mainImageId img").css({"transform" : "none"});
           $("#filterTypeText").append("img { transform: none;}");
 
         }

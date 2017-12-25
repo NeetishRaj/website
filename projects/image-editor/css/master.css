@@ -1,4 +1,4 @@
-* {
+*{
     border: none;
     box-sizing: border-box;
     margin: 0;
@@ -52,9 +52,9 @@ h1 {
     word-spacing: 10px;
 }
 
-#mainImage {
+.mainImage {
     background: #fff;
-    background: linear-gradient(#fff,deepskyblue,#fff);
+    background: linear-gradient(#fff, deepskyblue, #fff);
     /*box-shadow: 10px 10px 20px #fff,5px 5px 10px #fff;*/
     box-sizing: border-box;
     grid-area: mainImage;
@@ -64,59 +64,63 @@ h1 {
     /*width:300px;*/
 }
 
-#mainImage>img {
+.mainImage > img {
     /*width:300px;
     height:400px;*/
-    display: block;
     box-sizing: border-box;
-    object-fit: cover;
     cursor: crosshair;
+    display: block;
+    object-fit: cover;
 }
 
 #controller {
-    width: 99%;
-    height: 25px;
-    position: absolute;
-    bottom: 20px;
-    /*left:3px;
-    right:-3px;*/
-    margin: 0 3px 0 3px;
+    background: white;
+    background: rgba(0, 0, 0, 0);
     border: 3px solid #000;
     border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-#controller #filterText {
-    display: inline-block;
-    position: absolute;
-    top: -3px;
-    left: -3px;
+    bottom: 20px;
     height: 25px;
-    width: 24%;
-    font-size: 13px;
-    padding: 4px 2px;
-    text-align: center;
-    color: #f5bc17;
-    letter-spacing: 0;
-    border-radius: 20px 0 0 20px;
-    background-color: #000;
+    margin: 0 3px 0 3px;
+    position: absolute;
+    /*left:3px;
+    right:-3px;*/
+    width: 99%;
 }
 
-#controller #slider {
-    -webkit-appearance: none;
-    position: absolute;
-    top: 5px;
-    right: 3px;
-    background: #f57c17;
+#filterText {
+    background-color: #000;
+    border-radius: 20px 0 0 20px;
+    color: #f5bc17;
     display: inline-block;
-    width: 76%;
-    height: 10px;
+    font-size: 13px;
+    height: 25px;
+    left: -3px;
+    letter-spacing: 0;
+    padding: 4px 2px;
+    position: absolute;
+    text-align: center;
+    top: -3px;
+    width: 24%;
+}
+
+#slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #f57c17;
     border: 3px solid #000;
+    border-left: none;
     border-radius: 0 20px 20px 0;
+    display: inline-block;
+    height: 10px;
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    width: 76%;
 }
 
 #slider::-webkit-slider-thumb {
     -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
     width: 30px;
     height: 20px;
@@ -164,111 +168,115 @@ h1 {
 }
 
 #controlPanel {
+    background: #2e112d;
+    background: radial-gradient(90deg, #fff, #000);
     grid-area: controlPanel;
-    background-color: #2e112d;
     position: relative;
 }
 
 #filterStrip {
+    background: linear-gradient(45deg, deepskyblue, #000);
     height: 50px;
     overflow-x: hidden;
 }
 
 .controlPanelButton {
-  background: #f06060;
-  border: 5px solid #071930;
-  border-radius: 20px;
-  box-shadow: 0 5px 0 #555;
-  color: #42011c;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: bold;
-  margin: 5px 0 5px 5px;
-  padding: 4px 5px;
+    background: radial-gradient(90deg, #fff, #000);
+    border: 5px solid #f57c17;
+    border-radius: 20px;
+    box-shadow: 3px 5px 0 #113;
+    color: #f57c17;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 5px 0 5px 5px;
+    padding: 4px 5px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     width: 100px;
 }
 
 .controlPanelButton:hover {
-    cursor: pointer;
+    border-color: black;
     border-color: hsl(240, 30%, 30%);
-    transform: translateY(5px);
     box-shadow: 0 0 0 #555;
+    cursor: pointer;
+    transform: translateY(5px);
 }
 
 #filterStripShift {
-    position: absolute;
+    background-color: #222a12;
+    color: #fff;
+    font-size: 30px;
     height: 50px;
-    width: 20px;
+    padding: 10px 0;
+    position: absolute;
     right: 0;
     top: 0;
-    font-size: 30px;
-    padding: 10px 0;
-    color: #fff;
-    background-color: #222a12;
+    width: 20px;
 }
 
 #filterTypeText {
-    height: 50px;
     background-color: yellow;
     color: #000;
-    padding: 3px;
-    overflow-x: scroll;
     font-size: 13px;
+    height: 50px;
+    overflow-x: scroll;
+    padding: 3px;
 }
 
 footer {
+    background-color: pink;
+    border-bottom: 5px solid #000;
+    border-top: 5px solid #000;
     grid-area: footer;
     margin: 0;
     padding: 0;
-    border-top: 5px solid #000;
-    border-bottom: 5px solid #000;
     text-align: center;
-    background-color: pink;
 }
 
 footer h6 {
+    color: #3a5d1e;
     font-size: 13px;
     font-weight: bold;
-    padding: 10px 0 0 0;
     line-height: 0;
-    vertical-align: middle;
+    padding: 10px 0 0 0;
     text-align: center;
-    color: #3a5d1e;
+    vertical-align: middle;
 }
 
 #aboutPage {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 70px 60px;
+    background: white;
     background: radial-gradient( rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.8));
-    /*background:radial-gradient(100% 100%, #fff, #000);*/
+    height: 100%;
+    left: 0;
+    opacity: 0;
     overflow-x: scroll;
+    padding: 70px 60px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
 }
 
 #aboutPage h3 {
-    position: relative;
     background-color: #000;
     padding: 20px;
+    position: relative;
     /*box-shadow: -5px -5px 10px #aaa, -7px -7px 15px #aaa;*/
 }
 
 .closeButton {
-  color: #fff;
-  cursor: pointer;
-  font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 30px;
     position: fixed;
     right: 0;
     top: 0;
 }
 
-#aboutPage #aboutBody {
+#aboutBody {
+    background: white;
     background: rgba(0, 0, 0, 0);
     color: #fff;
     font-family: 'Courgette', cursive;
@@ -315,7 +323,7 @@ footer h6 {
 
 .transformIconStrip {
     align-content: center;
-    display:flex;
+    display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
     width: 100%;
@@ -325,21 +333,21 @@ footer h6 {
     display: inline-block;
 }
 
-.transformIcons .material-icons{
+.transformIcons .material-icons {
     align-self: center;
     background: black;
     background: rgba(10, 10, 40, 0.4);
     border-radius: 10px;
     font-size: 20px;
-    padding:10px;
+    padding: 10px;
 }
 
-.transformIcons .material-icons:hover{
-    color:white;
+.transformIcons .material-icons:hover {
+    color: white;
 }
 
 .iconText {
-  text-align: center;
+    text-align: center;
     display: block;
     font-size: 10px;
     /*width:60px;*/
