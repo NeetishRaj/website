@@ -32,8 +32,8 @@
             <span class="sidePanelButton" id="transform"><i class="material-icons">transform</i></span>
             <span class="sidePanelButton" id="default"><i class="material-icons">reply_all</i></span>
             <span class="sidePanelButton" id="objectFit"><i id="fit" class="material-icons">fullscreen</i></span>
-            <span class="sidePanelButton" id="uploadImage"><i class="material-icons">add_a_photo</i></span>
             <span class="sidePanelButton" id="texture"><i class="material-icons">texture</i></span>
+            <span class="sidePanelButton" id="uploadImage"><i class="material-icons">add_a_photo</i></span>
             <span class="sidePanelButton" id="about"><i class="material-icons">face</i></span>
         </div>
         <div id="controlPanel">
@@ -47,18 +47,22 @@
                 <span class="controlPanelButton" id="saturation">Saturation</span>
                 <span class="controlPanelButton" id="sepia">Sepia</span>
                 <span class="controlPanelButton" id="rgb">RGB</span>
-                <span id="filterStripShift"><i class="material-icons">unfold_more</i></span>
+                <span class="filterStripShift"><i class="material-icons">unfold_more</i></span>
             </div>
-            <div id="filterTypeText">
+            <div class="filterTypeText">
+              <div id="filterTypeText">
                 Loading...<br>Slide down above to get more filters.<br>There are 9 CSS based image filters and many transform methods on side panel for editing images.
+                <br>I have added this section because while fiddling with CSS basic filters you might make some awesome looking custom filters, which you can copy from here.
+              </div>
+              <span class="filterStripShift"><i class="material-icons">unfold_more</i></span>
             </div>
         </div>
-        <div class="overlay" id="aboutPage">
+        <div class="overlay overlayPanel" id="aboutPage">
             <h3>
               <span class="closeButton" id="aboutClose">&times;</span>
               Designing webpages is easy <br>Designing beautiful webpages is hard <br>
           But designing responsive layouts is Headache <hr><br></h3>
-            <div  id="aboutBody">
+            <div id="aboutBody">
                 <div>To make your beautiful layout to hold good for every devices &amp; browser versions is a nightmare, offcourse there are Bootstrap classes available for that, but what I felt in my learning was that a good designer must be able to create
                     his own Bootstrap equivalent classes.
                 </div>
@@ -95,56 +99,95 @@
             </div>
         </div>
         <div class="transformFunctionsContainer overlay">
-          <span class="closeButton" id="transformFunctionsClose">&times;</span>
-          <div class="transformFunctions">
-            <div class="transformIconStrip" id="scale">
-                <div id="scaleY" class="transformIcons">
-                    <i class="material-icons" style="transform:rotate(90deg)">compare_arrows</i>
-                    <span class="iconText">Mirror-Y</span>
+            <span class="closeButton" id="transformFunctionsClose">&times;</span>
+            <div class="transformFunctions">
+                <div class="transformIconStrip" id="scale">
+                    <div id="scaleY" class="transformIcons">
+                        <i class="material-icons" style="transform:rotate(90deg)">compare_arrows</i>
+                        <span class="iconText">Mirror-Y</span>
+                    </div>
+                    <div id="scaleX" class="transformIcons">
+                        <i class="material-icons">compare_arrows</i>
+                        <span class="iconText">Mirror-X</span>
+                    </div>
+                    <div id="translate" class="transformIcons">
+                        <i class="material-icons">touch_app</i>
+                        <span class="iconText">scroll</span>
+                    </div>
                 </div>
-                <div id="scaleX" class="transformIcons">
-                    <i class="material-icons">compare_arrows</i>
-                    <span class="iconText">Mirror-X</span>
+                <div class="transformIconStrip" id="rotate">
+                    <div id="rotate_left" class="transformIcons">
+                        <i class="material-icons">rotate_left</i>
+                        <span class="iconText">Rotate Left</span>
+                    </div>
+                    <div id="rotate_right" class="transformIcons">
+                        <i class="material-icons">rotate_right</i>
+                        <span class="iconText">Rotate Right</span>
+                    </div>
+                    <div id="rotate_twice" class="transformIcons">
+                        <i class="material-icons">refresh</i>
+                        <span class="iconText">Rotate 180</span>
+                    </div>
                 </div>
-                <div id="translate" class="transformIcons">
-                    <i class="material-icons">touch_app</i>
-                    <span class="iconText">scroll</span>
+                <div class="transformIconStrip" id="skewStrip">
+                    <div id="skewX" class="transformIcons">
+                        <i class="material-icons">panorama_horizontal</i>
+                        <span class="iconText">Stretch-X</span>
+                    </div>
+                    <div id="skewY" class="transformIcons">
+                        <i class="material-icons">panorama_vertical</i>
+                        <span class="iconText">Stretch-Y</span>
+                    </div>
+                    <div id="skewXY" class="transformIcons">
+                        <i class="material-icons">settings_overscan</i>
+                        <span class="iconText">Stretch-XY</span>
+                    </div>
                 </div>
             </div>
-            <div class="transformIconStrip" id="rotate">
-                <div id="rotate_left" class="transformIcons">
-                    <i class="material-icons">rotate_left</i>
-                    <span class="iconText">Rotate Left</span>
-                </div>
-                <div id="rotate_right" class="transformIcons">
-                    <i class="material-icons">rotate_right</i>
-                    <span class="iconText">Rotate Right</span>
-                </div>
-                <div id="rotate_twice" class="transformIcons">
-                    <i class="material-icons">refresh</i>
-                    <span class="iconText">Rotate 180</span>
-                </div>
+        </div>
+        <div class="overlay overlayPanel texturePanelContainer" id="texturePanelContainer">
+            <span class="closeButton" id="texturePanelClose">&times;</span>
+            <div class="texturePanel">
+              Creating texture is very simple for images, you just need 2 things
+              <ol>
+                <li>A textured background for Image Container.</li>
+                <li>Just lower image opacity, and voilla!!</li>
+              </ol>
             </div>
-            <div class="transformIconStrip" id="skewStrip">
-                <div id="skewX" class="transformIcons">
-                    <i class="material-icons">panorama_horizontal</i>
-                    <span class="iconText">Stretch-X</span>
-                </div>
-                <div id="skewY" class="transformIcons">
-                    <i class="material-icons">panorama_vertical</i>
-                    <span class="iconText">Stretch-Y</span>
-                </div>
-                <div id="skewXY" class="transformIcons">
-                    <i class="material-icons" >settings_overscan</i>
-                    <span class="iconText">Stretch-XY</span>
-                </div>
+            <div class="texturePanel">
+
+              For textured Background we can do it:&minus;
+              <ul>
+                <li>Using Images</li>
+                <li>Using SVGs</li>
+                <li>or My favourite, using Gradient functions linear-gradient() and radial-gradient()</li>
+              </ul>
             </div>
-          </div>
+            <div class="texturePanel">
+              <b>NOTE:</b> all the gradient functions based textures that I have used here are from
+              <a href="http://lea.verou.me/css3patterns/#"><i>Lea Verou</i></a>'s site and many contributors, make sure to check out her
+               page, creating textures from gradient functions is quite amazing, it saves us from one extra
+               http-request and the ever precious data bandwith thus significant decrease in loading time.<br>
+             </div>
+             <div class="texturePanel">
+               And even creating one couldnt be easier, many thanks to
+               <a href="http://www.patternify.com/"><i>Sacha Grief</i></a>, be sure to check out this web tool too.
+            </div>
+            <div class="texturePanel">
+              Can select any of the 5 textures below and see there texture background code in code section of editor<br>
+                <span class="textureIcons transformIcons" id="texture1" ><i class="material-icons">filter_1</i><small>by Nate Eagle</small></span>
+                <span class="textureIcons transformIcons" id="texture2" ><i class="material-icons">filter_2</i><small>by Estelle Weyh</small></span>
+                <span class="textureIcons transformIcons" id="texture3" ><i class="material-icons">filter_3</i><small>by Lea Verou</small></span>
+                <span class="textureIcons transformIcons" id="texture4" ><i class="material-icons">filter_4</i><small>by Paul Salentiny</small></span>
+                <span class="textureIcons transformIcons" id="texture5" ><i class="material-icons">filter_5</i><small>by Paul Salentiny</small></span>
+            </div>
+
         </div>
         <footer>
             <h6>&copy;Morpheus, But all rights reserved for you too!</h6>
         </footer>
     </div>
+
 </body>
 
 </html>
