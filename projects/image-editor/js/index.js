@@ -64,6 +64,9 @@ $(function() {
         $("#filterTypeText").html(" ");
         for (var i = 0; i < imageArray.length; i++) {
           $("<img />", {src:imageArray[i]}).appendTo("#filterTypeText");
+          $("#filterTypeText img").click(function(){
+            $("#mainImageId img").attr("src", this.src);
+          });
         }
     });
 
@@ -165,7 +168,7 @@ $(function() {
           "background-position" : this.backgroundPosition,
           "background-image" : this.backgroundImage
         });
-        $("#mainImageId img").css({"filter" : "filter(0.7)"});
+        $("#mainImageId img").css({"filter" : "opacity(0.75)"});
 
         $("#filterTypeText").html(
           "img{filter: opacity(0.7); }<br>"+
@@ -231,6 +234,14 @@ $(function() {
     );
     $("#texture5").click(function(){
       texture5.applyChangesToTexture();
+    });
+
+    $("#uploadImage").on("click", function() {
+        // console.log("hi");
+        $("#addImage").css({
+            "z-index": "2",
+            "opacity": "1"
+        });
     });
 
     $("#about").on("click", function() {
