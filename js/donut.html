@@ -1,0 +1,313 @@
+<!-- Created by Dylan Missuwe-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--DylanMissuwe-->
+        <meta charset="utf-8"/>
+        <title>canvas</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <h1 align="center">Simple 3D Engine</h1>
+        <canvas width="1000" height="600" id="canvas">canvas not supported</canvas>
+        <div id="slidecontainer">
+            <p>speed X: <span id="demo1"></span></p>
+            <input type="range" min="0" max="31.5" value="14" step=".5" class="sliderB" id="speedSliderX">
+            <p>speed Y: <span id="demo2"></span></p>
+            <input type="range" min="0" max="31.5" value="6.5" step=".5" class="sliderC" id="speedSliderY">
+            <p>speed Z: <span id="demo3"></span></p>
+            <input type="range" min="0" max="31.5" value="10" step=".5" class="sliderD" id="speedSliderZ">
+        </div>
+        <h3>This is a simple 3d engine using canvas and javascript.<br/>
+        This is a project i started a jear ago. I learned alot about 3d garaphics and linear algebra.
+        </h3>
+        <script>
+    var context = document.getElementById("canvas").getContext("2d");
+
+    var slider1 = document.getElementById("speedSliderX");
+    var output1 = document.getElementById("demo1");
+    var slider2 = document.getElementById("speedSliderY");
+    var output2 = document.getElementById("demo2");
+    var slider3 = document.getElementById("speedSliderZ");
+    var output3 = document.getElementById("demo3");
+    var initTime = Date.now();
+    context.font = "50px Comic Sans MS";
+    var pi = 3.141592;
+    var rad = 2*pi;
+
+    function line(color, xi, yi, xf, yf){
+        context.beginPath();
+        context.strokeStyle = color;
+        context.lineWidth = 4;
+        context.moveTo(xi, yi);
+        context.lineTo(xf, yf);
+        context.stroke();
+        context.closePath();
+    }
+
+    setInterval(update,1); //updates screen every millisecond
+
+    function update(){
+        var thisLoop = Date.now();
+        var fps = 1000 / (thisLoop - initTime);
+        initTime = thisLoop;
+
+        output1.innerHTML = slider1.value;
+        output2.innerHTML = slider2.value;
+        output3.innerHTML = slider3.value;
+        var tim = Date.now(); //for timing
+        context.clearRect(0, 0, canvas.width, canvas.height); //clears the canvas before drawing on it
+        mesh(tim); // draws the mesh
+
+        context.fillStyle = "red";
+        //context.textAlign = "center";
+        context.fillText("fps: "+Math.floor(fps), 0,50);
+    }
+
+    function torus(){
+        var verts = [];
+        var faces = [];
+        var slices = 32;
+        var stacks = 20;
+        var radius = 0.5;
+
+        for (i=0;i<slices;i++){
+            for (j=0;j<stacks;j++){
+                var vert = [];
+                var r = 1 - radius*Math.sin((rad/stacks)*j);
+                vert.push(r*Math.sin((rad/slices)*i));
+                vert.push(radius*Math.cos((rad/stacks)*j));
+                vert.push(r*Math.cos((rad/slices)*i));
+                verts.push(vert);
+
+                var face = [];
+                face.push((j+i*stacks));
+                face.push((((j+1)%stacks)+stacks*i)%(stacks*slices));
+                face.push(((((j+1)%stacks)+stacks)+(stacks*i))%(stacks*slices));
+                face.push(((j+stacks)+(stacks*i))%(stacks*slices));
+                faces.push(face);
+            }
+        }
+        return [verts,faces];
+    }
+
+    function mesh(i){
+        var camZoom = 500;
+        var camZ = 1+camZoom/150;
+
+        var angleX = i*((slider1.value*slider1.value)/1000); //for rotation speed
+        var angleY = i*((slider2.value*slider2.value)/1000);
+        var angleZ = i*((slider3.value*slider3.value)/1000);
+
+        var angleX = (angleX%360) / (180 / pi); //converts degree to radian
+        var angleY = (angleY%360) / (180 / pi);
+        var angleZ = (angleZ%360) / (180 / pi);
+
+        var obj = torus();
+
+        var verts = obj[0];
+        var faces = obj[1];
+
+        verts = scale(verts,1,1,1);
+        verts = rotateMesh(verts,angleX,angleY,angleZ); //rotates the vertices around the origin
+        verts = setOrigin(verts,2,0,0);                 //sets an ofset to the origin of the vertices
+        verts = rotateMesh(verts,angleX,angleY,angleZ); //rotates them again
+        drawFaces(verts,faces,camZ,camZoom);           //draws the faces
+        //drawMesh(verts,edges,camZ,camZoom);           //draws black lines
+        //drawVerts(verts,camZ,camZoom);
+    }
+
+    function randomColor(){
+        return('#'+Math.floor(Math.random()*16777215).toString(16));
+        // return "#000000";
+    }
+
+    function makeColorGradient(frequency1, frequency2, frequency3,phase1, phase2, phase3,center, width, i){
+        if (center == undefined)   center = 128;
+        if (width == undefined)    width = 127;
+
+        var red = Math.sin(frequency1*i + phase1) * width + center;
+        var grn = Math.sin(frequency2*i + phase2) * width + center;
+        var blu = Math.sin(frequency3*i + phase3) * width + center;
+        return RGB2Color(red,grn,blu);
+    }
+
+    function RGB2Color(r,g,b){
+        return 'rgb(' + Math.round(r) + ',' + Math.round(g) + ',' + Math.round(b) + ')';
+    }
+
+    function drawFaces(verts,faces,camZ,camZoom){
+        var Zbuf = Zbuffer(verts,faces);
+        for (j=0;j<faces.length;j++){
+            context.fillStyle = makeColorGradient(.3,.3,.3,0,2,4,128,127,(Zbuf[j])%20);
+            context.beginPath();
+            for(k=0;k<4;k++){
+
+                var x = verts[faces[Zbuf[j]][k]][0];
+                var y = verts[faces[Zbuf[j]][k]][1];
+                var z = verts[faces[Zbuf[j]][k]][2]+camZ;
+
+                var f = camZoom/z;
+                x=x*f;
+                y=y*f;
+
+                if(k!=0){
+                    context.lineTo(500+x,300+y);
+                }else{
+                    context.moveTo(500+x,300+y);
+                }
+            }
+            context.closePath();
+            context.fill();
+        }
+    }
+
+    //draws a wireframe
+    function drawMesh(verts,edges,camZ,camZoom){
+        for (j=0;j<edges.length;j++){
+
+            var camX = 0;
+            var camY = 0;
+
+            var x = verts[edges[j][0]][0]+camX;
+            var y = verts[edges[j][0]][1]+camY;
+            var z = verts[edges[j][0]][2]+camZ;
+
+            var x2 = verts[edges[j][1]][0]+camX;
+            var y2 = verts[edges[j][1]][1]+camY;
+            var z2 = verts[edges[j][1]][2]+camZ;
+
+            var f = camZoom/z;
+            x=x*f;
+            y=y*f;
+
+            var f2 = camZoom/z2;
+            x2=x2*f2;
+            y2=y2*f2;
+
+            line("black", 500+x, 300+y, 500+x2, 300+y2);
+        }
+    }
+
+    function drawVerts(verts,camZ,camZoom){
+        for(var i=0;i<verts.length;i++){
+            var x = verts[i][0];
+            var y = verts[i][1];
+            var z = verts[i][2]+camZ;
+
+            var f = camZoom/z;
+            x=x*f;
+            y=y*f;
+
+            context.fillStyle = "#000000";
+            context.beginPath();
+            context.arc(500+x, 300+y, 5, 0, 2 * Math.PI);
+            context.fill();
+        }
+    }
+
+    function rotatePoint(x,y,z,xangle,yangle,zangle){
+
+        //x rotation
+        var xsin = Math.sin(xangle);
+        var xcos = Math.cos(xangle);
+        var xx = x;
+        var yx = y*xcos - z*xsin;
+        var zx = y*xsin + z*xcos;
+
+        //y rotation
+        var ysin = Math.sin(yangle);
+        var ycos = Math.cos(yangle);
+        var xy = zx*ysin + xx*ycos;
+        var yy = yx;
+        var zy = zx*ycos - xx*ysin;
+
+        //z rotation
+        var zsin = Math.sin(zangle);
+        var zcos = Math.cos(zangle);
+        var xz = xy*zcos - yy*zsin;
+        var yz = xy*zsin + yy*zcos;
+        var zz = zy;
+
+        return [xz,yz,zz];
+    }
+
+
+    function rotateMesh(verts,x,y,z){
+        for(j=0;j<verts.length;j++){
+
+            var v = verts[j];
+            var r = rotatePoint(v[0],v[1],v[2],x,y,z);
+
+            verts[j] = r;
+
+        }
+        return verts;
+    }
+
+    function setOrigin(verts,x,y,z){
+        for(j=0;j<verts.length;j++){
+            verts[j][0] += x;
+            verts[j][1] += y;
+            verts[j][2] += z;
+        }
+        return verts;
+    }
+
+    function scale(verts,x,y,z){
+        for(j=0;j<verts.length;j++){
+            verts[j][0] *= x;
+            verts[j][1] *= y;
+            verts[j][2] *= z;
+        }
+        return verts;
+    }
+
+    //all the rest is z-buffer
+    function  faceCenter(verts,faces,k){
+        var cx = 0;
+        var cy = 0;
+        var cz = 0;
+        for(var i=0;i<faces[0].length;i++){
+            cx += verts[faces[k][i]][0];
+            cy += verts[faces[k][i]][1];
+            cz += verts[faces[k][i]][2];
+        }
+        cx /= faces[k].length;
+        cy /= faces[k].length;
+        cz /= faces[k].length;
+        return [cx,cy,cz];
+    }
+
+    function sortWithIndeces(toSort) {
+        for (var i = 0; i < toSort.length; i++) {
+            toSort[i] = [toSort[i], i];
+        }
+        toSort.sort(function(left, right) {
+        return left[0] < right[0] ? -1 : 1;
+        });
+        toSort.sortIndices = [];
+        for (var j = 0; j < toSort.length; j++) {
+            toSort.sortIndices.push(toSort[j][1]);
+            toSort[j] = toSort[j][0];
+        }
+        return toSort;
+    }
+
+    function Zarr(verts,faces){
+        var arr = [];
+        for(var i=0;i<faces.length;i++){
+            var c = faceCenter(verts,faces,i)[2];
+            arr.push(c);
+        }
+        return arr;
+    }
+
+    function Zbuffer(verts,faces){
+        var arr = Zarr(verts,faces);
+        sortWithIndeces(arr);
+        return arr.sortIndices.reverse();
+    }
+</script>
+    </body>
+</html>
