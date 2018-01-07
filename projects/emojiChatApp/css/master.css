@@ -1,0 +1,25 @@
+body{
+  background-color: lightblue;
+}
+
+h1{
+  text-align: center;
+}
+.encryptionContainer{
+  width:100vw;
+  height:30vh;
+  text-align: center;
+}
+
+.decryptionContainer{
+  width:100vw;
+  height:30vh;
+  text-align: center;
+}
+.customEmojiContainer{
+  text-align: center;
+  margin:10px auto;
+}
+table{
+  /*text-align: center;*/
+}

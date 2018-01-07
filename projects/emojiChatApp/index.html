@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Bobbie, Morpheus">
+    <meta name="keywords" content="Emoji Chat App">
+    <meta name="description" content="project">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/master.css">
+    <title>Emoji Chat App</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Emojis Encryption</h1>
+
+    <!-- encryption part -->
+    <div class="encryptionContainer">
+      <input type="text" id="data" name="data">
+      <p class="output" id="a"></p>
+      <button id="encryptButton">Encrypt</button>
+    </div>
+
+    <!-- decryption part -->
+    <div class="decryptionContainer">
+      <input type="text" id="data1" name="data1">
+      <p class="output" id="b"></p>
+      <button id="decryptButton">Decrypt</button>
+    </div>
+
+    <!-- set custom emoji part -->
+    <div class="customEmojiContainer">
+      <button type="button" id="customEmoji">Set Custom Emojis</button>
+      <div class="customEmojiPage active">
+        <table>
+          <tr>
+            <th>Alphabets</th>
+            <th>Current Emoji</th>
+            <th colspan="2">New Emoji</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="./js/index.js"></script>
+</body>
+
+</html>
