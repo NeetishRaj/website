@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj">
+    <meta name="description" content="project">
+    <title>webGL | Fundamental</title>
+    <style media="screen">
+      body{
+        margin: 0;
+        padding: 0;
+      }
+      canvas{
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body onload="getRenderingContext()">
+    <canvas id="canvas"></canvas>
+
+
+    <script id="2d-vertex-shader" type="notjs">
+      attribute vec2 a_position;
+      uniform mat3 u_matrix;
+      varying vec4 v_color;
+      void main(){
+        gl_Position = vec4((u_matrix * vec3(a_position, 1)).xy, 0, 1);
+
+        v_color = gl_Position * 0.5 + 0.5;
+      }
+    </script>
+
+
+    <script id="2d-fragment-shader" type="notjs">
+      precision mediump float;
+      // uniform vec4 u_color;
+
+      varying vec4 v_color;
+
+      void main(){
+        gl_FragColor = v_color;
+      }
+    </script>
+    <script type="text/javascript">
+      "use strict";
+
+      function getRenderingContext(){
+        var canvas = document.getElementById('canvas');
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+
+        var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+        if(!gl){
+          console.log("webgl not supported");
+        }
+
+        //creat both shaders
+        var vertexShaderSource = document.getElementById('2d-vertex-shader').text;
+        var fragmentShaderSource = document.getElementById('2d-fragment-shader').text;
+
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+        //link both shaders into a single program
+        var program = createProgram(gl, vertexShader, fragmentShader);
+
+        //Look up the location of the attribute for the program we just createShader
+        var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+        //also Look up the location of uniform that we added for resolution
+        var resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+
+        var matrixLocation = gl.getUniformLocation(program, "u_matrix");
+        //Attributes get their data from buffers so we need to create a buffer
+        var positionBuffer = gl.createBuffer();
+
+        //lets bind the positionBuffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        //Now we can put data in thar buffer by referencing it through the bind points
+        /*up till here was initialization code, rendering part starts below*/
+
+        //clipspace to canvas space conversion
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+        //we clear the canvas with (0, 0, 0, 1) black color
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        //we tell the webgl which shader program to use
+        gl.useProgram(program);
+
+        //set the resolution
+        gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+        //set the color using our uniform variable
+        gl.uniform4f(colorUniformLocation, Math.random(), Math.random(), Math.random(),1.0 );
+
+        /*Now we need to tell webgl how to take data from buffer that we set up before
+          and supply it to the attribute in the shader*/
+
+        //we turn the attribute ON
+        gl.enableVertexAttribArray(positionAttributeLocation);
+
+        /*now we need to specify how to pull the data out*/
+        //bind the positionBuffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        //tell the attribute how to get data out of positionBuffer(ARRAY_BUFFER)
+        var size = 2;           //2 components per iteration
+        var type = gl.FLOAT;    //data is 32 bits float
+        var normalize = false;  //dont normalize the data
+        var stride = 0;         //0 = move forward
+        var offset = 0;         //start at the beginning of the buffer
+
+        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+        gl.uniform4f(colorUniformLocation, Math.random(), Math.random(), Math.random(),1.0 );
+
+        var matrix =
+
+        setGeometry(gl,randomInt(gl.canvas.width),randomInt(gl.canvas.height), randomInt(300),randomInt(300));
+
+
+
+      }
+
+      function randomInt(range){
+        return Math.ceil(Math.random() * range);
+      }
+
+      function setGeometry(gl, x, y, width, height){
+        var positions = [
+          0, -100,
+          150, 125,
+          -175, 100
+        ];
+
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+
+        //FINALLY we ask webgl to execute our GLSL
+        var primitiveType = gl.TRIANGLES;
+        var offset = 0;
+        var count = 3;
+        gl.drawArrays(primitiveType, offset, count);
+
+      }
+
+
+
+      function createShader(gl, type, source){
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+
+        var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        if(success){
+          return shader;
+        }
+        //Error returning shader and delete the shader
+        console.log(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+      }
+
+      //link both shaders in a single program
+      function createProgram(gl, vertexShader, fragmentShader){
+        var program = gl.createProgram();
+
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+
+        var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+        if (success) {
+          return program;
+        }
+
+        //post Error and delete program if there is some issue with the program
+        console.log(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+      }
+
+    </script>
+  </body>
+</html>

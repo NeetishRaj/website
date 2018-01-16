@@ -25,8 +25,10 @@ window.onload = function() {
         "W": "🐩",
         "X": "🌻",
         "Y": "🍇",
-        "Z": "🚀",
-    }
+        "Z": "🚀"
+    };
+
+    //Encryption function
     var encryptButton = document.getElementById('encryptButton');
     encryptButton.addEventListener("click", myFunction);
 
@@ -37,43 +39,10 @@ window.onload = function() {
         for (var i = 0; i < word.length; i++) {
             encrypted += letterMap[word[i]] || word[i];
         }
-
-        function clearInput(element) {
-            element.value = "";
-        }
         document.getElementById("a").innerHTML = encrypted;
     }
 
-
-    var letterMap1 = {
-        "🙂": "A",
-        "🤓": "0x1f913",
-        "🐒": "C",
-        "⛵": "D",
-        "🐦": "E",
-        "😎": "F",
-        "🌲": "G",
-        "🐢": "H",
-        "🐎": "I",
-        "⚽": "J",
-        "👑": "K",
-        "🐕": "L",
-        "🙃": "M",
-        "🍓": "N",
-        "😍": "O",
-        "🎂": "P",
-        "🏵": "Q",
-        "🐇": "R",
-        "🍬": "S",
-        "⭐": "T",
-        "🏈": "U",
-        "😵": "V",
-        "🐩": "W",
-        "🌻": "X",
-        "🍇": "Y",
-        "🚀": "Z",
-    }
-
+    //Decryption function
     var decryptButton = document.getElementById('decryptButton');
     decryptButton.addEventListener("click", myFunction1);
     function myFunction1() {
@@ -81,14 +50,18 @@ window.onload = function() {
         inputText = [...inputText];
         var decrypted = "";
         for (var i = 0; i < inputText.length; i++) {
-            decrypted += letterMap1[inputText[i]] || inputText[i];
-        }
-        function clearInput(element) {
-            element.value = "";
+            decrypted += findMatch(inputText[i]) || inputText[i];
         }
         document.getElementById("b").innerHTML = decrypted;
-    }
+    };
 
+    function findMatch(str){
+      for(let j in letterMap){
+        if(letterMap[j] === str){
+          return j;
+        }
+      }
+    }
 
     //CUSTOM EMOJI SECTION
     var customEmojiButton = document.getElementById('customEmoji');
@@ -97,10 +70,7 @@ window.onload = function() {
 
     customEmojiButton.addEventListener("click",createTable);
     function createTable(){
-        for (var i = 0; i < 26; i++) {
-
-          //returns the letters from loop variables A-Z
-          var loopLetter = String.fromCodePoint(65+i);
+        for (var i in letterMap) {
 
           //create new ROWS for each alphabet and append to table
           var newRow = document.createElement("TR");
@@ -108,7 +78,7 @@ window.onload = function() {
 
           //first column TD element for of characters
           var alphabet = document.createElement("TD");
-          var alphabetText = document.createTextNode(loopLetter);
+          var alphabetText = document.createTextNode(i);
           alphabet.setAttribute("class", "tableAlphabets");
           alphabet.append(alphabetText);
           newRow.append(alphabet);
@@ -116,7 +86,7 @@ window.onload = function() {
           //second column TD element for of current character Mapping
           var currentEmoji = document.createElement("TD");
           currentEmoji.setAttribute("class", "tableEmojis");
-          var currentEmojiText = document.createTextNode(letterMap[loopLetter]);
+          var currentEmojiText = document.createTextNode(letterMap[i]);
           currentEmoji.append(currentEmojiText);
           newRow.append(currentEmoji);
 
@@ -147,14 +117,13 @@ window.onload = function() {
         var allCustomEmojiButtons = document.querySelectorAll('.customEmojiButton');
         var allTableAlphabets = document.querySelectorAll('.tableAlphabets');
         var allTableEmojis = document.querySelectorAll('.tableEmojis');
-        for(let i=0; i<26; i++){
-          var loopLetter = String.fromCodePoint(65+i);
+
+        for(let i in letterMap){
           allCustomEmojiButtons[i].addEventListener("click", function(){
-            letterMap[allTableAlphabets[i].textContent] = allCustomEmojiInputs[i].value;
+            letterMap[i] = allCustomEmojiInputs[i].value;
             allTableEmojis[i].textContent = allCustomEmojiInputs[i].value;
           });
         }
     }
     //CUSTOM EMOJI SECTION ENS HERE
-
-};
+}
