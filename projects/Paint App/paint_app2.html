@@ -104,10 +104,9 @@
             var canvasTop = canvas.offsetTop;
             var canvasLeft = canvas.offsetLeft;
 
-            //mode variable to specify whether "create" or "drag" rectangle mode
+            /*mode variable to specify whether "create" or "drag" rectangle mode
+            initially create for the first rectangle*/
             var mode = "create";
-
-            var clearButton = document.querySelector('#clear');
 
             //Rectangle array for storing all the rectangle objects created on click drag event
             var rectangleArray = [];
@@ -132,6 +131,7 @@
             }
 
             //clear the rectangles array on clicking clear button to clear screen
+            var clearButton = document.querySelector('#clear');
             clearButton.addEventListener('click', function() {
               rectangleArray = [];
             }, false);
@@ -143,59 +143,55 @@
                 mouseDownPosition.clickX = clickEvent.pageX;
                 mouseDownPosition.clickY = clickEvent.pageY;
 
-                // mode = "create";
+                mode = "create";
                 //check for existing rectangles and determine mode
-                rectangleArray.forEach(function(rectObject){
+                for (var i = 0; i < rectangleArray.length; i++){
 
                   //First quadrant
-                  if (rectObject.isUp && rectObject.isLeft) {
-                    if((mouseDownPosition.clickX - canvasLeft) < rectObject.xPos &&
-                        (mouseDownPosition.clickY - canvasTop) < rectObject.yPos &&
-                        (mouseDownPosition.clickX - canvasLeft) > (rectObject.xPos + rectObject.width) &&
-                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                  if (rectangleArray[i].isUp && rectangleArray[i].isLeft) {
+                    if((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
+                        (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) > (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)){
+                          console.log("first quadrant UL");
                           mode = "drag";
-                          // break;
-                    }else{
-                        mode = "create";
+                          break;
                     }
 
                     //Second Quadrant
-                  } else if(rectObject.isUp && rectObject.isRight){
-                    if((mouseDownPosition.clickX - canvasLeft) > rectObject.xPos &&
-                        (mouseDownPosition.clickY - canvasTop) < rectObject.yPos &&
-                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
-                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                  } else if(rectangleArray[i].isUp && rectangleArray[i].isRight){
+                    if((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
+                        (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)){
                           mode = "drag";
-                          // break;
-                    }else{
-                        mode = "create";
+                          console.log("second quadrant UR");
+                          break;
                     }
 
                     //Third quadrant
-                  } else if(rectObject.isDown && rectObject.isRight){
-                    if((mouseDownPosition.clickX - canvasLeft) > rectObject.xPos &&
-                        (mouseDownPosition.clickY - canvasTop) > rectObject.yPos &&
-                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
-                        (mouseDownPosition.clickY - canvasTop) < (rectObject.yPos + rectObject.height)){
+                  } else if(rectangleArray[i].isDown && rectangleArray[i].isRight){
+                    if((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
+                        (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                        (mouseDownPosition.clickY - canvasTop) < (rectangleArray[i].yPos + rectangleArray[i].height)){
                           mode = "drag";
-                          // break;
-                    }else{
-                        mode = "create";
+                          console.log("third quadrant DR");
+                          break;
                     }
 
                     //Fourth quadrant
-                  } else if(rectObject.isDown && rectObject.isLeft){
-                    if((mouseDownPosition.clickX - canvasLeft) < rectObject.xPos &&
-                        (mouseDownPosition.clickY - canvasTop) > rectObject.yPos &&
-                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
-                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                  } else if(rectangleArray[i].isDown && rectangleArray[i].isLeft){
+                    if((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
+                        (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)){
                           mode = "drag";
-                          // break;
-                    }else{
-                        mode = "create";
+                          console.log("fourth quadrant DL");
+                          break;
                     }
                   }
-                });
+                }
             }, false);
 
             canvas.addEventListener('mouseup', function(dragEvent) {
@@ -234,7 +230,7 @@
                   mouseUpPosition.dragX = 2000;
                   mouseUpPosition.dragY = 2000;
 
-                  testing();
+                  // testing();
                 }//end of if
               }, false);
 
