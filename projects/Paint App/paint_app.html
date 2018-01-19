@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Paint App | Neetish Raj</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj,paint app">
+    <meta name="description" content="paint app">
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+        color: #000;
+      }
+      .main-container{
+        background: linen;
+        border: 5px solid #000;
+        box-sizing: border-box;
+        height: 95vh;
+        margin: 10px auto;
+        padding: 10px;
+        width: 95vw;
+      }
+      .header-container{
+        background: #cdcdcd;
+        border: 5px solid #000;
+        box-sizing: border-box;
+        height: 8%;
+        margin: 10px auto;
+        padding: 2px;
+        width: 100%;
+      }
+      h1{
+        font-size: 18px;
+        line-height: 0;
+      }
+      .canvas-container{
+        background: #efefef;
+        border: 5px solid #000;
+        box-sizing: border-box;
+        height: 76%;
+        margin: 10px auto;
+        padding: 2px;
+        width: 100%;
+      }
+      canvas{
+        background: #efafcf;
+        height: 100%;
+        width: 100%;
+      }
+      .control-panel-container{
+        background: #afafaf;
+        border: 5px solid #000;
+        box-sizing: border-box;
+        height:10%;
+        margin: 10px auto;
+        width: 100%;
+      }
+      .button{
+        background: #afafaf;
+        border: 3px solid #000;
+        box-sizing: border-box;
+        display: inline-block;
+        height: 30px;
+        margin: 8px 0;
+        margin-left: 5px;
+        padding: 5px 3px;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .button:hover{
+        background: #000;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body onload="main()">
+    <div class="main-container">
+      <div class="header-container">
+        <h1>Paint App <span class="author"><small>By Neetish Raj</small></span></h1>
+      </div>
+      <div class="canvas-container">
+        <canvas id="mainCanvas">Ooops! HTML5 not Supported in yout browser, Please
+          update your browser to use this app</canvas>
+      </div>
+      <div class="control-panel-container">
+        <span class="button" id="clear">clear</span>
+        <span class="button" id="undo">Undo</span>
+        <span class="button" id="redo">Redo</span>
+        <span class="button" id="shapes">Shapes</span>
+      </div>
+    </div>
+    <script>
+      function main(){
+
+        var canvas = document.querySelector('#mainCanvas');
+        console.log(document.querySelector('.canvas-container').style.width);
+        canvas.width = window.innerWidth -64;
+        canvas.height = window.innerHeight -164;
+        console.log(canvas);
+        console.log(window.innerWidth);
+        console.log(window.innerHeight);
+        console.log(canvas.width);
+        console.log(canvas.height );
+        if(!canvas.getContext){
+          console.log("Sorry Canvas API not supported in your browser");
+        }
+
+        var c = canvas.getContext('2d');
+        console.log(c);
+        c.beginPath();
+        c.moveTo(100,100);
+        c.lineTo(200,200);
+        c.stroke();
+
+      }
+    </script>
+  </body>
+</html>

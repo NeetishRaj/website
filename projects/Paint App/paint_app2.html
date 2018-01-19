@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paint App | Neetish Raj</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Neetish Raj">
+    <meta name="keywords" content="neetish,raj,paint app">
+    <meta name="description" content="paint app">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        .main-container {
+            background: linen;
+            border: 0 solid #000;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            /* width: 95vw; */
+        }
+
+        canvas {
+            background: #efafcf;
+            height: 100%;
+            margin: 50px;
+            padding: 0;
+            width: 100%;
+        }
+
+        .control-panel-container {
+            background: #afafaf;
+            border: 3px solid #000;
+            box-sizing: border-box;
+            height: 60px;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .button {
+            background: #afafaf;
+            border: 3px solid #000;
+            box-sizing: border-box;
+            display: inline-block;
+            height: 54px;
+            margin: 0;
+            margin-left: 5px;
+            padding: 5px 3px;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+        }
+
+        .cursor-positions {
+            right: 0;
+            top: 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body onload="main()">
+    <div class="main-container">
+        <canvas id="mainCanvas">Ooops! HTML5 not Supported in yout browser, Please
+        update your browser to use this app</canvas>
+        <div class="control-panel-container">
+            <span class="button" id="clear">clear</span>
+            <span class="button" id="undo">Undo</span>
+            <span class="button" id="redo">Redo</span>
+            <span class="button" id="shapes">Shapes</span>
+        </div>
+        <div class="overlay cursor-positions">
+            <!-- <p>cursor X: <span id="cursorX"></span></p>
+        <p>cursor Y: <span id="cursorY"></span></p>
+        <p>canvas X: <span id="canvasX"></span></p>
+        <p>canvas Y: <span id="canvasY"></span></p> -->
+            <p>click X: <span id="clickX"></span></p>
+            <p>Click Y: <span id="clickY"></span></p>
+            <p>Drag X: <span id="dragX"></span></p>
+            <p>Drag Y: <span id="dragY"></span></p>
+            <p>Rect Count: <span id="rectCount"></span></p>
+        </div>
+    </div>
+    <script>
+        function main() {
+
+            var canvas = document.querySelector('#mainCanvas');
+            var context = canvas.getContext('2d');
+            var canvasTop = canvas.offsetTop;
+            var canvasLeft = canvas.offsetLeft;
+
+            //mode variable to specify whether "create" or "drag" rectangle mode
+            var mode = "create";
+
+            var clearButton = document.querySelector('#clear');
+
+            //Rectangle array for storing all the rectangle objects created on click drag event
+            var rectangleArray = [];
+
+            //object to store mouse click postions over canvas element
+            var mouseDownPosition = {
+              clickX: 0,
+              clickY: 0
+            };
+
+            //object to store mouseup postions over canvas element
+            var mouseUpPosition = {
+              dragX: 0,
+              dragY: 0
+            };
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight -166;
+
+            if (canvas.getContext == null) {
+                console.log("Sorry Canvas API not supported in your browser, Update it!!");
+            }
+
+            //clear the rectangles array on clicking clear button to clear screen
+            clearButton.addEventListener('click', function() {
+              rectangleArray = [];
+            }, false);
+
+
+
+            //Click drag event function to create rectangles
+            canvas.addEventListener('mousedown', function(clickEvent) {
+                mouseDownPosition.clickX = clickEvent.pageX;
+                mouseDownPosition.clickY = clickEvent.pageY;
+
+                // mode = "create";
+                //check for existing rectangles and determine mode
+                rectangleArray.forEach(function(rectObject){
+
+                  //First quadrant
+                  if (rectObject.isUp && rectObject.isLeft) {
+                    if((mouseDownPosition.clickX - canvasLeft) < rectObject.xPos &&
+                        (mouseDownPosition.clickY - canvasTop) < rectObject.yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) > (rectObject.xPos + rectObject.width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                          mode = "drag";
+                          // break;
+                    }else{
+                        mode = "create";
+                    }
+
+                    //Second Quadrant
+                  } else if(rectObject.isUp && rectObject.isRight){
+                    if((mouseDownPosition.clickX - canvasLeft) > rectObject.xPos &&
+                        (mouseDownPosition.clickY - canvasTop) < rectObject.yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                          mode = "drag";
+                          // break;
+                    }else{
+                        mode = "create";
+                    }
+
+                    //Third quadrant
+                  } else if(rectObject.isDown && rectObject.isRight){
+                    if((mouseDownPosition.clickX - canvasLeft) > rectObject.xPos &&
+                        (mouseDownPosition.clickY - canvasTop) > rectObject.yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
+                        (mouseDownPosition.clickY - canvasTop) < (rectObject.yPos + rectObject.height)){
+                          mode = "drag";
+                          // break;
+                    }else{
+                        mode = "create";
+                    }
+
+                    //Fourth quadrant
+                  } else if(rectObject.isDown && rectObject.isLeft){
+                    if((mouseDownPosition.clickX - canvasLeft) < rectObject.xPos &&
+                        (mouseDownPosition.clickY - canvasTop) > rectObject.yPos &&
+                        (mouseDownPosition.clickX - canvasLeft) < (rectObject.xPos + rectObject.width) &&
+                        (mouseDownPosition.clickY - canvasTop) > (rectObject.yPos + rectObject.height)){
+                          mode = "drag";
+                          // break;
+                    }else{
+                        mode = "create";
+                    }
+                  }
+                });
+            }, false);
+
+            canvas.addEventListener('mouseup', function(dragEvent) {
+              mouseUpPosition.dragX = dragEvent.pageX;
+              mouseUpPosition.dragY = dragEvent.pageY;
+
+              /*
+                First 1 condition checks whether its on create mode or not
+                Next 2 condition to prevent creating rectangles with 0 dimensions on click events
+                Next 4 conditions to prevent creating rectangles when mousedown outside canvas
+                Last 4 conditions to prevent creating rectangles when mouseup outside canvas
+              */
+              if( mode === "create" &&
+                  mouseUpPosition.dragX - mouseDownPosition.clickX !== 0 &&
+                  mouseUpPosition.dragY - mouseDownPosition.clickY !== 0 &&
+                  mouseDownPosition.clickX > canvasLeft &&
+                  mouseDownPosition.clickX < (canvasLeft + canvas.width) &&
+                  mouseDownPosition.clickY > canvasTop &&
+                  mouseDownPosition.clickY < (canvasTop + canvas.height) &&
+                  mouseUpPosition.dragX > canvasLeft &&
+                  mouseUpPosition.dragX < (canvasLeft + canvas.width) &&
+                  mouseUpPosition.dragY > canvasTop &&
+                  mouseUpPosition.dragY < (canvasTop + canvas.height)){
+
+                  rectangleArray.push(new Rectangle(
+                    mouseDownPosition.clickX - canvasLeft,
+                    mouseDownPosition.clickY - canvasTop,
+                    mouseUpPosition.dragX - mouseDownPosition.clickX,
+                    mouseUpPosition.dragY - mouseDownPosition.clickY,
+                    getRandomColor()
+                  ));
+
+                  //reset click values with randomly chosen large value 2000
+                  mouseDownPosition.clickX = 2000;
+                  mouseDownPosition.clickY = 2000;
+                  mouseUpPosition.dragX = 2000;
+                  mouseUpPosition.dragY = 2000;
+
+                  testing();
+                }//end of if
+              }, false);
+
+            //Rectangle constructor function OR the rectangle class
+            function Rectangle(xPos, yPos, width, height, fillColor) {
+                this.xPos = xPos,
+                this.yPos = yPos,
+                this.width = width,
+                this.height = height,
+                this.fillColor = fillColor,
+                this.isUp = (Math.sign(height) === -1) ? true : false,
+                this.isDown = (Math.sign(height) === 1) ? true : false,
+                this.isLeft = (Math.sign(width) === -1) ? true : false,
+                this.isRight = (Math.sign(width) === 1) ? true : false,
+
+                this.drawRectangle = function() {
+                    context.fillStyle = this.fillColor;
+                    context.fillRect(this.xPos, this.yPos, this.width, this.height);
+                },
+
+                this.updateRectangle = function() {
+                    this.drawRectangle();
+                }
+
+            }
+
+            //UPdtae the cursor positions on top right corner with this function
+            function updatePositionStats() {
+                document.getElementById('clickX').textContent = mouseDownPosition.clickX;
+                document.getElementById('clickY').textContent = mouseDownPosition.clickY;
+                document.getElementById('dragX').textContent = mouseUpPosition.dragX;
+                document.getElementById('dragY').textContent = mouseUpPosition.dragY;
+                document.getElementById('rectCount').textContent = rectangleArray.length;
+            }
+
+
+            //Animation function responsible for drawing
+            function animate() {
+                requestAnimationFrame(animate);
+                context.clearRect(0, 0, innerWidth, innerHeight);
+
+                updatePositionStats();
+                // for (var i = 0; i < rectangleArray.length; i++) {
+                //     rectangleArray[i].updateRectangle();
+                // }
+                rectangleArray.forEach(function(rectObject) {
+                    rectObject.updateRectangle();
+                });
+            }
+            animate();
+
+            /***************************************************************/
+            //test functions
+            function testing(){
+            for (var i = 0; i < rectangleArray.length; i++) {
+              console.log("**********************");
+              console.log(rectangleArray[i].xPos);
+              console.log(rectangleArray[i].yPos);
+              console.log(rectangleArray[i].width);
+              console.log(rectangleArray[i].height);
+              console.log("UP : " + rectangleArray[i].isUp);
+              console.log("DOWN : " + rectangleArray[i].isDown);
+              console.log("LEFT : " + rectangleArray[i].isLeft);
+              console.log("RIGHT : " + rectangleArray[i].isRight);
+              console.log(`canvas width is ${canvas.width}`);
+              console.log(`canvas height is ${canvas.height}`);
+              console.log(`window.innerWidth is ${window.innerWidth}`);
+              console.log(`window.innerHeight is ${window.innerHeight}`);
+              console.log("**********************");
+            }
+            }
+
+        } //end of main function
+
+        //returns random rgb() format color on every call
+        function getRandomColor() {
+            var red = Math.floor(Math.random() * 255);
+            var green = Math.floor(Math.random() * 255);
+            var blue = Math.floor(Math.random() * 255);
+            return `rgb(${red},${green},${blue})`;
+        }
+    </script>
+</body>
+
+</html>
