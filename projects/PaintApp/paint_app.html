@@ -27,12 +27,11 @@
         }
 
         canvas {
-            background-color:black;
-            background-image:
-            radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-            radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-            radial-gradient(white, rgba(255,255,255,.1) 3px, transparent 40px),
-            radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+            background-color: black;
+            background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
+            radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px),
+            radial-gradient(white, rgba(255, 255, 255, .1) 3px, transparent 40px),
+            radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
             background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
             background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
             height: 100%;
@@ -92,7 +91,7 @@
         <div class="control-panel-container">
             <span class="button" id="stats">Show Stats</span>
             <span class="button" id="undo">Undo Delete</span>
-            <span class="button" id="redo">Background</span>
+            <span class="button" id="shade">Shades <small>(Under Progress)</small></span>
             <span class="button" id="clear">clear</span>
         </div>
         <div class="overlay cursorPositions">
@@ -102,16 +101,23 @@
             <p>Drag Y: <span id="dragY"></span></p>
             <p>Rect Count: <span id="rectCount"></span></p>
             <p>Undo Buffer: <span id="undoCount"></span></p>
+            <p>FPS: <span id="fps"></span></p>
         </div>
     </div>
     <script>
         "use strict"
+
         function main() {
 
             var canvas = document.querySelector('#mainCanvas');
             var context = canvas.getContext('2d');
             var canvasTop = canvas.offsetTop;
             var canvasLeft = canvas.offsetLeft;
+
+            //To calculate FPS in requestAnimationFrame() function
+            var fps;
+            var lastTimeCalled;
+            var timeDiff;
 
             /*mode variable to specify whether "create" or "drag" rectangle mode
             on mouse click and drag event, initially create for the first rectangle*/
@@ -135,12 +141,6 @@
                 dragY: 0
             };
 
-            //Object to store doubleClickEvent over canvas element
-            // var dblClickPosition = {
-            //     dblClickX: 0,
-            //     dblClickY: 0
-            // };
-
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight - 166;
 
@@ -159,110 +159,123 @@
             //toggle stats box
             var statsBox = document.querySelector('.cursorPositions');
             var statsButton = document.querySelector('#stats');
-            statsButton.addEventListener('mousedown', function(){
-              if(statsBox.style.display === "block"){
-                statsBox.style.display = "none";
-                statsButton.textContent = "Show Stats";
-              } else {
-                statsBox.style.display = "block";
-                statsButton.textContent = "Hide Stats";
-              }
+            statsButton.addEventListener('mousedown', function() {
+                if (statsBox.style.display === "block") {
+                    statsBox.style.display = "none";
+                    statsButton.textContent = "Show Stats";
+                } else {
+                    statsBox.style.display = "block";
+                    statsButton.textContent = "Hide Stats";
+                }
             });
 
-            document.querySelector('#undo').addEventListener('mousedown', function(){
-              console.log("UNDO OPERATION");
-              if(undoArray.length !== 0){
-                rectangleArray.push(undoArray.pop());
-              }
+            document.querySelector('#undo').addEventListener('mousedown', function() {
+                console.log("UNDO OPERATION");
+                if (undoArray.length !== 0) {
+                    rectangleArray.push(undoArray.pop());
+                }
+            });
+
+            document.querySelector('#shade').addEventListener('mousedown', function(){
+              console.log("SHADE dIRECTION operation");
+              rectangleArray.forEach(function(rectObject){
+                rectObject.lgx2 = rectObject.xPos + Math.ceil(Math.random() * rectObject.width);
+                rectObject.lgy2 = rectObject.yPos + Math.ceil(Math.random() * rectObject.heigth);
+                rectObject.linearGradient = context.createLinearGradient(
+                  rectObject.lgx1,
+                  rectObject.lgy1,
+                  rectObject.lgx2,
+                  rectObject.lgy2);
+              });
             });
 
             //check for existing rectangles and determine mode create or drag
-            function checkForExistingRectangle(deleteMode, dragMode){
+            function checkForExistingRectangle(deleteMode, dragMode) {
 
-              var i = 0;
-              /* A special 2 way conditional loop, for deleteing upper ones first,
-                if its deleteMode = true then go reverse i=length-1 TO i=0
-                else go normal i=0 TO i=length-1*/
-              for ((deleteMode || dragMode) ? i = (rectangleArray.length - 1) : i = 0 ;
-                   (deleteMode || dragMode) ? i >= 0 : i < rectangleArray.length ;
-                   (deleteMode || dragMode) ? i-- : i++) {
+                var i = 0;
+                /* A special 2 way conditional loop, for deleteing upper ones first,
+                  if its deleteMode = true then go reverse i=length-1 TO i=0
+                  else go normal i=0 TO i=length-1*/
+                for ((deleteMode || dragMode) ? i = (rectangleArray.length - 1) : i = 0;
+                    (deleteMode || dragMode) ? i >= 0 : i < rectangleArray.length;
+                    (deleteMode || dragMode) ? i-- : i++) {
 
-                  //First quadrant
-                  if (rectangleArray[i].isUp && rectangleArray[i].isLeft) {
-                      if ((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
-                          (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
-                          (mouseDownPosition.clickX - canvasLeft) > (rectangleArray[i].xPos + rectangleArray[i].width) &&
-                          (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)) {
-                          console.log("first quadrant UL");
-                          mode = "drag";
+                    //First quadrant
+                    if (rectangleArray[i].isUp && rectangleArray[i].isLeft) {
+                        if ((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
+                            (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
+                            (mouseDownPosition.clickX - canvasLeft) > (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                            (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)) {
+                            console.log("first quadrant UL");
+                            mode = "drag";
 
-                          if(deleteMode){
-                            undoArray.push(rectangleArray[i]);
-                            rectangleArray.splice(i, 1);
-                          }
+                            if (deleteMode) {
+                                undoArray.push(rectangleArray[i]);
+                                rectangleArray.splice(i, 1);
+                            }
 
-                          return rectangleArray[i];
-                          // break;
-                      }
+                            return rectangleArray[i];
+                            // break;
+                        }
 
-                  //Second Quadrant
-                  } else if (rectangleArray[i].isUp && rectangleArray[i].isRight) {
-                      if ((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
-                          (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
-                          (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
-                          (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)) {
-                          mode = "drag";
-                          console.log("second quadrant UR");
+                        //Second Quadrant
+                    } else if (rectangleArray[i].isUp && rectangleArray[i].isRight) {
+                        if ((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
+                            (mouseDownPosition.clickY - canvasTop) < rectangleArray[i].yPos &&
+                            (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                            (mouseDownPosition.clickY - canvasTop) > (rectangleArray[i].yPos + rectangleArray[i].height)) {
+                            mode = "drag";
+                            console.log("second quadrant UR");
 
-                          if(deleteMode){
-                            undoArray.push(rectangleArray[i]);
-                            rectangleArray.splice(i, 1);
-                          }
+                            if (deleteMode) {
+                                undoArray.push(rectangleArray[i]);
+                                rectangleArray.splice(i, 1);
+                            }
 
-                          return rectangleArray[i];
-                          // break;
-                      }
+                            return rectangleArray[i];
+                            // break;
+                        }
 
-                  //Third quadrant
-                  } else if (rectangleArray[i].isDown && rectangleArray[i].isRight) {
-                      if ((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
-                          (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
-                          (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
-                          (mouseDownPosition.clickY - canvasTop) < (rectangleArray[i].yPos + rectangleArray[i].height)) {
-                          mode = "drag";
-                          console.log("third quadrant DR");
+                        //Third quadrant
+                    } else if (rectangleArray[i].isDown && rectangleArray[i].isRight) {
+                        if ((mouseDownPosition.clickX - canvasLeft) > rectangleArray[i].xPos &&
+                            (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
+                            (mouseDownPosition.clickX - canvasLeft) < (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                            (mouseDownPosition.clickY - canvasTop) < (rectangleArray[i].yPos + rectangleArray[i].height)) {
+                            mode = "drag";
+                            console.log("third quadrant DR");
 
-                          if(deleteMode){
-                            undoArray.push(rectangleArray[i]);
-                            rectangleArray.splice(i, 1);
-                          }
+                            if (deleteMode) {
+                                undoArray.push(rectangleArray[i]);
+                                rectangleArray.splice(i, 1);
+                            }
 
-                          return rectangleArray[i];
-                          // break;
-                      }
+                            return rectangleArray[i];
+                            // break;
+                        }
 
-                  //Fourth quadrant
-                  } else if (rectangleArray[i].isDown && rectangleArray[i].isLeft) {
-                      if ((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
-                          (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
-                          (mouseDownPosition.clickX - canvasLeft) > (rectangleArray[i].xPos + rectangleArray[i].width) &&
-                          (mouseDownPosition.clickY - canvasTop) < (rectangleArray[i].yPos + rectangleArray[i].height)) {
-                          mode = "drag";
-                          console.log("fourth quadrant DL");
+                        //Fourth quadrant
+                    } else if (rectangleArray[i].isDown && rectangleArray[i].isLeft) {
+                        if ((mouseDownPosition.clickX - canvasLeft) < rectangleArray[i].xPos &&
+                            (mouseDownPosition.clickY - canvasTop) > rectangleArray[i].yPos &&
+                            (mouseDownPosition.clickX - canvasLeft) > (rectangleArray[i].xPos + rectangleArray[i].width) &&
+                            (mouseDownPosition.clickY - canvasTop) < (rectangleArray[i].yPos + rectangleArray[i].height)) {
+                            mode = "drag";
+                            console.log("fourth quadrant DL");
 
-                          if(deleteMode){
-                            undoArray.push(rectangleArray[i]);
-                            rectangleArray.splice(i, 1);
-                          }
+                            if (deleteMode) {
+                                undoArray.push(rectangleArray[i]);
+                                rectangleArray.splice(i, 1);
+                            }
 
-                          return rectangleArray[i];
-                          // break;
-                      }
-                  }
+                            return rectangleArray[i];
+                            // break;
+                        }
+                    }
 
-              }// end of for loop
+                } // end of for loop
 
-            }//end of checkForExistingRectangle()
+            } //end of checkForExistingRectangle()
 
             //Click drag event function to create rectangles
             canvas.addEventListener('mousedown', function(clickEvent) {
@@ -298,22 +311,22 @@
                     mouseUpPosition.dragY > canvasTop &&
                     mouseUpPosition.dragY < (canvasTop + canvas.height)) {
 
-                      if (mode === "create") {
+                    if (mode === "create") {
                         console.log("created new Rectangle");
                         rectangleArray.push(new Rectangle(
-                          mouseDownPosition.clickX - canvasLeft,
-                          mouseDownPosition.clickY - canvasTop,
-                          mouseUpPosition.dragX - mouseDownPosition.clickX,
-                          mouseUpPosition.dragY - mouseDownPosition.clickY,
-                          getRandomColor()
+                            mouseDownPosition.clickX - canvasLeft,
+                            mouseDownPosition.clickY - canvasTop,
+                            mouseUpPosition.dragX - mouseDownPosition.clickX,
+                            mouseUpPosition.dragY - mouseDownPosition.clickY,
+                            getRandomColor()
                         ));
-                      } else if(mode === "drag"){
+                    } else if (mode === "drag") {
                         console.log("dragged existing Rectangle");
                         var draggableRect = checkForExistingRectangle(false, true);
                         console.log(draggableRect);
                         draggableRect.updateRectangle(
-                          mouseUpPosition.dragX - canvasLeft, mouseUpPosition.dragY - canvasTop);
-                      }
+                            mouseUpPosition.dragX - canvasLeft, mouseUpPosition.dragY - canvasTop);
+                    }
 
                     //reset click values with randomly chosen large value 2000
                     mouseDownPosition.clickX = 2000;
@@ -340,50 +353,66 @@
             // });
 
             //Delete Rectangles on doubleClickEvent
-            canvas.addEventListener('dblclick', function(doubleClickEvent){
-              // dblClickPosition.dblClickX = doubleClickEvent.pageX;
-              // dblClickPosition.dblClickY = doubleClickEvent.pageY;
+            canvas.addEventListener('dblclick', function(doubleClickEvent) {
+                // dblClickPosition.dblClickX = doubleClickEvent.pageX;
+                // dblClickPosition.dblClickY = doubleClickEvent.pageY;
 
-              //check for existing triangle in deleteMode = true
-              checkForExistingRectangle(true, false);
-              clearSelection();
+                //check for existing triangle in deleteMode = true
+                checkForExistingRectangle(true, false);
+                clearSelection();
 
-              mode = " create";
+                mode = " create";
             });
 
             /*this function clearSelection() is taken from stackoverflow
             to disable automatic selection of span texts on doubleClickEvent
              which causes extra clicking for draw operation */
             function clearSelection() {
-              if(document.selection && document.selection.empty) {
-                document.selection.empty();
-              } else if(window.getSelection) {
-                var sel = window.getSelection();
-                sel.removeAllRanges();
-              }
+                if (document.selection && document.selection.empty) {
+                    document.selection.empty();
+                } else if (window.getSelection) {
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                }
             }
 
             //Rectangle constructor function OR the rectangle class
             function Rectangle(xPos, yPos, width, height, fillColor) {
                 this.xPos = xPos,
-                    this.yPos = yPos,
-                    this.width = width,
-                    this.height = height,
-                    this.fillColor = fillColor,
-                    this.isUp = (Math.sign(height) === -1) ? true : false,
-                    this.isDown = (Math.sign(height) === 1) ? true : false,
-                    this.isLeft = (Math.sign(width) === -1) ? true : false,
-                    this.isRight = (Math.sign(width) === 1) ? true : false,
+                this.yPos = yPos,
+                this.width = width,
+                this.height = height,
+                this.fillColor = fillColor,
+                this.isUp = (Math.sign(height) === -1) ? true : false,
+                this.isDown = (Math.sign(height) === 1) ? true : false,
+                this.isLeft = (Math.sign(width) === -1) ? true : false,
+                this.isRight = (Math.sign(width) === 1) ? true : false,
+                this.lgx1Variance = Math.ceil(Math.random() * this.width),
+                this.lgx1 = this.xPos + this.lgx1Variance,
+                this.lgy1Variance = Math.ceil(Math.random() * this.height),
+                this.lgy1 = this.yPos + this.lgy1Variance,
+                this.lgx2 = this.xPos + this.width,
+                this.lgy2 = this.yPos + this.height,
+                this.linearGradient = context.createLinearGradient(this.lgx1, this.lgy1, this.lgx2, this.lgy2),
+                this.linearGradient.addColorStop(0, this.fillColor[0]),
+                this.linearGradient.addColorStop(Math.random(), this.fillColor[1]),
+                this.linearGradient.addColorStop(1, this.fillColor[2]),
 
-                    this.drawRectangle = function() {
-                        context.fillStyle = this.fillColor;
-                        context.fillRect(this.xPos, this.yPos, this.width, this.height);
-                    },
 
-                    this.updateRectangle = function(newXpos, newYpos) {
-                      this.xPos = newXpos;
-                      this.yPos = newYpos;
-                    }
+                this.drawRectangle = function() {
+                    context.lineWidth = 4.0;
+                    context.fillStyle = this.linearGradient;
+                    context.fillRect(this.xPos, this.yPos, this.width, this.height);
+                    context.strokeStyle = this.fillColor[0];
+                    context.strokeRect(this.xPos, this.yPos, this.width, this.height);
+                },
+
+                this.updateRectangle = function(newXpos, newYpos) {
+                    this.xPos = newXpos;
+                    this.yPos = newYpos;
+                    this.lgx1 = this.xPos + this.lgx1Variance;
+                    this.lgy1 = this.yPos + this.lgy1Variance;
+                }
 
             }
 
@@ -395,26 +424,36 @@
                 document.getElementById('dragY').textContent = mouseUpPosition.dragY;
                 document.getElementById('rectCount').textContent = rectangleArray.length;
                 document.getElementById('undoCount').textContent = undoArray.length;
+                document.getElementById('fps').textContent = fps;
             }
-
 
             //Animation function responsible for drawing
             function animate() {
+
+                /******FPS CALCULATION START******/
+                if (!lastTimeCalled) {
+                    lastTimeCalled = Date.now();
+                    fps = 0;
+                }
+                timeDiff = (Date.now() - lastTimeCalled) / 1000;
+                lastTimeCalled = Date.now();
+                fps = Math.round(1 / timeDiff);
+                /******FPS CALCULATION END******/
+
                 requestAnimationFrame(animate);
                 context.clearRect(0, 0, innerWidth, innerHeight - 166);
 
                 updatePositionStats();
-                // for (var i = 0; i < rectangleArray.length; i++) {
-                //     rectangleArray[i].updateRectangle();
-                // }
+
                 rectangleArray.forEach(function(rectObject) {
                     rectObject.drawRectangle();
                 });
             }
             animate();
 
-            /***************************************************************/
-            //test functions
+            /**********************TEST FUNCTION START*************************/
+
+            //to use this function remove comments inside mouseup event listener
             function testing() {
                 for (var i = 0; i < rectangleArray.length; i++) {
                     console.log("**********************");
@@ -433,16 +472,20 @@
                     console.log("**********************");
                 }
             }
-            /***************************************************************/
+            /**********************TEST FUNCTION END*************************/
 
         } //end of main function
 
-        //returns random rgb() format color on every call
+        //returns random rgb() format color Array on every call
         function getRandomColor() {
             var red = Math.floor(Math.random() * 255);
             var green = Math.floor(Math.random() * 255);
             var blue = Math.floor(Math.random() * 255);
-            return `rgb(${red},${green},${blue})  `;
+            // return `rgb(${red},${green},${blue})  `;
+            return [`rgb(${red},${green},${blue})`,
+                `rgb(${Math.ceil(green/2)},${Math.ceil(blue/2)},${Math.ceil(red/2)})`,
+                `rgb(${Math.ceil(blue/3)},${Math.ceil(red/3)},${Math.ceil(green/3)})`
+            ];
         }
     </script>
 </body>
