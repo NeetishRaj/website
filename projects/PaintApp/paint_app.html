@@ -105,7 +105,7 @@
         </div>
     </div>
     <script>
-        "use strict"
+        "use strict";
 
         function main() {
 
@@ -412,6 +412,8 @@
                     this.yPos = newYpos;
                     this.lgx1 = this.xPos + this.lgx1Variance;
                     this.lgy1 = this.yPos + this.lgy1Variance;
+                    this.lgx2 = this.xPos + this.width;
+                    this.lgy2 = this.yPos + this.height;
                 }
 
             }
