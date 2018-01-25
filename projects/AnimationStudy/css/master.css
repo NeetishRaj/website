@@ -1,0 +1,40 @@
+body{
+  color: #211212;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.container{
+  margin: 100px;
+}
+
+.face{
+  height: 150px;
+  width: 150px;
+  padding: 10px;
+}
+
+.face1{
+  background: red;
+}
+
+.face2{
+  background: green;
+}
+
+.face3{
+  background: yellow;
+}
+
+.face4{
+  background: cyan;
+}
+
+.face5{
+  background: blue;
+}
+
+.face6{
+  background: black;
+}
