@@ -44,8 +44,8 @@
         cx.fillRect(50,50,100,100);
 
         this.ondevicemotion = function(e){
-          alpha = Math.floor(e.event.accelerationIncludingGravity.x  * (h - 50));
-          beta = Math.floor(event.accelerationIncludingGravity.y  * (w - 50));
+          alpha = Math.floor(e.accelerationIncludingGravity.x  * (h - 50));
+          beta = Math.floor(e.accelerationIncludingGravity.y  * (w - 50));
           box.update(alpha, beta, 50);
         }
 
@@ -71,16 +71,6 @@
         }, 17);
     }
 
-    /*
-    @Morpheus might be better if you used
-
-ondevicemotion instead of ondeviceorientation the attributes
-
-event.accelerationIncludingGravity.x
-event.accelerationIncludingGravity.y
-
-similarly to what i did in this code
-    */
     </script>
   </body>
 </html>
