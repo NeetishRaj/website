@@ -10,6 +10,9 @@
         color: #FFF;
         text-align: center;
       }
+      canvas {
+        border: 1px solid black;
+      }
 		</style>
     </head>
     <body>
@@ -65,16 +68,15 @@ var newShape = function(x,y,hspd,vspd,r,s){
         });
     }
     shape.move = function(){
-        with(shape){
-            x += hspd;
-            y += vspd;
-            if(x < r || x > dim-r){
-                hspd *= -1;
-            }
-            if(y < r || y > dim-r){
-                vspd *= -1;
-            }
-            a += aspd;
+
+        this.x += this.hspd;
+        this.y += this.vspd;
+
+        if( this.x < this.r || this.x > dim - this.r){
+          this.hspd *= -1;
+        }
+        if( this.y < this.r || this.y > dim - this.r){
+          this.vspd *= -1;
         }
     }
     shape.collide = function(shape2){
