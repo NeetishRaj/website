@@ -32,46 +32,35 @@ p{
   width:90%;
 }
 
-#showcase .showcase-right, #testimonial .showcase-right{
-  margin-top: 90px;
-}
-
 #showcase h1{
   text-align: center;
 }
 
-#colorStudy .showcase-left{
-  margin-top: 180px;
-}
-
-#testimonial{
+section.testimonial{
   background: #f1f1f1;
   padding: 50px 0 30px 0;
   text-align: center;
   margin-top: 40px;
 }
 
-#testimonial p{
+section.testimonial p{
   color: #000;
   font-family: 'Josefin sans';
   font-size: 24px;
 }
 
-#testimonial p.customer{
+section.testimonial p.customer{
   color:#666;
   font-size: 20px;
 }
 
-#info1 .info-left {
-  margin-top: 90px;
+section {
+  margin-top: 40px;
 }
 
-#info1 .info-right{
-  margin-top: 180px;
-}
-
-#info2{
-  margin: 20px 0 60px 0;
+section > div > div {
+	display: flex;
+	align-items: center;
 }
 
 #contact{
