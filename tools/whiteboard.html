@@ -131,6 +131,7 @@ function init() {
 
         const D = hypot(p2.x - p1.x, p2.y - p1.y);
     
+		var last_stroke = strokes_array[strokes_array.length - 1];
         for(let i = 0; i < D; i += pen_sharpness) {
             let x0, y0;
 
@@ -142,13 +143,15 @@ function init() {
             else
                 x0 = (1 - t) * p1.x + t * p2.x;
 
-
             if(p1.y == p2.y)
                 y0 = p1.y;
             else
                 y0 = (1 - t) * p1.y + t * p2.y;
 
             draw_dot(x0, y0);
+
+			last_stroke.push({x:x0, y: y0});
+
         }
     }
 
@@ -163,12 +166,18 @@ function init() {
 		if(e.type === 'touchmove') {
 			draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
 		} else if(e.type === 'mousemove' && is_pen_down) {
-			draw_dot(e.clientX, e.clientY);
+			// draw_dot(e.clientX, e.clientY);
+			//strokes_array.push([{x: e.clientX, y: e.clientY}])
 			points_array.push({x: e.clientX, y: e.clientY});
-			if(points_array.length > 2) {
-				renderLine(points_array[points_array.length - 2], points_array[points_array.length - 1]);
+
+			console.log(strokes_array);
+			var last_stroke = strokes_array[strokes_array.length - 1];
+			last_stroke.push({x: e.clientX, y: e.clientY});
+			if(last_stroke.length > 2) {
+				renderLine(last_stroke[last_stroke.length - 2], last_stroke[last_stroke.length - 1]);
 			}
 		} else if(e.type === 'click') {
+			strokes_array.push([{x: e.clientX, y: e.clientY}])
 			draw_dot(e.clientX, e.clientY);
 		}
 
@@ -208,7 +217,8 @@ function init() {
 
 	function pen_down() {
 		is_pen_down = true;
-		is_new_stroke = false;
+		// is_new_stroke = false;
+		strokes_array.push([])
 		// console.log("Pen Down");
 	}
 
