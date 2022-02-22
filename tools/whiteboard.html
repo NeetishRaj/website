@@ -3,49 +3,52 @@
 
 <head>
 	<title>Whiteboard</title>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<!--<meta http-equiv="refresh" content="60">-->
-	<meta name="author" content="Neetish Raj">
-	<meta name="keywords" content="whiteboard, white, board, sketch, sketchboard, free, online, sketch">
-	<meta name="description" content="Simple and free online Whiteboard for your meetings">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet">
+	<meta name="author" content="Neetish Raj" />
+	<meta name="keywords" content="whiteboard, white, board, sketch, sketchboard, free, online, sketch" />
+	<meta name="description" content="Simple and free online Whiteboard for your meetings" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet" />
 
-	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico">
-	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png">
-	<link rel="manifest" href="../manifest.json">
-	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="theme-color" content="#ffffff">
+	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+	<link rel="manifest" href="../manifest.json" />
+	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="theme-color" content="#ffffff" />
 
 	<style>
-		body, html {
+		body,
+		html {
 			margin: 0;
 			padding: 0;
 		}
 
-		#whiteboard {
+		canvas {
 			background-color: #cfcfcf;
 			position: fixed;
 
 			width: 100vw;
 			height: 100vh;
 
-			cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==") 0 16, auto;
+			cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==") 0 16,
+				auto;
 		}
 
 		.tools-wrapper {
 			border: 5px solid black;
 			border-radius: 100px;
 
-			width:50px;
+			width: 50px;
 			min-height: 400px;
 			position: fixed;
 			/* z-index: 1; */
-			top: calc(100vh/2 - 200px);
+			top: calc(100vh / 2 - 200px);
 			left: 10px;
+			z-index: 10;
 
 			display: flex;
 			flex-direction: column;
@@ -61,199 +64,367 @@
 
 			cursor: pointer;
 		}
-
-		 
 	</style>
 </head>
 
 <body>
-	<canvas id="whiteboard">
-    </canvas>
+	<!-- <canvas id="whiteboard">
+    </canvas> -->
 
 	<div class="tools-wrapper">
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
-		<div class="tools-icon">
-
-		</div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
+		<div class="tools-icon"></div>
 	</div>
-<script>
+	<script>
+		const { PI, hypot, sqrt, sin, cos, round } = Math;
 
-const { PI, hypot, sqrt, sin, cos, round } = Math;
+		const PEN_COLOR = Object.freeze({
+			BLACK: "#000000",
+			RED: "#FF0000",
+			GREEN: "#00FF00",
+			BLUE: "#0000FF",
+			ERASE: "#dfdfdf",
+		});
 
-function init() {
-	var whiteboard = document.querySelector("#whiteboard");
-	var ctx = whiteboard.getContext("2d");
-
-	var whiteboard_color = '#dfdfdf';
-	var is_pen_down = false;
-	var pen_radius = 3;
-	var pen_sharpness = 2;
-	var pen_color = "black";
-	var is_new_stroke = false;
-	var supported_pen_colors = ['black', 'red', 'green', 'blue'];
-	var current_pen_color = 0;
-	var points_array = [];
-	var strokes_array = [];
-	var strokes_index = 0;
-	
-
-	// Designed on https://www.piskelapp.com/p/create/sprite by Neetish Raj
-	var pen_cursor_black = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==";
-	var pen_cursor_red = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlJJREFUWEelV1mWxCAIxL7/mYd5CCirzJKPfp1EWYoqMAsWwEIABKC/gPIL++In6Woe54XFE7uXfP/PuotEc7hWi9ijvyIAv6RO9m5bCwER8AsAPozYagEK2RO4xlKN9g/CQU0UF8CHbwTcGYI+2m1lAUYO+PS2c3JMP4QG8UmuN7piZy+S/YFvEch0j6jsFbJ+GER1fDnxYGeOso4mmjiwkzu6+VwJ0Vp2TvjSy4dqTgBnzSSxBei8k3Ar5yHk0j4xRYMsZZ9Za3xzdpLBJp3EllB95TSQkNMQXh3CKdGu8w048bVRlQlB/1oSWto2wkFiOpeTPJHmd5npaXZu4Q/p31tft5qnvGY3GYsr/ZcOTjFQJ2olpzLjJTm9qWHczD1kxy7F4s1q9xioL5tM5JFxu8O6meRqznOL6/GYW9PLLEOGF792zVnKnu2GcE2S8XFedkcwB3ALpQHv5G1y0pkJ783FHuDSXV19lg1Hc7qqU17s63tVS7jL5Ff9WTiaXmmM0Rfd6WyTidPPt4dTpzG/LkEpr6n6PAljuSqND1xw3bZo0e2s2naPcQnplajiec93je1rxCjLnAZnGrfK6+LzLqtDQ7mzPJIk4YeqPo9WFqQjwLYG5kUvrleQs+VCBTWIMfLqkGHoktt+T9Rkeg67bL1nPIXvjLc5j8AkZfMRU5qd3qdNVL4XblNA0eBL8KkZcTesx/GvHPPiX21x5H7u1Jcdtuo8fj/0monzolBBdYr+SWd6Y9BVOgRgb8d+2n89jwcUj0MmtEvmjzKthlYhnW/eFREzmms7QAAAAABJRU5ErkJggg==";
-	var pen_cursor_green = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlBJREFUWEelV0lyBCEMg/z/zUMKb1jGBibpQ6p6GrzIkiC9/evprbXx7witQZxvg9r6Wcl8kWfFqSN22WAr3pP78L23MT5D01MR9P0UrrfWbYvteEQTAw+YAmPgkIjBcXMCWV520cygNoe0MofwAzPA6VptOq3hRjA/ej7dptHb6J/eZvswwdV94ITOhRHhnRtU9QhCPQj7DPRDQCiiW+ysn/lbmFUQxMZn+oGSc0D5O6dAP9G7Sy5MOyC7FXChoetcekLSUXLtdsER+nevSzJ39TLhPFF88kUHjuSrEARmZYSPewq5eIAX7GAyU8Qnwh2hXI0c9GqONoqyeeZ9qBCgL07B7TLnVWalD/j+VCQaA4fG1KKw6gAgfkX5pOTIE9Sylmso6xCdy8WZ54pBPoTZA2PDyBi9ZVjqcEo7gv3sVWI2uooIrM/CCDhgsCi2HzlQJK0sZthTQWSH863MnK2AuZThWbTtojRgDW83hcSIKIoVoGyWlll8JpB1EM0PfmJ5X7s1WQFBHMMOC/kAR3dCJqZndJoz/MtIruucaKjV6wasxQrb7bEawdHHUtHDaKqr4uaw+2n4ljlkUwIoptk9tQAtQeBQQiK9mCs7cNKIQTHJGneWoxOnFIidvF6urgh42qgRZB1ZjYCSf8lnIAVcWP2MKx4Ie1RNN+hKXt4Jy416GfmD3uGC4qCsjIh15K90y8RKlt7dYZcJh33ZmazJkXL/I0CpSOouXnslYSUhDWD1H5pIP+0yPDhFvJgoZNuWBygTLwkX2Ae3+d4uyx2/EYsLNOiPRfkAAAAASUVORK5CYII=";
-	var pen_cursor_blue = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAk9JREFUWEedV1mWBCEI07n/mcd5yBYQl5r+qK7XIksg0e6ttdbp0Vob89lbl7cxVwYbDHkXW9zEy721wR7sY1vYZ1zlRdpGXxKa3pMTyXDayVJKRePRqtYiSWt5tU+trVEafZShxfkmpNc6GD+ym1Dws4gbIcKMAQNEefWxtGK08QvFd8qhx+hVAY760jM3v1TeaTKGx7JZsWpywcuMULowaGf7hIzAHqdOuqkz7TOxcU3jqeOPr6H3BQ5ceVj4Uao8B9cRfSobhmpWHpOC4My3VLnWqRMVmkxdUDRREVAPjE7DbIHjSUqA2pTJqgBKEeEMGFSCs1AtK42JSFH5HVzBRvPUshBglSCFz/iOLdRS14hXIm2kBvaV026wlz2/V46MCgOVMBitochY0XNYRD+vVANdlrxd3ubAKG+SoQTf9Fy196rSNy2qHfyDat5LI1UZO/LC4At5mMoQ/CbtAvtUXoAdOH06kRcgXYA5iBzLEns2aVaiC2zDwW1Q7BdTU3C21F+xvBwgLwQVi7dzZi7fp4AxAxE8Hzi5/NQeXObnPuvJO78eLR8otBZ8olVudXmfgCnteinDm9iuV/lauBnyYh72XHUEks15S75e+nnyVRbsQuKnQTy9bg4ZrccLYAHZjgXV3bim1eOw7cxiAlJuEqXQ0wWRCqIbbJDNlQUffLHbjxvoDil/Ri7qYsv3CCcEcysEgbvTsBHNP24tE3jz8WZVBdj+QRIO1noCJw9f9orL5TMDHoToFdXVFfzyDz1IM3CAWZfyd6EOe6xW/3/ydgw1zN04NQAAAABJRU5ErkJggg==";
-	
-	whiteboard.width = window.innerWidth;
-	whiteboard.height = window.innerHeight;
-	whiteboard.style.backgroundColor = whiteboard_color;
-	
-	ctx.fillStyle = pen_color;
-
-    function renderLine(p1, p2, d = pen_radius) {
-        //console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
-
-        const D = hypot(p2.x - p1.x, p2.y - p1.y);
-    
-		var last_stroke = strokes_array[strokes_array.length - 1];
-        for(let i = 0; i < D; i += pen_sharpness) {
-            let x0, y0;
-
-            const dt = i;
-            const t = dt / D;
-
-            if(p1.x == p2.x)
-                x0 = p1.x;
-            else
-                x0 = (1 - t) * p1.x + t * p2.x;
-
-            if(p1.y == p2.y)
-                y0 = p1.y;
-            else
-                y0 = (1 - t) * p1.y + t * p2.y;
-
-            draw_dot(x0, y0);
-
-			last_stroke.push({x:x0, y: y0});
-
-        }
-    }
-
-	function draw_dot(x, y) {
-		ctx.beginPath();
-		ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
-		ctx.fill();
-	}
-	
-	function draw (e) {
-
-		if(e.type === 'touchmove') {
-			draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-		} else if(e.type === 'mousemove' && is_pen_down) {
-			// draw_dot(e.clientX, e.clientY);
-			//strokes_array.push([{x: e.clientX, y: e.clientY}])
-			points_array.push({x: e.clientX, y: e.clientY});
-
-			console.log(strokes_array);
-			var last_stroke = strokes_array[strokes_array.length - 1];
-			last_stroke.push({x: e.clientX, y: e.clientY});
-			if(last_stroke.length > 2) {
-				renderLine(last_stroke[last_stroke.length - 2], last_stroke[last_stroke.length - 1]);
+		class Stroke {
+			constructor(
+				color = "",
+				points,
+				isLine = false,
+				penSize = 3,
+				penSharpeness = 2
+			) {
+				this.color = color;
+				this.points = points;
+				this.is_line = isLine;
+				this.pen_size = pensize;
+				this.pen_sharpeness = penSharpeness;
 			}
-		} else if(e.type === 'click') {
-			strokes_array.push([{x: e.clientX, y: e.clientY}])
-			draw_dot(e.clientX, e.clientY);
+
+			static DEFAULT_PEN_SIZE = 3;
+			static DEFAULT_PEN_SHARPNESS = 2;
 		}
 
-	}
+		class Whiteboard {
+			constructor(
+				parent = document.body,
+				color = PEN_COLOR.ERASE,
+				is_pen_down = false
+			) {
+				this.parent = parent;
+				this.create_canvas();
 
-	function change_marker_color(pen_color) {
-		if(!pen_color)
-			pen_color = supported_pen_colors[++current_pen_color % supported_pen_colors.length];
-		
-		ctx.fillStyle = pen_color;
+				this.color = color;
+				this.is_pen_down = is_pen_down;
+				this.strokes_array = [];
 
-		switch (pen_color) {
-			case 'black': 
-				whiteboard.style.cursor = `url(${pen_cursor_black}) 0 16, auto`;
-				break;
-			case 'red': 
-				whiteboard.style.cursor = `url(${pen_cursor_red}) 0 16, auto`;
-				break;
-			case 'green': 
-				whiteboard.style.cursor = `url(${pen_cursor_green}) 0 16, auto`;
-				break;
-			case 'blue': 
-				whiteboard.style.cursor = `url(${pen_cursor_blue}) 0 16, auto`;
-				break;
-			default:
-				ctx.fillStyle = 'black';
-				whiteboard.style.cursor = `url(${pen_cursor_black}) 0 16, auto`;
-				break;
+				this.current_pen_color = 0;
+			}
+
+			create_canvas() {
+				this.board = document.createElement("CANVAS");
+				this.ctx = this.board.getContext("2d");
+				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
+
+				this.board.style.backgroundColor = PEN_COLOR.ERASE;
+				this.board.style.width = this.board.width = window.innerWidth;
+				this.board.style.height = this.board.height = window.innerHeight;
+				this.board.style.cursor = Whiteboard.pen_cursor_black;
+
+				this.parent.appendChild(this.board);
+			}
+
+			draw_dot(x, y, pen_radius = Stroke.DEFAULT_PEN_SIZE) {
+				//console.log(`${x}, ${y}, ${pen_radius}`)
+				this.ctx.beginPath();
+				this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
+				this.ctx.fill();
+			}
+
+			renderLine(p1, p2, d = Stroke.DEFAULT_PEN_SIZE) {
+				//console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
+
+				const D = hypot(p2.x - p1.x, p2.y - p1.y);
+
+				var last_stroke = this.strokes_array[this.strokes_array.length - 1];
+				for (let i = 0; i < D; i += Stroke.DEFAULT_PEN_SHARPNESS) {
+					let x0, y0;
+
+					const dt = i;
+					const t = dt / D;
+
+					if (p1.x == p2.x) x0 = p1.x;
+					else x0 = (1 - t) * p1.x + t * p2.x;
+
+					if (p1.y == p2.y) y0 = p1.y;
+					else y0 = (1 - t) * p1.y + t * p2.y;
+
+					this.draw_dot(x0, y0);
+
+					last_stroke.push({ x: x0, y: y0 });
+				}
+			}
+
+			draw = (e) => {
+				console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
+
+				if (e.type === "touchmove") {
+					this.draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+				} else if (
+					e.type === "mousemove" &&
+					this.is_pen_down &&
+					e.which === 1
+				) {
+					console.log("Moving");
+					const last_stroke = this.strokes_array[this.strokes_array.length - 1];
+					last_stroke.push({ x: e.clientX, y: e.clientY });
+					if (last_stroke.length > 2) {
+						this.renderLine(
+							last_stroke[last_stroke.length - 2],
+							last_stroke[last_stroke.length - 1]
+						);
+					}
+				} else if (e.type === "click") {
+					this.strokes_array.push([{ x: e.clientX, y: e.clientY }]);
+					this.draw_dot(e.clientX, e.clientY);
+				} else if (e.type === "contextmenu") {
+					var last_stroke = this.strokes_array[this.strokes_array.length - 1];
+					last_stroke.push({ x: e.clientX, y: e.clientY });
+					if (last_stroke.length > 2) {
+						this.renderLine(
+							last_stroke[last_stroke.length - 2],
+							last_stroke[last_stroke.length - 1]
+						);
+					}
+				}
+			}
+
+			change_marker_color(pen_color) {
+				if (!pen_color) {
+					this.current_pen_color =
+						(this.current_pen_color + 1) %
+						Whiteboard.supported_pen_colors.length;
+					pen_color = Whiteboard.supported_pen_colors[this.current_pen_color];
+				}
+
+				this.ctx.fillStyle = pen_color;
+
+				switch (pen_color) {
+					case PEN_COLOR.BLACK:
+						this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
+						break;
+					case PEN_COLOR.RED:
+						this.board.style.cursor = `url(${Whiteboard.pen_cursor_red}) 0 16, auto`;
+						break;
+					case PEN_COLOR.GREEN:
+						this.board.style.cursor = `url(${Whiteboard.pen_cursor_green}) 0 16, auto`;
+						break;
+					case PEN_COLOR.BLUE:
+						this.board.style.cursor = `url(${Whiteboard.pen_cursor_blue}) 0 16, auto`;
+						break;
+					default:
+						ctx.fillStyle = PEN_COLOR.BLACK;
+						this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
+						break;
+				}
+			}
+
+			static default_pen_color = PEN_COLOR.BLACK;
+			static supported_pen_colors = [
+				PEN_COLOR.BLACK,
+				PEN_COLOR.RED,
+				PEN_COLOR.GREEN,
+				PEN_COLOR.BLUE,
+			];
+
+			static pen_cursor_black =
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==";
+			static pen_cursor_red =
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlJJREFUWEelV1mWxCAIxL7/mYd5CCirzJKPfp1EWYoqMAsWwEIABKC/gPIL++In6Woe54XFE7uXfP/PuotEc7hWi9ijvyIAv6RO9m5bCwER8AsAPozYagEK2RO4xlKN9g/CQU0UF8CHbwTcGYI+2m1lAUYO+PS2c3JMP4QG8UmuN7piZy+S/YFvEch0j6jsFbJ+GER1fDnxYGeOso4mmjiwkzu6+VwJ0Vp2TvjSy4dqTgBnzSSxBei8k3Ar5yHk0j4xRYMsZZ9Za3xzdpLBJp3EllB95TSQkNMQXh3CKdGu8w048bVRlQlB/1oSWto2wkFiOpeTPJHmd5npaXZu4Q/p31tft5qnvGY3GYsr/ZcOTjFQJ2olpzLjJTm9qWHczD1kxy7F4s1q9xioL5tM5JFxu8O6meRqznOL6/GYW9PLLEOGF792zVnKnu2GcE2S8XFedkcwB3ALpQHv5G1y0pkJ783FHuDSXV19lg1Hc7qqU17s63tVS7jL5Ff9WTiaXmmM0Rfd6WyTidPPt4dTpzG/LkEpr6n6PAljuSqND1xw3bZo0e2s2naPcQnplajiec93je1rxCjLnAZnGrfK6+LzLqtDQ7mzPJIk4YeqPo9WFqQjwLYG5kUvrleQs+VCBTWIMfLqkGHoktt+T9Rkeg67bL1nPIXvjLc5j8AkZfMRU5qd3qdNVL4XblNA0eBL8KkZcTesx/GvHPPiX21x5H7u1Jcdtuo8fj/0monzolBBdYr+SWd6Y9BVOgRgb8d+2n89jwcUj0MmtEvmjzKthlYhnW/eFREzmms7QAAAAABJRU5ErkJggg==";
+			static pen_cursor_green =
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlBJREFUWEelV0lyBCEMg/z/zUMKb1jGBibpQ6p6GrzIkiC9/evprbXx7witQZxvg9r6Wcl8kWfFqSN22WAr3pP78L23MT5D01MR9P0UrrfWbYvteEQTAw+YAmPgkIjBcXMCWV520cygNoe0MofwAzPA6VptOq3hRjA/ej7dptHb6J/eZvswwdV94ITOhRHhnRtU9QhCPQj7DPRDQCiiW+ysn/lbmFUQxMZn+oGSc0D5O6dAP9G7Sy5MOyC7FXChoetcekLSUXLtdsER+nevSzJ39TLhPFF88kUHjuSrEARmZYSPewq5eIAX7GAyU8Qnwh2hXI0c9GqONoqyeeZ9qBCgL07B7TLnVWalD/j+VCQaA4fG1KKw6gAgfkX5pOTIE9Sylmso6xCdy8WZ54pBPoTZA2PDyBi9ZVjqcEo7gv3sVWI2uooIrM/CCDhgsCi2HzlQJK0sZthTQWSH863MnK2AuZThWbTtojRgDW83hcSIKIoVoGyWlll8JpB1EM0PfmJ5X7s1WQFBHMMOC/kAR3dCJqZndJoz/MtIruucaKjV6wasxQrb7bEawdHHUtHDaKqr4uaw+2n4ljlkUwIoptk9tQAtQeBQQiK9mCs7cNKIQTHJGneWoxOnFIidvF6urgh42qgRZB1ZjYCSf8lnIAVcWP2MKx4Ie1RNN+hKXt4Jy416GfmD3uGC4qCsjIh15K90y8RKlt7dYZcJh33ZmazJkXL/I0CpSOouXnslYSUhDWD1H5pIP+0yPDhFvJgoZNuWBygTLwkX2Ae3+d4uyx2/EYsLNOiPRfkAAAAASUVORK5CYII=";
+			static pen_cursor_blue =
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAk9JREFUWEedV1mWBCEI07n/mcd5yBYQl5r+qK7XIksg0e6ttdbp0Vob89lbl7cxVwYbDHkXW9zEy721wR7sY1vYZ1zlRdpGXxKa3pMTyXDayVJKRePRqtYiSWt5tU+trVEafZShxfkmpNc6GD+ym1Dws4gbIcKMAQNEefWxtGK08QvFd8qhx+hVAY760jM3v1TeaTKGx7JZsWpywcuMULowaGf7hIzAHqdOuqkz7TOxcU3jqeOPr6H3BQ5ceVj4Uao8B9cRfSobhmpWHpOC4My3VLnWqRMVmkxdUDRREVAPjE7DbIHjSUqA2pTJqgBKEeEMGFSCs1AtK42JSFH5HVzBRvPUshBglSCFz/iOLdRS14hXIm2kBvaV026wlz2/V46MCgOVMBitochY0XNYRD+vVANdlrxd3ubAKG+SoQTf9Fy196rSNy2qHfyDat5LI1UZO/LC4At5mMoQ/CbtAvtUXoAdOH06kRcgXYA5iBzLEns2aVaiC2zDwW1Q7BdTU3C21F+xvBwgLwQVi7dzZi7fp4AxAxE8Hzi5/NQeXObnPuvJO78eLR8otBZ8olVudXmfgCnteinDm9iuV/lauBnyYh72XHUEks15S75e+nnyVRbsQuKnQTy9bg4ZrccLYAHZjgXV3bim1eOw7cxiAlJuEqXQ0wWRCqIbbJDNlQUffLHbjxvoDil/Ri7qYsv3CCcEcysEgbvTsBHNP24tE3jz8WZVBdj+QRIO1noCJw9f9orL5TMDHoToFdXVFfzyDz1IM3CAWZfyd6EOe6xW/3/ydgw1zN04NQAAAABJRU5ErkJggg==";
 		}
-	}
 
-	function pen_up() {
-		is_pen_down = false;
-		// is_new_stroke = true;
-		// console.log("Pen Up");
-	}
+		let whiteboard;
+		function init() {
+			whiteboard = new Whiteboard();
 
-	function pen_down() {
-		is_pen_down = true;
-		// is_new_stroke = false;
-		strokes_array.push([])
-		// console.log("Pen Down");
-	}
+			// var whiteboard = document.querySelector("#whiteboard");
+			// var ctx = whiteboard.getContext("2d");
 
+			// var is_pen_down = false;
+			// var pen_radius = 3;
+			// var pen_sharpness = 2;
+			// var pen_color = "black";
+			// var supported_pen_colors = ["black", "red", "green", "blue"];
+			// var current_pen_color = 0;
+			// var strokes_array = [];
+			// var strokes_index = 0;
 
-	function click_handler(event) {
-		console.log(event);
-		if(event.ctrlKey)
-			change_marker_color();
-		else {
-			draw(event);
+			// Designed on https://www.piskelapp.com/p/create/sprite by Neetish Raj
+			// var pen_cursor_black =
+			//   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==";
+			// var pen_cursor_red =
+			//   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlJJREFUWEelV1mWxCAIxL7/mYd5CCirzJKPfp1EWYoqMAsWwEIABKC/gPIL++In6Woe54XFE7uXfP/PuotEc7hWi9ijvyIAv6RO9m5bCwER8AsAPozYagEK2RO4xlKN9g/CQU0UF8CHbwTcGYI+2m1lAUYO+PS2c3JMP4QG8UmuN7piZy+S/YFvEch0j6jsFbJ+GER1fDnxYGeOso4mmjiwkzu6+VwJ0Vp2TvjSy4dqTgBnzSSxBei8k3Ar5yHk0j4xRYMsZZ9Za3xzdpLBJp3EllB95TSQkNMQXh3CKdGu8w048bVRlQlB/1oSWto2wkFiOpeTPJHmd5npaXZu4Q/p31tft5qnvGY3GYsr/ZcOTjFQJ2olpzLjJTm9qWHczD1kxy7F4s1q9xioL5tM5JFxu8O6meRqznOL6/GYW9PLLEOGF792zVnKnu2GcE2S8XFedkcwB3ALpQHv5G1y0pkJ783FHuDSXV19lg1Hc7qqU17s63tVS7jL5Ff9WTiaXmmM0Rfd6WyTidPPt4dTpzG/LkEpr6n6PAljuSqND1xw3bZo0e2s2naPcQnplajiec93je1rxCjLnAZnGrfK6+LzLqtDQ7mzPJIk4YeqPo9WFqQjwLYG5kUvrleQs+VCBTWIMfLqkGHoktt+T9Rkeg67bL1nPIXvjLc5j8AkZfMRU5qd3qdNVL4XblNA0eBL8KkZcTesx/GvHPPiX21x5H7u1Jcdtuo8fj/0monzolBBdYr+SWd6Y9BVOgRgb8d+2n89jwcUj0MmtEvmjzKthlYhnW/eFREzmms7QAAAAABJRU5ErkJggg==";
+			// var pen_cursor_green =
+			//   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlBJREFUWEelV0lyBCEMg/z/zUMKb1jGBibpQ6p6GrzIkiC9/evprbXx7witQZxvg9r6Wcl8kWfFqSN22WAr3pP78L23MT5D01MR9P0UrrfWbYvteEQTAw+YAmPgkIjBcXMCWV520cygNoe0MofwAzPA6VptOq3hRjA/ej7dptHb6J/eZvswwdV94ITOhRHhnRtU9QhCPQj7DPRDQCiiW+ysn/lbmFUQxMZn+oGSc0D5O6dAP9G7Sy5MOyC7FXChoetcekLSUXLtdsER+nevSzJ39TLhPFF88kUHjuSrEARmZYSPewq5eIAX7GAyU8Qnwh2hXI0c9GqONoqyeeZ9qBCgL07B7TLnVWalD/j+VCQaA4fG1KKw6gAgfkX5pOTIE9Sylmso6xCdy8WZ54pBPoTZA2PDyBi9ZVjqcEo7gv3sVWI2uooIrM/CCDhgsCi2HzlQJK0sZthTQWSH863MnK2AuZThWbTtojRgDW83hcSIKIoVoGyWlll8JpB1EM0PfmJ5X7s1WQFBHMMOC/kAR3dCJqZndJoz/MtIruucaKjV6wasxQrb7bEawdHHUtHDaKqr4uaw+2n4ljlkUwIoptk9tQAtQeBQQiK9mCs7cNKIQTHJGneWoxOnFIidvF6urgh42qgRZB1ZjYCSf8lnIAVcWP2MKx4Ie1RNN+hKXt4Jy416GfmD3uGC4qCsjIh15K90y8RKlt7dYZcJh33ZmazJkXL/I0CpSOouXnslYSUhDWD1H5pIP+0yPDhFvJgoZNuWBygTLwkX2Ae3+d4uyx2/EYsLNOiPRfkAAAAASUVORK5CYII=";
+			// var pen_cursor_blue =
+			//   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAk9JREFUWEedV1mWBCEI07n/mcd5yBYQl5r+qK7XIksg0e6ttdbp0Vob89lbl7cxVwYbDHkXW9zEy721wR7sY1vYZ1zlRdpGXxKa3pMTyXDayVJKRePRqtYiSWt5tU+trVEafZShxfkmpNc6GD+ym1Dws4gbIcKMAQNEefWxtGK08QvFd8qhx+hVAY760jM3v1TeaTKGx7JZsWpywcuMULowaGf7hIzAHqdOuqkz7TOxcU3jqeOPr6H3BQ5ceVj4Uao8B9cRfSobhmpWHpOC4My3VLnWqRMVmkxdUDRREVAPjE7DbIHjSUqA2pTJqgBKEeEMGFSCs1AtK42JSFH5HVzBRvPUshBglSCFz/iOLdRS14hXIm2kBvaV026wlz2/V46MCgOVMBitochY0XNYRD+vVANdlrxd3ubAKG+SoQTf9Fy196rSNy2qHfyDat5LI1UZO/LC4At5mMoQ/CbtAvtUXoAdOH06kRcgXYA5iBzLEns2aVaiC2zDwW1Q7BdTU3C21F+xvBwgLwQVi7dzZi7fp4AxAxE8Hzi5/NQeXObnPuvJO78eLR8otBZ8olVudXmfgCnteinDm9iuV/lauBnyYh72XHUEks15S75e+nnyVRbsQuKnQTy9bg4ZrccLYAHZjgXV3bim1eOw7cxiAlJuEqXQ0wWRCqIbbJDNlQUffLHbjxvoDil/Ri7qYsv3CCcEcysEgbvTsBHNP24tE3jz8WZVBdj+QRIO1noCJw9f9orL5TMDHoToFdXVFfzyDz1IM3CAWZfyd6EOe6xW/3/ydgw1zN04NQAAAABJRU5ErkJggg==";
+
+			// whiteboard.width = window.innerWidth;
+			// whiteboard.height = window.innerHeight;
+			// whiteboard.style.backgroundColor = PEN_COLOR.ERASE;
+
+			// ctx.fillStyle = pen_color;
+
+			// function renderLine(p1, p2, d = pen_radius) {
+			//   //console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
+
+			//   const D = hypot(p2.x - p1.x, p2.y - p1.y);
+
+			//   var last_stroke = strokes_array[strokes_array.length - 1];
+			//   for (let i = 0; i < D; i += pen_sharpness) {
+			//     let x0, y0;
+
+			//     const dt = i;
+			//     const t = dt / D;
+
+			//     if (p1.x == p2.x) x0 = p1.x;
+			//     else x0 = (1 - t) * p1.x + t * p2.x;
+
+			//     if (p1.y == p2.y) y0 = p1.y;
+			//     else y0 = (1 - t) * p1.y + t * p2.y;
+
+			//     draw_dot(x0, y0);
+
+			//     last_stroke.push({ x: x0, y: y0 });
+			//   }
+			// }
+
+			// function draw_dot(x, y) {
+			//   ctx.beginPath();
+			//   ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
+			//   ctx.fill();
+			// }
+
+			// function draw(e) {
+			//   console.log(e.which);
+			//   if (e.type === "touchmove") {
+			//     draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+			//   } else if (e.type === "mousemove" && is_pen_down && e.which === 1) {
+			//     // draw_dot(e.clientX, e.clientY);
+			//     //strokes_array.push([{x: e.clientX, y: e.clientY}])
+
+			//     //console.log(strokes_array);
+			//     var last_stroke = strokes_array[strokes_array.length - 1];
+			//     last_stroke.push({ x: e.clientX, y: e.clientY });
+			//     if (last_stroke.length > 2) {
+			//       renderLine(
+			//         last_stroke[last_stroke.length - 2],
+			//         last_stroke[last_stroke.length - 1]
+			//       );
+			//     }
+			//   } else if (e.type === "click") {
+			//     strokes_array.push([{ x: e.clientX, y: e.clientY }]);
+			//     draw_dot(e.clientX, e.clientY);
+			//   } else if (e.type === "contextmenu") {
+			//     var last_stroke = strokes_array[strokes_array.length - 1];
+			//     last_stroke.push({ x: e.clientX, y: e.clientY });
+			//     if (last_stroke.length > 2) {
+			//       renderLine(
+			//         last_stroke[last_stroke.length - 2],
+			//         last_stroke[last_stroke.length - 1]
+			//       );
+			//     }
+			//   }
+			// }
+
+			// function change_marker_color(pen_color) {
+			//   if (!pen_color)
+			//     pen_color =
+			//       supported_pen_colors[
+			//         ++current_pen_color % supported_pen_colors.length
+			//       ];
+
+			//   ctx.fillStyle = pen_color;
+
+			//   switch (pen_color) {
+			//     case "black":
+			//       whiteboard.style.cursor = `url(${pen_cursor_black}) 0 16, auto`;
+			//       break;
+			//     case "red":
+			//       whiteboard.style.cursor = `url(${pen_cursor_red}) 0 16, auto`;
+			//       break;
+			//     case "green":
+			//       whiteboard.style.cursor = `url(${pen_cursor_green}) 0 16, auto`;
+			//       break;
+			//     case "blue":
+			//       whiteboard.style.cursor = `url(${pen_cursor_blue}) 0 16, auto`;
+			//       break;
+			//     default:
+			//       ctx.fillStyle = "black";
+			//       whiteboard.style.cursor = `url(${pen_cursor_black}) 0 16, auto`;
+			//       break;
+			//   }
+			// }
+
+			function pen_up() {
+				whiteboard.is_pen_down = false;
+			}
+
+			function pen_down() {
+				whiteboard.is_pen_down = true;
+				whiteboard.strokes_array.push([]);
+			}
+
+			function click_handler(event) {
+				//console.log(event);
+				if (event.ctrlKey)
+					whiteboard.change_marker_color();
+				else {
+					whiteboard.draw(event);
+				}
+			}
+
+			function dblclick_handler() {
+				console.log("Double click handler!");
+			}
+
+			function contextmenu_handler(e) {
+				e.preventDefault();
+
+				whiteboard.draw(e);
+				console.log("Context Menu Handler");
+			}
+
+			whiteboard.board.ontouchmove = whiteboard.draw;
+			whiteboard.board.onmousemove = whiteboard.draw;
+			whiteboard.board.onmousedown = pen_down;
+			whiteboard.board.onmouseup = pen_up;
+			whiteboard.board.onclick = click_handler;
+			whiteboard.board.ondblclick = dblclick_handler;
+			whiteboard.board.oncontextmenu = contextmenu_handler;
+
+			// document.addEventListener('keydown', function (event) {
+			// 	// CTRL + S combo
+			// 	if (event.ctrlKey && event.key === 'd') {
+			// 		document.body.style = "color: white; background-color: #111111";
+			// 	}
+			// 	// CTRL + L combo
+			// 	if (event.ctrlKey && event.key === 'l') {
+			// 		document.body.style = '';
+			// }
 		}
 
-	}
-	
-	
-	whiteboard.ontouchmove = draw;
-	whiteboard.onmousemove = draw;
-	whiteboard.onmousedown = pen_down;
-	whiteboard.onmouseup = pen_up;
-	whiteboard.onclick = click_handler;
-
-	// document.addEventListener('keydown', function (event) {
-	// 	// CTRL + S combo
-	// 	if (event.ctrlKey && event.key === 'd') {
-	// 		document.body.style = "color: white; background-color: #111111";
-	// 	}
-	// 	// CTRL + L combo 
-	// 	if (event.ctrlKey && event.key === 'l') {
-	// 		document.body.style = '';
-	// }
-}
-
-window.onload = init;
-
-</script>
+		window.onload = init;
+	</script>
 </body>
 
 </html>
