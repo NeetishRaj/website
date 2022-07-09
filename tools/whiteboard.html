@@ -145,15 +145,13 @@
 			</span>
 		</div>
 
-		<a href="" id="downloadWhiteboardButton" download="whiteboard.png">
-			<div class="tools-icon">
-				<span class="icon-container">
-					<svg viewBox="0 0 24 24">
-						<path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path>
-					</svg>
-				</span>
-			</div>
-		</a>
+		<div class="tools-icon" id="downloadWhiteboardButton">
+			<span class="icon-container">
+				<svg viewBox="0 0 24 24">
+					<path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path>
+				</svg>
+			</span>
+		</div>
 
 		<div class="tools-icon">
 			<span class="icon-container">
@@ -213,17 +211,19 @@
 
 				this.color = color;
 				this.is_pen_down = is_pen_down;
-				this.strokes_array = [new Stroke()];
+				this.strokes_array = [];
 
 				this.current_pen_color = 0;
 			}
 
-			create_canvas() {
+			create_canvas = () => {
 				this.board = document.createElement("CANVAS");
+				this.board.setAttribute('id', 'whiteboard');
 				this.ctx = this.board.getContext("2d");
+
+				// Set the Pen color to currently selected color
 				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
 
-				this.board.style.backgroundColor = PEN_COLOR.ERASE;
 				this.board.style.width = this.board.width = window.innerWidth;
 				this.board.style.height = this.board.height = window.innerHeight;
 				this.board.style.cursor = Whiteboard.pen_cursor_black;
@@ -298,7 +298,13 @@
 			}
 
 			clear_white_board() {
-				this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+				// Draw the canvas background with default color
+				this.ctx.fillStyle = PEN_COLOR.ERASE;
+				this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+				// Change the Pen color back to selected color
+				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
+				
 				this.strokes_array = [];
 			}
 
@@ -360,6 +366,7 @@
 		let whiteboard;
 		function init() {
 			whiteboard = new Whiteboard();
+			whiteboard.clear_white_board();
 
 			function pen_up() {
 				whiteboard.is_pen_down = false;
@@ -402,11 +409,10 @@
 			}
 
 			function download_whiteboard_to_png() {
-				downloadWhiteboardButton.href = this.whiteboard.board
-					.toDataURL('image/png')
-					.replace(/^data:image\/[^;]/, 'data:application/octet-stream')
-				// this.href = dt.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-				// this.whiteboard.board.
+				const link = document.createElement('a');
+				link.download = 'whiteboard.png';
+				link.href = document.getElementById('whiteboard').toDataURL()
+				link.click();
 			}
 
 			whiteboard.board.ontouchmove = whiteboard.draw;
@@ -418,7 +424,7 @@
 			whiteboard.board.oncontextmenu = contextmenu_handler;
 
 			eraserButton.onclick = toggle_eraser;
-
+			downloadWhiteboardButton.onclick = download_whiteboard_to_png;
 			clearWhiteboardButton.onclick = clear_white_board;
 			// document.addEventListener('keydown', function (event) {
 			// 	// CTRL + S combo
@@ -428,7 +434,8 @@
 			// 	// CTRL + L combo
 			// 	if (event.ctrlKey && event.key === 'l') {
 			// 		document.body.style = '';
-			// }
+			// 	}
+			// })
 
 		}
 
