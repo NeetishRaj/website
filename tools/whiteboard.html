@@ -273,6 +273,14 @@
 					e.which === 1
 				) {
 					console.log("Moving");
+
+					// Handle first stroke scenario
+					if(this.strokes_array.length === 0) {
+						this.strokes_array.push(
+							new Stroke([{ x: e.clientX, y: e.clientY }])
+						);
+					}
+					
 					const last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
 					last_stroke.push({ x: e.clientX, y: e.clientY });
 					if (last_stroke.length > 2) {
@@ -342,6 +350,14 @@
 				}
 			}
 
+			pen_up = () => {
+				this.is_pen_down = false;
+			}
+
+			pen_down = () => {
+				this.is_pen_down = true;
+			}
+
 			static default_pen_color = PEN_COLOR.BLACK;
 			static supported_pen_colors = [
 				PEN_COLOR.BLACK,
@@ -367,15 +383,6 @@
 		function init() {
 			whiteboard = new Whiteboard();
 			whiteboard.clear_white_board();
-
-			function pen_up() {
-				whiteboard.is_pen_down = false;
-			}
-
-			function pen_down() {
-				whiteboard.is_pen_down = true;
-				// whiteboard.strokes_array.push(new Stroke());
-			}
 
 			function click_handler(event) {
 				//console.log(event);
@@ -417,8 +424,8 @@
 
 			whiteboard.board.ontouchmove = whiteboard.draw;
 			whiteboard.board.onmousemove = whiteboard.draw;
-			whiteboard.board.onmousedown = pen_down;
-			whiteboard.board.onmouseup = pen_up;
+			whiteboard.board.onmousedown = whiteboard.pen_down;
+			whiteboard.board.onmouseup = whiteboard.pen_up;
 			whiteboard.board.onclick = click_handler;
 			whiteboard.board.ondblclick = dblclick_handler;
 			whiteboard.board.oncontextmenu = contextmenu_handler;
