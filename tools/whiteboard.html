@@ -212,6 +212,7 @@
 				this.color = color;
 				this.is_pen_down = is_pen_down;
 				this.strokes_array = [];
+				this.undo_strokes_array = [];
 
 				this.current_pen_color = 0;
 			}
@@ -238,7 +239,7 @@
 				this.ctx.fill();
 			}
 
-			renderLine(p1, p2, d = Stroke.DEFAULT_PEN_SIZE) {
+			render_line = (p1, p2, d = Stroke.DEFAULT_PEN_SIZE) => {
 				//console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
 
 				const D = hypot(p2.x - p1.x, p2.y - p1.y);
@@ -272,7 +273,7 @@
 					this.is_pen_down &&
 					e.which === 1
 				) {
-					console.log("Moving");
+					// console.log("Moving");
 
 					// Handle first stroke scenario
 					if(this.strokes_array.length === 0) {
@@ -280,24 +281,23 @@
 							new Stroke([{ x: e.clientX, y: e.clientY }])
 						);
 					}
-					
+
 					const last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
 					last_stroke.push({ x: e.clientX, y: e.clientY });
 					if (last_stroke.length > 2) {
-						this.renderLine(
+						this.render_line(
 							last_stroke[last_stroke.length - 2],
 							last_stroke[last_stroke.length - 1]
 						);
 					}
 				} else if (e.type === "click") {
-					console.log(this.strokes_array);
 					this.strokes_array.push( new Stroke([{ x: e.clientX, y: e.clientY }]));					
 					this.draw_dot(e.clientX, e.clientY);
 				} else if (e.type === "contextmenu") {
 					var last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
 					last_stroke.push({ x: e.clientX, y: e.clientY });
 					if (last_stroke.length > 2) {
-						this.renderLine(
+						this.render_line(
 							last_stroke[last_stroke.length - 2],
 							last_stroke[last_stroke.length - 1]
 						);
@@ -305,7 +305,7 @@
 				}
 			}
 
-			clear_white_board() {
+			clear_white_board = (undo_mode = false) => {
 				// Draw the canvas background with default color
 				this.ctx.fillStyle = PEN_COLOR.ERASE;
 				this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
@@ -313,9 +313,11 @@
 				// Change the Pen color back to selected color
 				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
 				
-				this.strokes_array = [];
+				if(!undo_mode) {
+					this.strokes_array = [];
+					this.undo_strokes_array = [];
+				}
 			}
-
 
 			change_marker_color(pen_color) {
 				if (!pen_color) {
@@ -358,6 +360,25 @@
 				this.is_pen_down = true;
 			}
 
+			undo_stroke = () => {
+				console.log("UNDO LAST STROKE!");
+				this.undo_strokes_array.push(this.strokes_array.pop());
+				this.redraw_strokes();
+			}
+
+			redraw_strokes = () => {
+				this.clear_white_board(true);
+				// console.log(`redraw_strkoes(): ${this}`);
+
+				for (let i = 0; i < this.strokes_array.length; i++) {
+					const points = this.strokes_array[i].points;
+
+					for (let j = 0; points.length > 0 && j < points.length; j++) {
+						this.draw_dot(points[j].x, points[j].y)
+					}
+				}
+			}
+
 			static default_pen_color = PEN_COLOR.BLACK;
 			static supported_pen_colors = [
 				PEN_COLOR.BLACK,
@@ -380,7 +401,9 @@
 		}
 
 		let whiteboard;
+
 		function init() {
+			console.log("Initializing default configurations..");
 			whiteboard = new Whiteboard();
 			whiteboard.clear_white_board();
 
@@ -411,10 +434,6 @@
 					whiteboard.change_marker_color(PEN_COLOR.ERASE);
 			}
 
-			function clear_white_board() {
-				whiteboard.clear_white_board();
-			}
-
 			function download_whiteboard_to_png() {
 				const link = document.createElement('a');
 				link.download = 'whiteboard.png';
@@ -432,17 +451,19 @@
 
 			eraserButton.onclick = toggle_eraser;
 			downloadWhiteboardButton.onclick = download_whiteboard_to_png;
-			clearWhiteboardButton.onclick = clear_white_board;
-			// document.addEventListener('keydown', function (event) {
-			// 	// CTRL + S combo
-			// 	if (event.ctrlKey && event.key === 'd') {
-			// 		document.body.style = "color: white; background-color: #111111";
-			// 	}
-			// 	// CTRL + L combo
-			// 	if (event.ctrlKey && event.key === 'l') {
-			// 		document.body.style = '';
-			// 	}
-			// })
+			clearWhiteboardButton.onclick = whiteboard.clear_white_board;
+			
+			document.addEventListener('keydown', (event) => {
+				
+				// CTRL + Z combo
+				if (event.ctrlKey && event.key === 'z') {
+					whiteboard.undo_stroke();
+				}
+				// CTRL + L combo
+				// if (event.ctrlKey && event.key === 'l') {
+				// 	document.body.style = '';
+				// }
+			})
 
 		}
 
