@@ -27,6 +27,19 @@
 			padding: 0;
 		}
 
+		:root {
+			--tools-wrapper-width: 50px;
+			--tools-wrapper-br: 100px;
+			--tools-wrapper-border: 5px solid black;
+			--tools-wrapper-vp: 5px;
+			--tools-wrapper-bg: #FFF8DC;
+
+			--color-picker-height: 180px;
+			--color-picker-width: var(--tools-wrapper-width);
+
+			--tools-icon-border: 2px solid black;
+		}
+
 		canvas {
 			background-color: #cfcfcf;
 			position: fixed;
@@ -45,10 +58,11 @@
 		}
 
 		.tools-wrapper {
-			border: 5px solid black;
-			border-radius: 100px;
+			border: var(--tools-wrapper-border);
+			border-radius: var(--tools-wrapper-br);
+			background-color: var(--tools-wrapper-bg);
 
-			width: 50px;
+			width: var(--tools-wrapper-width);
 			min-height: 400px;
 			position: fixed;
 			/* z-index: 1; */
@@ -61,12 +75,12 @@
 			justify-content: space-between;
 			align-items: center;
 
-			padding-top:5px;
-			padding-bottom: 5px;
+			padding-top: var(--tools-wrapper-vp);
+			padding-bottom: var(--tools-wrapper-vp);
 		}
 
 		.tools-wrapper .tools-icon {
-			border: 2px solid black;
+			border: var(--tools-icon-border);
 			width: 40px;
 			height: 40px;
 			border-radius: 50% 50%;
@@ -75,24 +89,60 @@
 		}
 
 		.tools-wrapper .color-picker {
-			/* width: 34px;
-			height: 34px;
-			border-radius: 50%; */
-
-			/* padding: 3px; */
 
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			position: relative;
 
 		}
 		
 		.tools-wrapper .color-picker .selected {
 			display: inline-block;
-			width: 30px;
-			height: 30px;
+			width: 25px;
+			height: 25px;
 			border-radius: 50%;
 			background-color: black;
+		}
+
+		
+		.tools-wrapper .color-picker .selector {
+			height: var(--color-picker-height);
+			width:  var(--color-picker-width);
+
+			padding-top: var(--tools-wrapper-vp);
+			padding-bottom: var(--tools-wrapper-vp);
+
+			background-color: var(--tools-wrapper-bg);
+
+			border: var(--tools-wrapper-border);
+			border-radius:  var(--tools-wrapper-br);
+			
+			position: absolute;
+			right: calc(-10px - var(--color-picker-width));
+			top: -calc(var(--color-picker-height) / 2);
+			
+			display: none;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+
+		}
+		
+		.tools-wrapper .color-picker:hover .selector {
+			display: flex;
+		}
+
+		.tools-wrapper .color-picker .selector > div {
+			padding: 5px;
+			border: var(--tools-icon-border);
+			border-radius: 50%;
+		}
+		
+		.tools-wrapper .color-picker .selector > div > div {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
 		}
 
 		.tools-wrapper .icon-container {
@@ -109,20 +159,33 @@
     </canvas> -->
 	<!-- https://mui.com/components/material-icons/?query=dot -->
 	<div class="tools-wrapper">
-		<div class="tools-icon  color-picker">
+
+		<div class="tools-icon">
+			<a href="/tools/whiteboard.html" target="_blank">
+				<span class="icon-container" >
+					<svg  viewBox="0 0 24 24">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+					</svg>
+				</span>
+			</a>
+		</div>
+
+		<div class="tools-icon color-picker">
 			<span class="icon-container">
 				<span class="selected">
 				</span>
 	
 				<div class="selector">
-					<span class="color"></span>
-					<span class="color"></span>
-					<span class="color"></span>
-					<span class="color"></span>
+					<div><div class="color" style="background-color: black;" onclick="change_pen_color(PEN_COLOR.BLACK)"></div></div>
+					<div><div class="color" style="background-color: red;" onclick="change_pen_color(PEN_COLOR.RED)"></div></div>
+					<div><div class="color" style="background-color: blue;" onclick="change_pen_color(PEN_COLOR.BLUE)"></div></div>
+					<div><div class="color" style="background-color: green;" onclick="change_pen_color(PEN_COLOR.GREEN)"></div></div>
 				</div>
 	
 			</span>
 		</div>
+
+
 		<!-- <div class="tools-icon">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24" data-testid="CreateIcon">
@@ -130,7 +193,7 @@
 				</svg>
 			</span>
 		</div> -->
-		<div class="tools-icon" id="eraserButton">
+		<div class="tools-icon" id="eraserButton" title="Eraser">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24" data-testid="RectangleRoundedIcon">
 					<path d="M2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2z"></path>
@@ -325,6 +388,8 @@
 						(this.current_pen_color + 1) %
 						Whiteboard.supported_pen_colors.length;
 					pen_color = Whiteboard.supported_pen_colors[this.current_pen_color];
+				} else {
+					this.current_pen_color = Whiteboard.supported_pen_colors.indexOf(pen_color);
 				}
 
 				this.ctx.fillStyle = pen_color;
@@ -400,17 +465,26 @@
 				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAotJREFUWEeVV1mWwzAIM73/met5bGa3p/mZaWILIQROYD0vWGvtfhWsBRufXtbgzjsEY4c18iPeg7X2QOTQwx147TlowtYdPYOnOmmBoVXRBhX8lh/CPSQPiqhquif+rQToeQ3gxO2IYpQmmRy0GuI3BVoWsMmJXPorXuuzIeF3OTgUR46KRRL/aJCmYg/BGfRY3ccAgLU3MZov1wmXhQabk+CGnOqLZiBhtDBPLnFB6tNjG2NxhgEgCdgyHhxNwCd0XxKc6xAUeAhfqy3UJZz1QZxDUMJ7rn4ESv2mKbYXQp1peOawU9CVTf6VUlmiaRs/GBU6D9jnQkB50GbiNABEwriy+KEQMNCz1sFzoBPuVJgqbvjpkHI8iumDNEYwZe5EIjCbAK6FhcS9+Y5rKBEkOq1XZfcXF5Lf3eSxXVMzphOAAVwF/L6OAyfpjl8kMYbN4DyMdLlWNb43uAblhQKiPvfBmTqQEgdVSsEvJAEiwVWTHzUvJRAFvrTbH3UAH6dlVxhNbdPGscGEZh0SliKT+CIJiUnY6IlP8EToCpaDcuP797eoaEJPl58IiaZ/tRxOBJmIAZMgrbyFTm+QaEsScm9Rwlvx42eLhBrcnouRuqCp1GEtxwp1BXvCX9qiMqdro5ht+YDyvSEeyV3QVu10B3pC5P9gu9luF0r7Jg7fzpAxnQIRa6FfATScUH622YDRiXHOzfA2kaO8frNw8kWSs/Kmc+uaSdFId48cztHmLdjbapi5TUdW+VxKuSvxHNSq65lY68p37gOIRwVitfWzSiVNXqhNv9uWPrN/mDBn1L0JTcWLjMP7iWiUmnr6EE5A3bJigarjD204ZNRIrBMugMdU3fBS75ob/wD1aDs32JEreQAAAABJRU5ErkJggg==";
 		}
 
-		let whiteboard;
+		let whiteboard, change_marker_color;
 
 		function init() {
 			console.log("Initializing default configurations..");
 			whiteboard = new Whiteboard();
 			whiteboard.clear_white_board();
 
+			const update_color_in_color_selector = () => {
+				// Update the color in color selector.
+				const selected = document.querySelector('div.color-picker  span.selected');
+				selected.style.backgroundColor = 
+					Whiteboard.supported_pen_colors[whiteboard.current_pen_color];
+			}
+
 			function click_handler(event) {
 				//console.log(event);
-				if (event.ctrlKey)
+				if (event.ctrlKey) {
 					whiteboard.change_marker_color();
+					update_color_in_color_selector();
+				}
 				else {
 					whiteboard.draw(event);
 				}
@@ -463,7 +537,12 @@
 				// if (event.ctrlKey && event.key === 'l') {
 				// 	document.body.style = '';
 				// }
-			})
+			});
+
+			change_pen_color = (color) => {
+				whiteboard.change_marker_color(color);
+				update_color_in_color_selector();
+			}
 
 		}
 
