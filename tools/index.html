@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tools</title>
+	<meta charset="UTF-8" />
+	<meta name="author" content="Neetish Raj" />
+	<meta name="keywords" content="online tools free whiteboard editor" />
+	<meta name="description" content="Tools for the web devlopment trade" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+	<link rel="manifest" href="../manifest.json" />
+	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="theme-color" content="#ffffff" />
+    <title>Tool</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            /* width: 100vw;
+            height: 100vh; */
+            background-color: burlywood; 
+            
+            /* position: fixed;
+            overflow-y: scroll; */
+
+            padding: 30px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            /* align-items: center; */
+            align-content: space-around;
+        }
+
+
+        .items {
+            width: calc(80vw / 3);
+            height: calc(80vw / 3);
+            
+            margin: 30px;
+            padding: 10px;
+            border-radius: 20px;
+            /* border: 1px solid red; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+            background-color: rgb(255, 228, 196);
+        }
+
+        .items iframe {
+            width: 100%;
+            height: 60%;
+
+            border-radius: 20px 20px 0 0;
+
+        }
+        
+        .items a {
+            text-decoration: none;
+        }
+
+        .items .item-title {
+            height: calc(40% - 10px);
+            margin-top: 10px;
+            border-radius: 0 0 20px 20px;
+            
+            background-color: rgba(255, 218, 181, 1);
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 2vw;
+            font-weight: 700;
+            color: rgba(85, 107, 47, 0.8);
+        }
+
+        .items .item-title:hover {
+            color: rgba(85, 107, 47, 1.0);
+        }
+
+
+        @media (max-width:768px)  {
+            .items {
+                width: 80vmin;
+            }
+        }
+
+    </style>
+</head>
+<body>
+   <div class="container">
+        <div class="items">
+            <iframe src="/tools/whiteboard.html" width="1024" height="768" frameborder="0" ></iframe>
+            <a href="/tools/whiteboard.html" target="_blank" rel="noopener noreferrer">
+                <div class="item-title">
+                    <span>Whiteboard</span>
+                </div>
+            </a>
+        </div>
+        <div class="items">
+            <iframe src="/tools/jsonformatter.html" frameborder="0"></iframe>
+            <div class="item-title">
+                <span>JSON Formatter</span>
+            </div>
+        </div>
+        <div class="items"></div>
+        <div class="items"></div>
+        <div class="items"></div>
+        <div class="items"></div>
+   </div>
+</body>
+</html>
