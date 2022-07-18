@@ -433,6 +433,11 @@ ol li .send {
   background: #bb0000;
   color: white;
 }
+
+.fa-github {
+	background: #000000cc;
+	color: white;
+}
 /*icons ends here*/
 /*Dropdown starts here*/
 .dropbtn {
