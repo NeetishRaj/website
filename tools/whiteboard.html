@@ -154,11 +154,11 @@
 			justify-content: space-between;
 			align-items: center;
 
-			transform: rotateY(90deg);
+			transform: rotateY(90deg) rotateX(90deg);
 			transform-origin: left;
 			overflow: hidden;
-			
-			transition: all 0.2s;
+
+			transition: all 0.4s;
 
 		}
 
@@ -167,8 +167,7 @@
 		}
 		
 		.tools-wrapper .color-picker:hover .selector {
-			display: flex;
-			transform: rotateY(0deg);
+			transform: rotateY(0deg) rotateX(0deg);
 		}
 
 		.tools-wrapper .color-picker .selector > div {
