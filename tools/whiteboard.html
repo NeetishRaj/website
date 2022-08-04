@@ -21,6 +21,10 @@
 	<meta name="theme-color" content="#ffffff" />
 
 	<style>
+		* {
+			box-sizing: border-box;
+		}
+
 		body,
 		html {
 			margin: 0;
@@ -28,16 +32,22 @@
 		}
 
 		:root {
-			--tools-wrapper-width: 50px;
+			--tools-wrapper-width: 70px;
 			--tools-wrapper-br: 100px;
-			--tools-wrapper-border: 5px solid black;
-			--tools-wrapper-vp: 5px;
+			--tools-wrapper-border: none;
+			--tools-wrapper-vp: 15px;
 			--tools-wrapper-bg: #FFF8DC;
 
 			--color-picker-height: 180px;
 			--color-picker-width: var(--tools-wrapper-width);
 
-			--tools-icon-border: 2px solid black;
+			--tools-icon-border: none;
+			--tools-icon-color: #a52a2aee;
+			--tools-icon-color-hover: #a52a2aff;
+			--tools-icon-width: 45px;
+
+			--tools-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
 		}
 
 		canvas {
@@ -61,6 +71,7 @@
 			border: var(--tools-wrapper-border);
 			border-radius: var(--tools-wrapper-br);
 			background-color: var(--tools-wrapper-bg);
+			box-shadow: var(--tools-box-shadow);
 
 			width: var(--tools-wrapper-width);
 			min-height: 400px;
@@ -81,20 +92,35 @@
 
 		.tools-wrapper .tools-icon {
 			border: var(--tools-icon-border);
-			width: 40px;
-			height: 40px;
+			box-shadow: var(--tools-box-shadow);
+
+			
+			width: var(--tools-icon-width);
+			height: var(--tools-icon-width);
 			border-radius: 50% 50%;
 
 			cursor: pointer;
+
+			transition: all 0.2s;
+		}
+
+		.tools-wrapper .tools-icon:hover {
+			transform: scale(1.1);
+		}
+		
+		.tools-wrapper .tools-icon svg {
+			fill: var(--tools-icon-color);
+		}
+
+		.tools-wrapper .tools-icon:hover svg {
+			fill: var(--tools-icon-color-hover);
 		}
 
 		.tools-wrapper .color-picker {
-
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			position: relative;
-
 		}
 		
 		.tools-wrapper .color-picker .selected {
@@ -108,29 +134,41 @@
 		
 		.tools-wrapper .color-picker .selector {
 			height: var(--color-picker-height);
-			width:  var(--color-picker-width);
+			width:  calc(var(--color-picker-width) - 20px);
 
-			padding-top: var(--tools-wrapper-vp);
-			padding-bottom: var(--tools-wrapper-vp);
+			padding-top: calc(var(--tools-wrapper-vp) - 7px);
+			padding-bottom: calc(var(--tools-wrapper-vp) - 7px);
 
 			background-color: var(--tools-wrapper-bg);
 
 			border: var(--tools-wrapper-border);
 			border-radius:  var(--tools-wrapper-br);
-			
+			box-shadow: var(--tools-box-shadow);
+
 			position: absolute;
-			right: calc(-10px - var(--color-picker-width));
+			right: calc(20px - var(--color-picker-width));
 			top: -calc(var(--color-picker-height) / 2);
 			
-			display: none;
+			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			align-items: center;
 
+			transform: rotateY(90deg);
+			transform-origin: left;
+			overflow: hidden;
+			
+			transition: all 0.2s;
+
+		}
+
+		.tools-wrapper .color-picker:hover {
+			border-radius: 50% 0 0 50%;
 		}
 		
 		.tools-wrapper .color-picker:hover .selector {
 			display: flex;
+			transform: rotateY(0deg);
 		}
 
 		.tools-wrapper .color-picker .selector > div {
@@ -160,15 +198,6 @@
 	<!-- https://mui.com/components/material-icons/?query=dot -->
 	<div class="tools-wrapper">
 
-		<div class="tools-icon" title="New Whiteboard">
-			<a href="/tools/whiteboard.html" target="_blank">
-				<span class="icon-container" >
-					<svg  viewBox="0 0 24 24">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-					</svg>
-				</span>
-			</a>
-		</div>
 
 		<div class="tools-icon color-picker" title="Shortcut: Ctrl + Left Click">
 			<span class="icon-container">
@@ -185,6 +214,16 @@
 			</span>
 		</div>
 
+		<div class="tools-icon" title="New Whiteboard">
+			<a href="/tools/whiteboard.html" target="_blank">
+				<span class="icon-container" >
+					<svg  viewBox="0 0 24 24">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+					</svg>
+				</span>
+			</a>
+		</div>
+
 		<!-- <div class="tools-icon">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24" data-testid="CreateIcon">
@@ -193,7 +232,7 @@
 			</span>
 		</div> -->
 
-		<div class="tools-icon" title="Undo" onclick="whiteboard.undo_stroke()">
+		<div class="tools-icon" title="Undo: Ctrl + Z" onclick="whiteboard.undo_stroke()">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24">
 					<path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
@@ -203,7 +242,7 @@
 
 		<div class="tools-icon" id="eraserButton" title="Eraser">
 			<span class="icon-container">
-				<svg viewBox="0 0 24 24" data-testid="RectangleRoundedIcon">
+				<svg style="transform: scale(0.7)" viewBox="0 0 24 24" data-testid="RectangleRoundedIcon">
 					<path d="M2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2z"></path>
 				</svg>
 			</span>
@@ -233,7 +272,7 @@
 			</span>
 		</div> -->
 
-		<div class="tools-icon" id="clearWhiteboardButton" title="Clear Whiteboard">
+		<div class="tools-icon" id="clearWhiteboardButton" title="Clear Whiteboard: Ctrl + Space">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24">
 					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
@@ -256,16 +295,16 @@
 		class Stroke {
 			constructor(
 				points = [],
-				isLine = false,
 				color = PEN_COLOR.BLACK,
 				pen_size = 3,
-				pen_sharpeness = 2
+				pen_sharpeness = 2,
+				isLine = false
 			) {
-				this.color = color;
 				this.points = points;
-				this.is_line = isLine;
+				this.color = color;
 				this.pen_size = pen_size;
 				this.pen_sharpeness = pen_sharpeness;
+				this.is_line = isLine;
 			}
 
 			static DEFAULT_PEN_SIZE = 3;
@@ -336,21 +375,29 @@
 			}
 
 			draw = (e) => {
-				//console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
+
+				// console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
+				// console.log(`x: ${e.clientX}, y: ${e.clientY}`);
 
 				if (e.type === "touchmove") {
 					this.draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
 				} else if (
 					e.type === "mousemove" &&
 					this.is_pen_down &&
-					e.which === 1
+					e.which === 1 &&
+					e.clientX > 0 &&
+					e.clientX < window.innerWidth &&
+					e.clientY > 0 &&
+					e.clientY < window.innerHeight
 				) {
 					// console.log("Moving");
-
 					// Handle first stroke scenario
 					if(this.strokes_array.length === 0) {
 						this.strokes_array.push(
-							new Stroke([{ x: e.clientX, y: e.clientY }])
+							new Stroke(
+								[{ x: e.clientX, y: e.clientY }],
+								Whiteboard.supported_pen_colors[this.current_pen_color]
+							)
 						);
 					}
 
@@ -363,7 +410,12 @@
 						);
 					}
 				} else if (e.type === "click") {
-					this.strokes_array.push( new Stroke([{ x: e.clientX, y: e.clientY }]));					
+					this.strokes_array.push(
+						new Stroke(
+							[{ x: e.clientX, y: e.clientY }],
+							Whiteboard.supported_pen_colors[this.current_pen_color]
+						)
+					);					
 					this.draw_dot(e.clientX, e.clientY);
 				} else if (e.type === "contextmenu") {
 					var last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
@@ -374,7 +426,7 @@
 							last_stroke[last_stroke.length - 1]
 						);
 					}
-				}
+				} 
 			}
 
 			clear_white_board = (undo_mode = false) => {
@@ -397,8 +449,10 @@
 						(this.current_pen_color + 1) %
 						Whiteboard.supported_pen_colors.length;
 					pen_color = Whiteboard.supported_pen_colors[this.current_pen_color];
+					this.color = pen_color;
 				} else {
 					this.current_pen_color = Whiteboard.supported_pen_colors.indexOf(pen_color);
+					this.color = pen_color;
 				}
 
 				this.ctx.fillStyle = pen_color;
@@ -436,6 +490,7 @@
 
 			undo_stroke = () => {
 				console.log("UNDO LAST STROKE!");
+				console.log(this.strokes_array);
 				this.undo_strokes_array.push(this.strokes_array.pop());
 				this.redraw_strokes();
 			}
@@ -446,7 +501,8 @@
 
 				for (let i = 0; i < this.strokes_array.length; i++) {
 					const points = this.strokes_array[i].points;
-
+					this.ctx.fillStyle = this.strokes_array[i].color;
+					// console.log(this.strokes_array[i].color);
 					for (let j = 0; points.length > 0 && j < points.length; j++) {
 						this.draw_dot(points[j].x, points[j].y)
 					}
@@ -538,14 +594,15 @@
 			
 			document.addEventListener('keydown', (event) => {
 				
-				// CTRL + Z combo
+				// CTRL + Z
 				if (event.ctrlKey && event.key === 'z') {
 					whiteboard.undo_stroke();
 				}
-				// CTRL + L combo
-				// if (event.ctrlKey && event.key === 'l') {
-				// 	document.body.style = '';
-				// }
+
+				// CTRL + space
+				if (event.ctrlKey && event.key === ' ') {
+					whiteboard.clear_white_board();
+				}
 			});
 
 			change_pen_color = (color) => {
