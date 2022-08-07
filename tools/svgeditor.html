@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="author" content="Neetish Raj" />
+	<meta name="keywords" content="SVG Editor, SVG, editor, free, online, visualizer, edit, svg, how" />
+	<meta name="description" content="Simple and free online SVG editor and visualizer" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+	<link rel="manifest" href="../manifest.json" />
+	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="theme-color" content="#ffffff" />
+	<title>SVG Editor</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		:root {
+			--device__height: 1700;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		div.wrapper {
+			width: 100vw;
+			height: 100vh;
+
+			background-color: blanchedalmond;
+			position: fixed;
+		}
+
+		div.container textarea::-webkit-scrollbar {
+			display: none;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.left,
+		.right {
+			width: 50vw;
+			height: 100vh;
+
+			padding: 50px;
+		}
+
+		.left {
+			background-color: bisque;
+		}
+
+		.right {
+			background-color: cornsilk;
+		}
+
+		.left>textarea,
+		#svg_preview {
+			width: 100%;
+			height: 100%;
+
+			padding: 10px;
+
+			background-color: beige;
+
+			border-radius: 10px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		}
+
+		.left textarea {
+			border: none;
+			outline: none;
+
+			resize: none;
+		}
+
+		.right #svg_preview {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.container>button {
+			width: 60px;
+			height: 60px;
+
+			position: absolute;
+			top: calc(50vh - 30px);
+			left: calc(50vw - 30px);
+
+			border-radius: 10px;
+		}
+
+		.container>button:hover {
+			cursor: pointer;
+		}
+
+		.pushbutton {
+			padding: 15px;
+			font-size: 18px;
+			text-align: center;
+			cursor: pointer;
+			outline: none;
+			color: #fff;
+			background-color: #c0d5db;
+			border: none;
+			border-radius: 15px;
+			box-shadow: 3px 7px #999;
+		}
+
+		.pushbutton:hover {
+			background-color: #73c4d8;
+		}
+
+		.pushbutton:active {
+			background-color: #55a6dd;
+			box-shadow: 1px 3px #666;
+			transform: translateY(4px);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="container">
+			<div class="left">
+				<textarea name="" 
+					id="svg_text" 
+					cols="30" 
+					rows="10" 
+					spellcheck="false" 
+					placeholder="Paste the SVG Code here">
+				</textarea>
+			</div>
+			<div class="right">
+				<div id="svg_preview"></div>
+			</div>
+
+
+			<button class="pushbutton" onclick="draw_svg()" title="Draw SVG">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(0, 0, 0, 0.6)">
+					<path d="M24 12l-10-10v7h-14v6h14v7z" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<script>
+
+		let sample_svg = '', svg_preview, svg_text, parser;
+
+		function draw_svg() {
+			const text = svg_text.value;
+			parse_update_svg(text);
+		}
+
+		function parse_update_svg(text) {
+			svg_preview.innerHTML = '';
+			const svg_html = parser.parseFromString(text, "text/html").body.childNodes[0];
+			svg_preview.appendChild(svg_html);
+		}
+
+		function init() {
+			load_sample_svg();
+			svg_preview = document.getElementById('svg_preview');
+			svg_text = document.getElementById('svg_text');
+			svg_text.value = sample_svg;
+
+			parser = new DOMParser();
+
+			parse_update_svg(sample_svg);
+		}
+
+		window.onload = init;
+
+		load_sample_svg = () => {
+			sample_svg = `
+      <svg
+       xmlns="http://www.w3.org/2000/svg"
+       version="1.1"
+       id="svg1"
+       viewBox="0 0 744.09448819 1052.3622047"
+       height="500px"
+       width="100%">
+        <ellipse
+           ry="177.20146"
+           rx="232.91574"
+           cy="296.64792"
+           cx="368.57141"
+           id="head"
+           style="
+            fill:#ffaaaa;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:12.02564812;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <ellipse
+           ry="44.285713"
+           rx="62.857143"
+           cy="253.79077"
+           cx="268.57141"
+           id="leye"
+           style="
+            fill:#000000;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <ellipse
+           ry="41.42857"
+           rx="57.142857"
+           cy="248.07649"
+           cx="465.71426"
+           id="reye"
+           style="
+            fill:#000000;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <circle
+           r="17.142857"
+           cy="255.21935"
+           cx="265.71429"
+           id="leyeball"
+           style="
+            fill:#cccccc;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <circle
+           r="17.142857"
+           cy="240.93362"
+           cx="462.85715"
+           id="reyeball"
+           style="
+            fill:#cccccc;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:15;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="leyebrow"
+           d="m 197.14286,220.93363 c 50.63342,-17.5269 108.90807,-100.00435 145.71428,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="reyebrow"
+           d="m 391.42857,220.93363 c 26.60846,-25.01973 26.41848,-89.01901 131.42857,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="mouth"
+           d="m 242.85714,352.3622 c 75.08764,41.43737 151.08865,78.00338 248.57143,0"
+           style="
+            fill:none;
+            fill-rule:evenodd;
+            stroke:#000000;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="760.93365"
+           x="160"
+           height="200"
+           width="171.42857"
+           id="lleg"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="763.79077"
+           x="405.71429"
+           height="191.42857"
+           width="177.14285"
+           id="rleg"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="500.93362"
+           x="160"
+           height="234.28572"
+           width="425.71429"
+           id="stomach"
+           style="
+            fill:#ff2a2a;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="lhand"
+           d="m 125.71429,518.07649 2.85714,145.71428 C 2.9295156,733.59463 40.29713,419.83477 45.714286,215.21935 66.145614,351.08963 70.283091,578.20548 125.71429,518.07649 Z"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            fill-rule:evenodd;
+            stroke:none;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <path
+           id="rhand"
+           d="m 600,526.64792 2.85714,134.28572 C 704.96116,720.01054 712.19288,462.84639 725.71429,226.64792 685.96657,330.72233 700.96766,538.21117 600,526.64792 Z"
+           style="
+            fill:#ff5555;
+            fill-rule:evenodd;
+            stroke:none;
+            stroke-width:10;
+            stroke-linecap:butt;
+            stroke-linejoin:miter;
+            stroke-opacity:1;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            fill-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="978.07648"
+           x="145.71428"
+           height="31.428572"
+           width="200"
+           id="lfoot"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+        <rect
+           ry="8.5714302"
+           y="975.21936"
+           x="391.42856"
+           height="34.285713"
+           width="208.57143"
+           id="rfoot"
+           style="
+            fill:#ff5555;
+            fill-opacity:1;
+            stroke:none;
+            stroke-width:10;
+            stroke-miterlimit:4;
+            stroke-dasharray:none;
+            stroke-opacity:1" />
+>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:162.70791626px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9ad248;fill-opacity:1;stroke:#671e46;stroke-width:5.93700218;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           x="11.862983"
+           y="157.97087"
+           id="texthi"
+           sodipodi:linespacing="125%"
+           transform="scale(1.202219,0.83179522)"><tspan
+             sodipodi:role="line"
+             id="tspan4328"
+             x="11.862983"
+             y="157.97087"
+             style="stroke-width:5.93700218;stroke-miterlimit:4;stroke-dasharray:none">HI</tspan></text>
+    </svg>`;
+		}
+	</script>
+
+</body>
+
+</html>
