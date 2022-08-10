@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="author" content="Neetish Raj" />
+	<meta name="keywords" content="Random texture maker, online, free, canvas texture" />
+	<meta name="description" content="Random texture maker" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+	<link rel="manifest" href="../manifest.json" />
+	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="theme-color" content="#ffffff" />
+	<title>Texture Maker</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		:root {
+			--main-color: darkgoldenrod;
+		}
+
+		body, html {
+			background-color: black;
+			padding: 0;
+			margin: 0;
+
+			color: var(--main-color);
+		}
+
+		.container {
+			width: 100vw;
+			height: 100vh;
+
+			position: fixed;
+
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-around;
+
+			padding: 50px;
+			padding-left: 20px;
+		}
+
+		.left {
+			width: 250px;
+			height: 100%;
+
+			padding: 10px;
+			padding-bottom: 0;
+			margin-right: 50px;
+
+			border-right: 3px solid  var(--main-color);;
+		}
+
+		.right {
+			width: 100%;
+			height: 100%;
+		}
+
+		#texture {
+			width: 100%;
+			height: 100%;
+
+			background-color: red;
+		}
+
+		.config {
+			height: 100%;
+
+			display: flex;
+			flex-direction: column;
+		}
+
+		.config h3 {
+			text-align: center;
+			padding-bottom: 20px;
+			margin-top: 0;
+			padding-top: 0;
+			border-bottom: 3px solid var(--main-color);
+		}
+
+		.config .row {
+			margin-bottom: 30px;
+		}
+
+		.config .row .row-header {
+			margin-bottom: 10px;
+		}
+
+		.config input {
+			background-color: rgba(0, 0, 0, 1);
+			width: 50px;
+
+			color: var(--main-color);
+		}
+
+		.primary-button {
+			background-color: rgba(20, 20, 20, 0.8);
+			width: 100%;
+
+			padding: 10px;
+
+			font-size: 1rem;
+			font-weight: 900;
+			color: var(--main-color);
+		}
+		.primary-button:hover {
+			cursor: pointer;
+			background-color: rgba(30, 30, 30, 1.0);
+		}
+		.primary-button:active {
+			background-color: rgba(50, 50, 50, 1.0);
+		}
+
+		div.row:last-child {
+			margin-top: auto;
+			margin-bottom: 0;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="left">
+
+			<div class="config">
+				<h3>Configuration</h3>
+
+				<div class="row">
+					<div class="row-header">
+						<b>Cell Size</b>  
+					</div>
+					<div>
+						<label for="cellX">X:</label>
+						<input type="number" name="cellX" id="cellX" value="40">
+						<label for="cellY"> &nbsp;Y:</label>
+						<input type="number" name="cellY" id="cellY" value="40">
+					</div>
+				</div>
+
+				<div class="row">
+					<label for="colorCount"><b>Color Count:</b> </label>
+					<input type="number" name="colorCount" id="colorCount" value="6">
+				</div>
+
+				<div class="row">
+					<label for="opacity"><b>Opacity (%):</b> </label>
+					<input type="number" name="opacity" id="opacity" value="80" max="100" min="0">
+				</div>
+
+				<div class="row">
+					<label for="pixelSize"><b>Pixel Size:</b> </label>
+					<input type="number" name="pixelSize" id="pixelSize" value="1" max="50" min="1">
+				</div>
+
+				<div class="row">
+					<button class="primary-button" id="drawTextureButton" onclick="update_values()">Random Texture</button>
+				</div>
+
+				<div class="row">
+					<button class="primary-button" id="downloadButton" onclick="download_texture()">Download Texture Block</button>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="right">
+			<div id="texture">
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- <div>
+		<button>
+
+		</button>
+		<button>
+
+
+		</button>
+	</div> -->
+
+
+	<script>
+		let cell_x, 
+			cell_y,
+			color_count,
+			opacity,
+			update_values,
+			pixel_size,
+			download_texture,
+			canvas;
+
+		window.onload = function () {
+			let imageUrl = "";
+
+			const texture_div = document.getElementById('texture');
+			const cell_x_input = document.getElementById('cellX');
+			const cell_y_input = document.getElementById('cellY');
+			const color_count_input = document.getElementById('colorCount');
+			const opacity_input = document.getElementById('opacity');
+			const pixel_size_input = document.getElementById('pixelSize');
+			
+			update_values = function() {
+				cell_x = cell_x_input.value; 
+				cell_y = cell_y_input.value;
+				color_count = color_count_input.value;
+				opacity = parseFloat(opacity_input.value) / 100;
+				pixel_size = parseInt(pixel_size_input.value);
+
+				const options = randomizer(
+					cell_x,
+					cell_y,
+					opacity,
+					color_count,
+					pixel_size
+				);
+				
+				texture_div.style.background = TextureMaker(options);
+			}
+
+			download_texture = function() {
+				const link = document.createElement('a');
+				link.download = 'my_texture.png';
+				link.href = canvas.toDataURL()
+				link.click();
+			}
+
+			function randomizer(x = false, y = false, op = false, colorCount = false, ps = false) {
+				var randColor = function () {
+					return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
+				}
+
+
+				var randColorCount = colorCount 
+					? colorCount 
+					: Math.ceil(Math.random() * 4) + 1;
+				var colorArray = [];
+
+				for (var i = 0; i < randColorCount; i++) {
+					colorArray.push(randColor());
+				}
+
+				var randomOptions = {
+					width: x ? x : 20 + Math.floor(Math.random() * 20),
+					height: y ? y : 20 + Math.floor(Math.random() * 20),
+					opacity: op ? op : Math.random(),
+					colors: colorArray,
+					pixelSize: ps ? ps : Math.ceil(Math.random() *  10)
+				}
+
+				return randomOptions;
+			}
+
+			
+			update_values();
+			
+			// window.addEventListener("click", function () {
+			// 	imageUrl = TextureMaker(randomizer());
+			// 	texture_div.style.background = imageUrl;
+			// 	texture_div.innerText = "";
+			// }, false);
+
+			// window.addEventListener("touchmove", function () {
+			// 	texture_div.body.innerText = imageUrl;
+			// }, false);
+
+		}
+
+		var TextureMaker = (function () {
+
+			var config = {
+				width: 40,
+				height: 40,
+				opacity: 0.2,
+				colors: [],
+				pixelSize: 1
+			};
+
+			var getRandColor = function (custom, r = 255, g = 255, b = 255, a = 0.2) {
+				if (custom.colors.length !== 0) {
+					return custom.colors[Math.floor(Math.random() * custom.colors.length)];
+				}
+				return `rgba(${Math.floor(Math.random() * r)}, ${Math.floor(Math.random() * g)},${Math.floor(Math.random() * b)}, ${a})`;
+			}
+
+
+			return function (custom) {
+
+				if (!document.createElement('canvas').getContext) {
+					console.error("HTML5 Canvas API not supported in this browser");
+					return 0;
+				}
+
+				var texture = document.createElement('canvas');
+				var ctx = texture.getContext('2d');
+
+				if (custom) {
+					custom = Object.assign({}, config, custom);
+				} else {
+					custom = config;
+				}
+
+				texture.display = "none";
+				texture.width = custom.width;
+				texture.height = custom.height;
+
+				console.log(custom);
+				for (var i = 0; i < custom.width; i += custom.pixelSize) {
+					for (var j = 0; j < custom.height; j += custom.pixelSize) {
+						ctx.fillStyle = getRandColor(custom);
+						ctx.fillRect(i, j, custom.pixelSize, custom.pixelSize);
+					}
+				}
+
+				canvas = texture;
+
+				return "url(" + texture.toDataURL("image/png") + ")";
+			}
+		})();
+
+	</script>
+
+	
+
+</body>
+
+</html>
