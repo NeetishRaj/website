@@ -327,6 +327,7 @@
 				this.current_pen_color = 0;
 			}
 
+
 			create_canvas = () => {
 				this.board = document.createElement("CANVAS");
 				this.board.setAttribute('id', 'whiteboard');
@@ -348,6 +349,7 @@
 				this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
 				this.ctx.fill();
 			}
+			
 
 			render_line = (p1, p2, d = Stroke.DEFAULT_PEN_SIZE) => {
 				//console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
@@ -378,9 +380,33 @@
 				// console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
 				// console.log(`x: ${e.clientX}, y: ${e.clientY}`);
 
-				if (e.type === "touchmove") {
-					this.draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-				} else if (
+				if (e.type === "touchmove" && this.is_pen_down) {
+					// this.draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+					if(this.strokes_array.length === 0) {
+						this.strokes_array.push(
+							new Stroke(
+								[{
+									 x: e.changedTouches[0].pageX, 
+									 y: e.changedTouches[0].pageY 
+								}],
+								Whiteboard.supported_pen_colors[this.current_pen_color]
+							)
+						);
+					}
+
+					const last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
+					last_stroke.push({
+						 x: e.changedTouches[0].pageX, 
+						 y: e.changedTouches[0].pageY 
+					});
+					if (last_stroke.length > 2) {
+						this.render_line(
+							last_stroke[last_stroke.length - 2],
+							last_stroke[last_stroke.length - 1]
+						);
+					}
+				} 
+				else if (
 					e.type === "mousemove" &&
 					this.is_pen_down &&
 					e.which === 1 &&
@@ -408,7 +434,8 @@
 							last_stroke[last_stroke.length - 1]
 						);
 					}
-				} else if (e.type === "click") {
+				} 
+				else if (e.type === "click") {
 					this.strokes_array.push(
 						new Stroke(
 							[{ x: e.clientX, y: e.clientY }],
@@ -416,7 +443,8 @@
 						)
 					);					
 					this.draw_dot(e.clientX, e.clientY);
-				} else if (e.type === "contextmenu") {
+				} 
+				else if (e.type === "contextmenu") {
 					var last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
 					last_stroke.push({ x: e.clientX, y: e.clientY });
 					if (last_stroke.length > 2) {
@@ -480,10 +508,13 @@
 			}
 
 			pen_up = () => {
+				// console.log("PEN_UP");
 				this.is_pen_down = false;
+				console.log(this.strokes_array);
 			}
 
 			pen_down = () => {
+				// console.log("PEN_DOWN");
 				this.is_pen_down = true;
 			}
 
@@ -580,6 +611,8 @@
 			}
 
 			whiteboard.board.ontouchmove = whiteboard.draw;
+			whiteboard.board.ontouchstart = whiteboard.pen_down;
+			whiteboard.board.ontouchend = whiteboard.pen_up;
 			whiteboard.board.onmousemove = whiteboard.draw;
 			whiteboard.board.onmousedown = whiteboard.pen_down;
 			whiteboard.board.onmouseup = whiteboard.pen_up;
