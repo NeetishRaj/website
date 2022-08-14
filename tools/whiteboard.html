@@ -512,6 +512,9 @@
 			}
 
 			pen_down = (event) => {
+
+				if(event.ctrlKey) return;
+				
 				// console.log("PEN_DOWN");
 				// Create a new stroke 
 				this.is_pen_down = true;
