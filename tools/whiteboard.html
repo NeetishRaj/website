@@ -33,6 +33,7 @@
 
 		:root {
 			--tools-wrapper-width: 70px;
+			--tools-wrapper-height: 400px;
 			--tools-wrapper-br: 100px;
 			--tools-wrapper-border: none;
 			--tools-wrapper-vp: 15px;
@@ -74,7 +75,7 @@
 			box-shadow: var(--tools-box-shadow);
 
 			width: var(--tools-wrapper-width);
-			min-height: 400px;
+			min-height: var(--tools-wrapper-height);
 			position: fixed;
 			/* z-index: 1; */
 			top: calc(100vh / 2 - 200px);
@@ -182,12 +183,32 @@
 			border-radius: 50%;
 		}
 
+		.tools-wrapper .color-picker .selector > div > div:hover {
+			box-shadow: var(--tools-box-shadow);
+		}
+
+
 		.tools-wrapper .icon-container {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			padding: 6px;
 		}
+
+		@media only screen and (max-width: 450px) {
+			div.tools-wrapper {
+				min-height: var(--tools-wrapper-width);
+				width:calc(100vw - 20px);
+
+				top: 40px;
+				left: 10px;
+
+				flex-direction: row;
+
+				padding: 20px;
+				
+			}
+    }
 	</style>
 </head>
 
@@ -381,28 +402,16 @@
 				// console.log(`x: ${e.clientX}, y: ${e.clientY}`);
 
 				if (e.type === "touchmove" && this.is_pen_down) {
-					// this.draw_dot(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-					if(this.strokes_array.length === 0) {
-						this.strokes_array.push(
-							new Stroke(
-								[{
-									 x: e.changedTouches[0].pageX, 
-									 y: e.changedTouches[0].pageY 
-								}],
-								Whiteboard.supported_pen_colors[this.current_pen_color]
-							)
-						);
-					}
-
-					const last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
-					last_stroke.push({
+					const last_stroke_points = this.strokes_array[this.strokes_array.length - 1].points;
+					last_stroke_points.push({
 						 x: e.changedTouches[0].pageX, 
 						 y: e.changedTouches[0].pageY 
 					});
-					if (last_stroke.length > 2) {
+					
+					if (last_stroke_points.length > 1) {
 						this.render_line(
-							last_stroke[last_stroke.length - 2],
-							last_stroke[last_stroke.length - 1]
+							last_stroke_points[last_stroke_points.length - 2],
+							last_stroke_points[last_stroke_points.length - 1]
 						);
 					}
 				} 
@@ -415,33 +424,17 @@
 					e.clientY > 0 &&
 					e.clientY < window.innerHeight
 				) {
-					// console.log("Moving");
-					// Handle first stroke scenario
-					if(this.strokes_array.length === 0) {
-						this.strokes_array.push(
-							new Stroke(
-								[{ x: e.clientX, y: e.clientY }],
-								Whiteboard.supported_pen_colors[this.current_pen_color]
-							)
-						);
-					}
-
-					const last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
-					last_stroke.push({ x: e.clientX, y: e.clientY });
-					if (last_stroke.length > 2) {
+					const last_stroke_point = this.strokes_array[this.strokes_array.length - 1].points;
+					last_stroke_point.push({ x: e.clientX, y: e.clientY });
+					
+					if (last_stroke_point.length > 1) {
 						this.render_line(
-							last_stroke[last_stroke.length - 2],
-							last_stroke[last_stroke.length - 1]
+							last_stroke_point[last_stroke_point.length - 2],
+							last_stroke_point[last_stroke_point.length - 1]
 						);
 					}
 				} 
 				else if (e.type === "click") {
-					this.strokes_array.push(
-						new Stroke(
-							[{ x: e.clientX, y: e.clientY }],
-							Whiteboard.supported_pen_colors[this.current_pen_color]
-						)
-					);					
 					this.draw_dot(e.clientX, e.clientY);
 				} 
 				else if (e.type === "contextmenu") {
@@ -510,12 +503,32 @@
 			pen_up = () => {
 				// console.log("PEN_UP");
 				this.is_pen_down = false;
-				console.log(this.strokes_array);
+				// console.log(this.strokes_array);
 			}
 
-			pen_down = () => {
+			pen_down = (event) => {
 				// console.log("PEN_DOWN");
+				// Create a new stroke 
 				this.is_pen_down = true;
+
+				let new_stroke;
+
+				if(event.type === 'touchstart') {
+					new_stroke = new Stroke(
+						[{
+							x: event.changedTouches[0].pageX, 
+							 y: event.changedTouches[0].pageY 
+						}],
+						Whiteboard.supported_pen_colors[this.current_pen_color]
+					);
+				} else if(event.type === 'mousedown') {
+					new_stroke = new Stroke(
+						[{x: event.clientX, y: event.clientY}],
+						Whiteboard.supported_pen_colors[this.current_pen_color]
+					)
+				}
+
+				this.strokes_array.push(new_stroke);	
 			}
 
 			undo_stroke = () => {
