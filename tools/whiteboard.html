@@ -542,7 +542,11 @@
 			undo_stroke = () => {
 				console.log("UNDO LAST STROKE!");
 				console.log(this.strokes_array);
-				this.undo_strokes_array.push(this.strokes_array.pop());
+				const last_stroke = this.strokes_array.pop();
+	
+				if(last_stroke)
+					this.undo_strokes_array.push(last_stroke);
+	
 				this.redraw_strokes();
 			}
 
@@ -643,7 +647,7 @@
 
 			eraserButton.onclick = toggle_eraser;
 			downloadWhiteboardButton.onclick = download_whiteboard_to_png;
-			clearWhiteboardButton.onclick = whiteboard.clear_white_board;
+			clearWhiteboardButton.onclick = () => {whiteboard.clear_white_board(false);}
 			
 			document.addEventListener('keydown', (event) => {
 				
