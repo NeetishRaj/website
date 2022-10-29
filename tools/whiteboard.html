@@ -239,6 +239,14 @@
 			</span>
 		</div>
 
+		<div class="tools-icon" id="eraserButton" title="Eraser">
+			<span class="icon-container">
+				<svg viewBox="0 0 576 512" style="transform:scale(0.9);">
+					<path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/>
+				</svg>
+			</span>
+		</div>
+
 		<div class="tools-icon" title="New Whiteboard">
 			<a href="/tools/whiteboard.html" target="_blank">
 				<span class="icon-container" >
@@ -264,11 +272,10 @@
 				</svg>
 			</span>
 		</div>
-
-		<div class="tools-icon" id="eraserButton" title="Eraser">
+		<div class="tools-icon" title="Redo: Ctrl + Y" onclick="whiteboard.redo_stroke()">
 			<span class="icon-container">
-				<svg style="transform: scale(0.7)" viewBox="0 0 24 24" data-testid="RectangleRoundedIcon">
-					<path d="M2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2z"></path>
+				<svg viewBox="0 0 24 24">
+					<path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"></path>
 				</svg>
 			</span>
 		</div>
@@ -541,11 +548,22 @@
 
 			undo_stroke = () => {
 				console.log("UNDO LAST STROKE!");
-				console.log(this.strokes_array);
+				// console.log(this.strokes_array);
 				const last_stroke = this.strokes_array.pop();
 	
 				if(last_stroke)
 					this.undo_strokes_array.push(last_stroke);
+	
+				this.redraw_strokes();
+			}
+
+			redo_stroke = () => {
+				console.log("REDO LAST UNDO STROKE!");
+				console.log(this.strokes_array);
+				const last_undo_stroke = this.undo_strokes_array.pop();
+	
+				if(last_undo_stroke)
+					this.strokes_array.push(last_undo_stroke);
 	
 				this.redraw_strokes();
 			}
@@ -654,6 +672,11 @@
 				// CTRL + Z
 				if (event.ctrlKey && event.key === 'z') {
 					whiteboard.undo_stroke();
+				}
+
+				// CTRL + Y
+				if (event.ctrlKey && event.key === 'y') {
+					whiteboard.redo_stroke();
 				}
 
 				// CTRL + space
