@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.2.0/screenfull.min.js"></script>
+
+    <script src="https://unpkg.com/three@0.145.0/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/libs/stats.min.js"></script>
+    <script src="https://unpkg.com/three@0.145.0/examples/js/shaders/VignetteShader.js"></script>
+    <style>
+
+        html, body {
+            margin:  0;
+            padding: 0;
+        }
+        canvas {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <script >
+
+        /**
+ * WebGL experiments inspired by Yuri Artiukh (Akella):
+ *  - https://twitter.com/akella
+ *  - https://www.youtube.com/channel/UCDo7RTzizoOdPjY8A-xDR7g 
+ *
+ * My WebGL boilerplate:
+ *  - https://gist.github.com/alsolovyev/06703411f9275a6e37cc6fae701449fd
+ * 
+ * Full screen mode for a better experience:
+ *  - https://codepen.io/janeRivas/full/yLELmyX
+ * 
+ * 
+ * Made with ❤ by janeRivas <solovyev.a@icloud.com>
+ */
+
+
+const data = {
+  particles: {
+    number: {
+      x: 200,
+      z: 100
+    },
+    size: {
+      min: 15,
+      max: 20
+    },
+    colors: [
+      [255, 27, 100],
+      [119, 150, 200]
+    ]
+  },
+  canvas: {
+    backgroundColor: 'rgb(34, 23, 55)'
+  },
+  effects: {
+    noise: {
+      isEnabled: false,
+      isStatic: false,
+      speed: 0.001
+    },
+    vignette: {
+      darkness: 2,
+      offset: 0.8
+    },
+    bokeh: {
+      distortion: {
+        x: 0.5,
+        y: 1.0
+      },
+      power: 0.015,
+      threshold: 0.1,
+      focus: 0.2
+    },
+    chromaticAberration: {
+      maxDistortion: 0,
+      iterations: 12
+    }
+  },
+  scene: {
+    position: {
+      z: 0
+    }
+  },
+  speed: window.chrome ? 0.001 : 0.005,
+  fly: () => {
+    gsap.fromTo(scene.position, { z: -65, y: -2 }, { z: 0, y: 6, duration: 4 })
+    gsap.fromTo(scene.rotation, { x: -0.3, y: 1 }, { x: 0, y: 0, duration: 6 })
+  },
+  fullscreen: () => {
+    const canvas = document.getElementById('canvas')
+
+    if (screenfull.isEnabled) {
+      screenfull.toggle(canvas)
+    }
+  }
+}
+
+console.log(data.particles.number)
+
+/** Stats */
+const stats = new Stats()
+document.body.appendChild(stats.dom)
+
+/** Create a renderer */
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.getElementById('canvas'),
+  antialias: false
+})
+renderer.setPixelRatio(window.devicePixelRatio)
+renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setClearColor(data.canvas.backgroundColor, 1)
+
+/** Setup a perspective camera */
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.0001,
+  10000
+)
+camera.position.set(0, 1, -7)
+
+/* Setup a camera controller */
+const controls = new THREE.OrbitControls(camera, renderer.domElement)
+
+// controls.enableDamping = true
+// controls.dampingFactor = 0.05
+
+/** Setup a scene */
+const scene = new THREE.Scene()
+scene.position.y = 6
+
+
+/** Generate particles */
+const numberOfParticles = {
+  x: data.particles.number.x,
+  z: data.particles.number.z,
+  halfX: data.particles.number.x / 2,
+  total: data.particles.number.x * data.particles.number.z,
+  totalx3: data.particles.number.x * data.particles.number.z * 3
+}
+const particleGeometry = new THREE.BufferGeometry()
+const particleVertices = new Float32Array(numberOfParticles.totalx3)
+const particleColors = new Float32Array(numberOfParticles.totalx3)
+const particleSizes = new Float32Array(numberOfParticles.total)
+const particleFirstColor = data.particles.colors[0].map(v => v / 255)
+const particleSecondColor = data.particles.colors[1].map(v => v / 255)
+const particleGrid = [6, 10]
+const r = 2
+
+let k = -1
+
+for (let i = -numberOfParticles.halfX; i < numberOfParticles.halfX; i++) {
+  for (let j = 0; j < numberOfParticles.z; j++) {
+    k++
+
+    // Position
+    const x = i
+    const y =
+      Math.cos((i / numberOfParticles.x) * Math.PI) * r ** 2 +
+      Math.sin((j / numberOfParticles.z) * Math.PI) * r -
+      r ** 4
+    const z = j
+
+    particleVertices.set([x, y, z], k * 3)
+
+    // Size
+    particleSizes[k] =
+      (j % particleGrid[1] || i % particleGrid[0] ? data.particles.size.min : data.particles.size.max) - (j / numberOfParticles.z) * 5
+
+    // Color
+    particleColors.set(Math.random() > 0.97 ? particleFirstColor : particleSecondColor, k * 3)
+  }
+}
+
+particleGeometry.setAttribute('position', new THREE.BufferAttribute(particleVertices, 3))
+particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3))
+particleGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1))
+
+/** Create a material rendered with custom shaders */
+const particleMaterial = new THREE.ShaderMaterial({
+  extensions: {
+    derivatives: '#extention GL_OES_standard_derivatives : enable'
+  },
+  uniforms: {
+    uPosition: { value: new THREE.Vector2(0, 0) },
+    uTime: { value: 0 }
+  },
+  blending: THREE.AdditiveBlending,
+  depthTest: false,
+  fragmentShader: `
+    varying vec2 vUv;
+    varying vec3 vColor;
+
+    void main() {
+      // Make point rounded
+      vec2 xy = gl_PointCoord.xy - vec2(0.5);
+      float ll = length(xy);
+
+      gl_FragColor = vec4(vColor, step(ll, 0.5));
+    }
+  `,
+  vertexShader: `
+    varying vec2 vUv;
+    varying vec3 vColor;
+    uniform vec2 uPosition;
+    uniform float uTime;
+    attribute vec3 color;
+    attribute float size;
+
+    //	Classic Perlin 2D Noise
+    //	by Stefan Gustavson
+    //
+    vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+    vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+    vec2 fade(vec2 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
+
+    float cnoise(vec2 P){
+      vec4 Pi = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);
+      vec4 Pf = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0);
+      Pi = mod(Pi, 289.0); // To avoid truncation effects in permutation
+      vec4 ix = Pi.xzxz;
+      vec4 iy = Pi.yyww;
+      vec4 fx = Pf.xzxz;
+      vec4 fy = Pf.yyww;
+      vec4 i = permute(permute(ix) + iy);
+      vec4 gx = 2.0 * fract(i * 0.0243902439) - 1.0; // 1/41 = 0.024...
+      vec4 gy = abs(gx) - 0.5;
+      vec4 tx = floor(gx + 0.5);
+      gx = gx - tx;
+      vec2 g00 = vec2(gx.x,gy.x);
+      vec2 g10 = vec2(gx.y,gy.y);
+      vec2 g01 = vec2(gx.z,gy.z);
+      vec2 g11 = vec2(gx.w,gy.w);
+      vec4 norm = 1.79284291400159 - 0.85373472095314 *
+        vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11));
+      g00 *= norm.x;
+      g01 *= norm.y;
+      g10 *= norm.z;
+      g11 *= norm.w;
+      float n00 = dot(g00, vec2(fx.x, fy.x));
+      float n10 = dot(g10, vec2(fx.y, fy.y));
+      float n01 = dot(g01, vec2(fx.z, fy.z));
+      float n11 = dot(g11, vec2(fx.w, fy.w));
+      vec2 fade_xy = fade(Pf.xy);
+      vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
+      float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
+      return 2.3 * n_xy;
+    }
+
+    void main() {
+      vColor = color;
+
+      vUv = uv;
+
+      vec3 newPosition = position;
+      float a = 0.8;
+      float b = 0.05;
+
+      newPosition.x += sin(position.y) * 3.;
+      // newPosition.x += cos(position.y) * 5.;
+      newPosition.y += cnoise(position.xy * b + uTime) * a;
+      newPosition.y += cnoise(position.xz * b + uTime) * a;
+
+      gl_PointSize = size;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+    }
+  `
+})
+
+/** Create points mesh */
+const particleMesh = new THREE.Points(particleGeometry, particleMaterial)
+scene.add(particleMesh)
+
+/** Set up a composer */
+const composer = new THREE.EffectComposer(renderer)
+composer.setSize(window.innerWidth, window.innerHeight)
+
+const renderPass = new THREE.RenderPass(scene, camera)
+
+/** Set up the vignette effect */
+const vignettePass = new THREE.ShaderPass(THREE.VignetteShader)
+vignettePass.uniforms['offset'].value = data.effects.vignette.offset
+vignettePass.uniforms['darkness'].value = data.effects.vignette.darkness
+
+/** Set up the chromatic aberration effect */
+const chromaticAberrationPass = new THREE.ShaderPass({
+  uniforms: {
+    tDiffuse: { value: null },
+    uMaxDistort: { value: data.effects.chromaticAberration.maxDistortion },
+    uIterations: { value: data.effects.chromaticAberration.iterations }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    varying vec3 vNormal;
+
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D tDiffuse;
+    uniform float uMaxDistort;
+    uniform int uIterations;
+
+    varying vec2 vUv;
+
+    vec2 barrelDistortion(vec2 coord, float amt) {
+      vec2 cc = coord - 0.5;
+      cc.y *= 0.3;
+      float dist = dot(cc, cc);
+      return coord + cc * dist * amt;
+    }
+
+    float sat( float t )
+    {
+      return clamp( t, 0.0, 1.0 );
+    }
+
+    float linterp( float t ) {
+      return sat( 1.0 - abs( 2.0*t - 1.0 ) );
+    }
+
+    float remap( float t, float a, float b ) {
+      return sat( (t - a) / (b - a) );
+    }
+
+    vec4 spectrum_offset( float t ) {
+      vec4 ret;
+      float lo = step(t,0.5);
+      float hi = 1.0-lo;
+      float w = linterp( remap( t, 1.0/6.0, 5.0/6.0 ) );
+      ret = vec4(lo,1.0,hi, 1.) * vec4(1.0-w, w, 1.0-w, 1.);
+
+      return pow( ret, vec4(1.0/2.2) );
+    }
+
+
+    void main() {
+      float reciNumIterF = 1.0 / float(uIterations);
+
+      vec4 sumcol = vec4(0.0);
+      vec4 sumw = vec4(0.0);
+
+      for (int i=0; i < uIterations; ++i) {
+        float t = float(i) * reciNumIterF;
+        vec4 w = spectrum_offset(t);
+        sumw += w;
+        sumcol += w * texture2D(tDiffuse, barrelDistortion(vUv, .6 * uMaxDistort*t));
+      }
+
+      gl_FragColor = sumcol / sumw;
+    }
+  `
+})
+
+/** Set up the noise effect */
+const noisePass = new THREE.ShaderPass({
+  uniforms: {
+    tDiffuse: { value: null },
+    uTime: { value: 0 },
+    uPower: { value: 0.1 }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    }
+  `,
+  fragmentShader: `
+    varying highp vec2 vUv;
+    uniform sampler2D tDiffuse;
+    uniform float uTime;
+    uniform float uPower;
+
+    float hash(vec2 p) {
+      return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x))));
+    }
+
+    void main() {
+      vec3 original = texture2D(tDiffuse, vUv).rgb;
+
+      float noise = hash(vUv + uTime) * uPower;
+
+      gl_FragColor = vec4((original + noise), 1.0);
+    }
+  `
+})
+
+/** Set up the bokeh (blur) effect */
+const bokehPass = new THREE.ShaderPass({
+  defines: {
+    DEPTH_PACKING: 1,
+    PERSPECTIVE_CAMERA: 1
+  },
+  uniforms: {
+    tDiffuse: { value: null },
+    tDepth: { value: null },
+    uFocus: { value: data.effects.bokeh.focus },
+    uDistortionX: { value: data.effects.bokeh.distortion.x },
+    uDistortionY: { value: data.effects.bokeh.distortion.y },
+    uAperture: { value: 0.025 },
+    uMaxblur: { value: data.effects.bokeh.power },
+    uNearClip: { value: 1.0 },
+    uFarClip: { value: 1000.0, },
+    uThreshold: { value: data.effects.bokeh.threshold }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+
+    void main() {
+      vUv = uv;
+
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
+    }
+  `,
+  fragmentShader: `
+    #include <common>
+
+		varying vec2 vUv;
+
+    uniform sampler2D tDiffuse;
+		uniform sampler2D tColor;
+		uniform sampler2D tDepth;
+    
+    uniform float uThreshold;
+		uniform float uMaxblur; // max blur amount
+		uniform float uAperture; // aperture - bigger values for shallower depth of field
+
+		uniform float uNearClip;
+		uniform float uFarClip;
+
+		uniform float uFocus;
+		uniform float uDistortionX;
+		uniform float uDistortionY;
+
+		#include <packing>
+
+// 		float getDepth( const in vec2 screenPosition ) {
+// 			#if DEPTH_PACKING == 1
+// 			return unpackRGBAToDepth( texture2D( tDepth, screenPosition ) );
+// 			#else
+// 			return texture2D( tDepth, screenPosition ).x;
+// 			#endif
+// 		}
+
+// 		float getViewZ( const in float depth ) {
+// 			#if PERSPECTIVE_CAMERA == 1
+// 			return perspectiveDepthToViewZ( depth, uNearClip, uFarClip );
+// 			#else
+// 			return orthographicDepthToViewZ( depth, uNearClip, uFarClip );
+// 			#endif
+// 		}
+
+		void main() {
+			vec2 aspectcorrect = vec2(uDistortionX, uDistortionY);
+
+// 			float viewZ = getViewZ( getDepth( vUv ) );
+
+// 			float factor = ( uFocus + viewZ ); // viewZ is <= 0, so this is a difference equation
+      
+      float factor = 1.0;
+
+			vec2 dofblur = vec2(clamp(factor * uAperture, -uMaxblur, uMaxblur));
+      dofblur *= -clamp(abs(vUv.y - uFocus) * 60.0, 0.0, 15.0);
+      dofblur *= uThreshold;
+
+			vec2 dofblur9 = dofblur * 0.9;
+			vec2 dofblur7 = dofblur * 0.7;
+			vec2 dofblur4 = dofblur * 0.4;
+
+			vec4 col = vec4(0.0);
+
+			col += texture2D( tDiffuse, vUv.xy );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,   0.4  ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.15,  0.37 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29,  0.29 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.37,  0.15 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.40,  0.0  ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.37, -0.15 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29, -0.29 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.15, -0.37 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,  -0.4  ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.15,  0.37 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29,  0.29 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.37,  0.15 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.4,   0.0  ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.37, -0.15 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29, -0.29 ) * aspectcorrect ) * dofblur );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.15, -0.37 ) * aspectcorrect ) * dofblur );
+
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.15,  0.37 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.37,  0.15 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.37, -0.15 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.15, -0.37 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.15,  0.37 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.37,  0.15 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.37, -0.15 ) * aspectcorrect ) * dofblur9 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.15, -0.37 ) * aspectcorrect ) * dofblur9 );
+
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29,  0.29 ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.40,  0.0  ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29, -0.29 ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,  -0.4  ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29,  0.29 ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.4,   0.0  ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29, -0.29 ) * aspectcorrect ) * dofblur7 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,   0.4  ) * aspectcorrect ) * dofblur7 );
+
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29,  0.29 ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.4,   0.0  ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.29, -0.29 ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,  -0.4  ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29,  0.29 ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.4,   0.0  ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2( -0.29, -0.29 ) * aspectcorrect ) * dofblur4 );
+			col += texture2D( tDiffuse, vUv.xy + ( vec2(  0.0,   0.4  ) * aspectcorrect ) * dofblur4 );
+
+			gl_FragColor = col / 41.0;
+			gl_FragColor.a = 1.0;
+		}
+  `
+})
+bokehPass.uniforms.tDepth.value = composer.renderTarget2.texture
+
+composer.addPass(renderPass)
+composer.addPass(vignettePass)
+composer.addPass(chromaticAberrationPass)
+composer.addPass(bokehPass)
+composer.addPass(noisePass)
+
+/** Window resize event handler */
+window.addEventListener('resize', () => {
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  composer.setSize(window.innerWidth, window.innerHeight)
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+})
+
+
+/** Fly animtaion */
+window.addEventListener('load', data.fly)
+
+
+/** Set up a controller */
+const gui = new dat.GUI()
+gui.close()
+
+const sceneGui = gui.addFolder('Scene')
+sceneGui.add(data.scene.position, 'z', data.scene.position.z, 50, 1).name('distance')
+
+const vignetteGui = gui.addFolder('Vignette')
+vignetteGui.add(data.effects.vignette, 'darkness', 1, 3, 0.01).onChange(value => vignettePass.uniforms.darkness.value = value)
+vignetteGui.add(data.effects.vignette, 'offset', 0, 3, 0.01).onChange(value => vignettePass.uniforms.offset.value = value)
+
+const chromaticAberrationGui = gui.addFolder('Chromatic Aberration')
+chromaticAberrationGui.add(data.effects.chromaticAberration, 'maxDistortion', 0, 10, 0.001).name('distortion').onChange(value => chromaticAberrationPass.uniforms.uMaxDistort.value = value)
+chromaticAberrationGui.add(data.effects.chromaticAberration, 'iterations', 1, 30, 1).onChange(value => chromaticAberrationPass.uniforms.uIterations.value = value)
+
+const bokehGui = gui.addFolder('Bokeh (blur)')
+bokehGui.add(data.effects.bokeh, 'power', 0, 0.5, 0.001).onChange(value => bokehPass.uniforms.uMaxblur.value = value)
+bokehGui.add(data.effects.bokeh, 'threshold', 0, 1, 0.001).onChange(value => bokehPass.uniforms.uThreshold.value = value)
+bokehGui.add(data.effects.bokeh, 'focus', 0, 1, 0.01).onChange(value => bokehPass.uniforms.uFocus.value = value)
+bokehGui.add(data.effects.bokeh.distortion, 'x', 0, 10, 0.01).name('X-axis distortion').onChange(value => bokehPass.uniforms.uDistortionX.value = value)
+bokehGui.add(data.effects.bokeh.distortion, 'y', 0, 10, 0.01).name('Y-axis distortion').onChange(value => bokehPass.uniforms.uDistortionY.value = value)
+
+const noiseGui = gui.addFolder('Noise')
+noiseGui.add(data.effects.noise, 'isEnabled').name('enabled').onChange(value => noisePass.uniforms.uPower.value = value ? 0.1 : 0)
+noiseGui.add(data.effects.noise, 'isStatic').name('static')
+
+gui.add(data, 'speed', 0, 0.1, 0.00001).onChange(value => data.speed * 0.001)
+gui.add(data, 'fly').name('Repeat animation')
+gui.add(data, 'fullscreen').name('Toggle fullscreen')
+
+
+/** Main loop */
+void (function render() {
+  requestAnimationFrame(render)
+
+  /** Update uniform values */
+  particleMaterial.uniforms.uTime.value += data.speed
+  if (!data.effects.noise.isStatic) {
+    noisePass.uniforms.uTime.value += data.effects.noise.speed
+  }
+
+  scene.position.z = THREE.MathUtils.lerp(scene.position.z, -data.scene.position.z, 0.05)
+
+  controls.update()
+  composer.render()
+  stats.update()
+})()
+
+    </script>
+    
+</body>
+</html>
