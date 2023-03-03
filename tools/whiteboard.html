@@ -200,11 +200,27 @@
 			padding: 6px;
 		}
 
+		#eraserCircle {
+			display: inline-block;
+			position: fixed;
+			top: 100px;
+			left: 100px;
+			z-index: 12;
+			width: 64px;
+			height: 64px;
+			background-color: transparent;
+			border-radius: 50%;
+			border: 1px solid rgba(0,0,0,0.3);
+			pointer-events: none;
+			box-shadow: inset 1px 1px 10px white, inset -1px -1px 10px white;
+
+		}
+
 		@media only screen and (max-width: 450px) {
 			div.tools-wrapper {
 				min-height: var(--tools-wrapper-width);
 				width:calc(100vw - 20px);
-
+				
 				top: 40px;
 				left: 10px;
 
@@ -213,8 +229,8 @@
 				padding: 20px;
 				
 			}
-    }
-	</style>
+		}
+		</style>
 </head>
 
 <body>
@@ -224,9 +240,9 @@
 	<div class="tools-wrapper">
 
 
-		<div class="tools-icon color-picker" title="Shortcut: Ctrl + Left Click">
+		<div class="tools-icon color-picker" title="Toggle Color: Ctrl + Left Click || Pen Size: Ctrl + Mouse wheel">
 			<span class="icon-container">
-				<span class="selected">
+				<span  id="currentColorCircle" class="selected">
 				</span>
 	
 				<div class="selector">
@@ -239,7 +255,7 @@
 			</span>
 		</div>
 
-		<div class="tools-icon" id="eraserButton" title="Eraser">
+		<div class="tools-icon" id="eraserButton" title="Eraser || Change Size: Ctrl + Mouse wheel">
 			<span class="icon-container">
 				<svg viewBox="0 0 576 512" style="transform:scale(0.9);">
 					<path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/>
@@ -311,8 +327,10 @@
 				</svg>
 			</span>
 		</div>
-
 	</div>
+
+	<div id="eraserCircle"></div>
+
 	<script>
 		const { PI, hypot, sqrt, sin, cos, round } = Math;
 
@@ -340,6 +358,7 @@
 			}
 
 			static DEFAULT_PEN_SIZE = 3;
+			static DEFAULT_ERASER_SIZE = 32;
 			static DEFAULT_PEN_SHARPNESS = 2;
 		}
 
@@ -358,6 +377,8 @@
 				this.undo_strokes_array = [];
 
 				this.current_pen_color = 0;
+				this.current_pen_size = Stroke.DEFAULT_PEN_SIZE;
+				this.current_eraser_size = Stroke.DEFAULT_ERASER_SIZE;
 			}
 
 
@@ -376,8 +397,12 @@
 				this.parent.appendChild(this.board);
 			}
 
-			draw_dot(x, y, pen_radius = Stroke.DEFAULT_PEN_SIZE) {
+			draw_dot(x, y) {
 				//console.log(`${x}, ${y}, ${pen_radius}`)
+				let pen_radius = whiteboard.is_eraser_enabled()
+					? this.current_eraser_size
+					: this.current_pen_size;
+
 				this.ctx.beginPath();
 				this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
 				this.ctx.fill();
@@ -582,6 +607,26 @@
 				}
 			}
 
+			is_eraser_enabled = () => {
+				return this.ctx.fillStyle.toLowerCase() === PEN_COLOR.ERASE.toLowerCase()
+			}
+
+			increase_pen_size = () => {
+				if(this.is_eraser_enabled()) {
+					this.current_eraser_size += 1;
+				} else {
+					this.current_pen_size += 1;
+				}
+			}
+
+			decrease_pen_size = () => {
+				if(this.is_eraser_enabled() && this.current_eraser_size > 1) {
+					this.current_eraser_size -= 1;
+				} else if(this.current_pen_size > 1) {
+					this.current_pen_size -= 1;
+				}
+			}
+
 			static default_pen_color = PEN_COLOR.BLACK;
 			static supported_pen_colors = [
 				PEN_COLOR.BLACK,
@@ -617,6 +662,13 @@
 					Whiteboard.supported_pen_colors[whiteboard.current_pen_color];
 			}
 
+			const update_color_selctor_circle_size = () => {
+				if(!whiteboard.is_eraser_enabled()) {
+					document.getElementById("currentColorCircle").style.width = `${whiteboard.current_pen_size * 3}px`;
+					document.getElementById("currentColorCircle").style.height = `${whiteboard.current_pen_size * 3}px`;
+				}
+			}
+
 			function click_handler(event) {
 				//console.log(event);
 				if (event.ctrlKey) {
@@ -640,10 +692,12 @@
 			}
 
 			function toggle_eraser() {
-				if(whiteboard.ctx.fillStyle.toLowerCase() === PEN_COLOR.ERASE.toLowerCase())
+
+				if(whiteboard.is_eraser_enabled()) {
 					whiteboard.change_marker_color(Whiteboard.supported_pen_colors[whiteboard.current_pen_color]);
-				else
+				} else {
 					whiteboard.change_marker_color(PEN_COLOR.ERASE);
+				}
 			}
 
 			function download_whiteboard_to_png() {
@@ -667,6 +721,41 @@
 			downloadWhiteboardButton.onclick = download_whiteboard_to_png;
 			clearWhiteboardButton.onclick = () => {whiteboard.clear_white_board(false);}
 			
+			// CTRL + Mouse wheel
+			whiteboard.board.addEventListener('wheel', (event) => {
+
+				if(event.ctrlKey) {
+					event.preventDefault();
+
+					const is_wheel_up = event.deltaY < 0;
+					const is_wheel_down = event.deltaY > 0;
+
+					if(is_wheel_up) {
+						whiteboard.increase_pen_size();
+					} else if(is_wheel_down) {
+						whiteboard.decrease_pen_size();
+					}
+
+					console.log(whiteboard.current_pen_size);
+					update_color_selctor_circle_size();
+				}
+			})
+
+			// Eraser circle
+			whiteboard.board.addEventListener('mousemove', (event) => {
+				const eraserCircle = document.getElementById('eraserCircle');
+				
+				if(whiteboard.is_eraser_enabled()) {
+					eraserCircle.style.display = 'block';
+					eraserCircle.style.left = `${event.clientX - whiteboard.current_eraser_size}px`;
+					eraserCircle.style.top = `${event.clientY - whiteboard.current_eraser_size}px`;
+					eraserCircle.style.height = `${whiteboard.current_eraser_size * 2}px`;
+					eraserCircle.style.width = `${whiteboard.current_eraser_size * 2}px`;
+				} else {
+					eraserCircle.style.display = 'none';
+				}
+			})
+
 			document.addEventListener('keydown', (event) => {
 				
 				// CTRL + Z
