@@ -394,11 +394,9 @@
 				this.parent.appendChild(this.board);
 			}
 
-			draw_dot(x, y) {
+			draw_dot(x, y, pen_radius = Stroke.DEFAULT_PEN_SIZE) {
+
 				//console.log(`${x}, ${y}, ${pen_radius}`)
-				let pen_radius = whiteboard.is_eraser_enabled()
-					? this.current_eraser_size
-					: this.current_pen_size;
 
 				this.ctx.beginPath();
 				this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
@@ -424,7 +422,7 @@
 					if (p1.y == p2.y) y0 = p1.y;
 					else y0 = (1 - t) * p1.y + t * p2.y;
 
-					this.draw_dot(x0, y0);
+					this.draw_dot(x0, y0, last_stroke.pen_size);
 
 					last_stroke.points.push({ x: x0, y: y0 });
 				}
@@ -549,6 +547,12 @@
 				this.is_pen_down = true;
 
 				let new_stroke;
+				let stroke_pen_size = whiteboard.is_eraser_enabled() 
+					? whiteboard.current_eraser_size
+					: whiteboard.current_pen_size;
+				let stroke_pen_color = whiteboard.is_eraser_enabled()
+					? PEN_COLOR.ERASE
+					: Whiteboard.supported_pen_colors[this.current_pen_color];
 
 				if(event.type === 'touchstart') {
 					new_stroke = new Stroke(
@@ -556,12 +560,14 @@
 							x: event.changedTouches[0].pageX, 
 							 y: event.changedTouches[0].pageY 
 						}],
-						Whiteboard.supported_pen_colors[this.current_pen_color]
+						stroke_pen_color,
+						stroke_pen_size
 					);
 				} else if(event.type === 'mousedown') {
 					new_stroke = new Stroke(
 						[{x: event.clientX, y: event.clientY}],
-						Whiteboard.supported_pen_colors[this.current_pen_color]
+						stroke_pen_color,
+						stroke_pen_size
 					)
 				}
 
@@ -599,7 +605,7 @@
 					this.ctx.fillStyle = this.strokes_array[i].color;
 					// console.log(this.strokes_array[i].color);
 					for (let j = 0; points.length > 0 && j < points.length; j++) {
-						this.draw_dot(points[j].x, points[j].y)
+						this.draw_dot(points[j].x, points[j].y, this.strokes_array[i].pen_size)
 					}
 				}
 			}
@@ -645,7 +651,7 @@
 				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAotJREFUWEeVV1mWwzAIM73/met5bGa3p/mZaWILIQROYD0vWGvtfhWsBRufXtbgzjsEY4c18iPeg7X2QOTQwx147TlowtYdPYOnOmmBoVXRBhX8lh/CPSQPiqhquif+rQToeQ3gxO2IYpQmmRy0GuI3BVoWsMmJXPorXuuzIeF3OTgUR46KRRL/aJCmYg/BGfRY3ccAgLU3MZov1wmXhQabk+CGnOqLZiBhtDBPLnFB6tNjG2NxhgEgCdgyHhxNwCd0XxKc6xAUeAhfqy3UJZz1QZxDUMJ7rn4ESv2mKbYXQp1peOawU9CVTf6VUlmiaRs/GBU6D9jnQkB50GbiNABEwriy+KEQMNCz1sFzoBPuVJgqbvjpkHI8iumDNEYwZe5EIjCbAK6FhcS9+Y5rKBEkOq1XZfcXF5Lf3eSxXVMzphOAAVwF/L6OAyfpjl8kMYbN4DyMdLlWNb43uAblhQKiPvfBmTqQEgdVSsEvJAEiwVWTHzUvJRAFvrTbH3UAH6dlVxhNbdPGscGEZh0SliKT+CIJiUnY6IlP8EToCpaDcuP797eoaEJPl58IiaZ/tRxOBJmIAZMgrbyFTm+QaEsScm9Rwlvx42eLhBrcnouRuqCp1GEtxwp1BXvCX9qiMqdro5ht+YDyvSEeyV3QVu10B3pC5P9gu9luF0r7Jg7fzpAxnQIRa6FfATScUH622YDRiXHOzfA2kaO8frNw8kWSs/Kmc+uaSdFId48cztHmLdjbapi5TUdW+VxKuSvxHNSq65lY68p37gOIRwVitfWzSiVNXqhNv9uWPrN/mDBn1L0JTcWLjMP7iWiUmnr6EE5A3bJigarjD204ZNRIrBMugMdU3fBS75ob/wD1aDs32JEreQAAAABJRU5ErkJggg==";
 		}
 
-		let whiteboard, change_marker_color;
+		let whiteboard;
 
 		function init() {
 			console.log("Initializing default configurations..");
