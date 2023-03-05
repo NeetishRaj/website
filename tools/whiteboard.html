@@ -467,7 +467,11 @@
 					}
 				} 
 				else if (e.type === "click") {
-					this.draw_dot(e.clientX, e.clientY);
+					let pen_size = this.is_eraser_enabled()
+						? this.current_eraser_size
+						: this.current_pen_size;
+
+					this.draw_dot(e.clientX, e.clientY, pen_size);
 				} 
 				else if (e.type === "contextmenu") {
 					var last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
@@ -558,7 +562,7 @@
 					new_stroke = new Stroke(
 						[{
 							x: event.changedTouches[0].pageX, 
-							 y: event.changedTouches[0].pageY 
+							y: event.changedTouches[0].pageY 
 						}],
 						stroke_pen_color,
 						stroke_pen_size
