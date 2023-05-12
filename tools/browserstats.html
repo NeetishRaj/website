@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Neetish Raj" />
+    <meta name="keywords" content="browser stats get my browser details" />
+    <meta name="description" content="Simple and free online browser stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Anton|Lobster"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="../favicons/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../manifest.json" />
+    <link
+      rel="mask-icon"
+      href="../favicons/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <title>SVG Editor</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        color: #f1ece9;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      a {
+        color: #d7443f;
+        text-decoration: none;
+      }
+      section {
+        background: #333a42;
+        border-radius: 5px;
+        color: #f1ece9;
+        margin: 5px;
+        padding: 15px;
+      }
+
+      textarea {
+        background: #485058;
+        border-radius: 5px;
+        color: #a6a5a1;
+        height: 50vh;
+        width: 100%;
+      }
+      /* Width and height of the scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      #copyBtn {
+        background: #485058;
+        border: 1px solid white;
+        border-radius: 5px;
+        color: #f1ece9;
+        margin-top: 15px;
+        padding: 15px;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      #copyBtn:hover {
+        background: #f1ece9;
+        color: #485058;
+        cursor: pointer;
+      }
+
+      p {
+        border-top: 1px solid #333a42;
+        border-bottom: 1px solid #333a42;
+        border-left: 10px solid #333a42;
+        border-right: 10px solid #333a42;
+        border-radius: 10px;
+        text-align: justify;
+        padding: 5px;
+      }
+
+      footer {
+        color: #333a42;
+        font-size: 14px;
+        margin: 5px;
+        margin-top: 50px;
+        padding: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <h1>Your Browser Stats</h1>
+      <div class="copyArea">
+        <div class="stats">
+          <textarea id="stats" spellcheck="false"></textarea>
+        </div>
+        <div class="copyBtn">
+          <input type="submit" id="copyBtn" value="copy to clipboard" />
+        </div>
+      </div>
+    </section>
+    <footer>
+      <p>
+        These stats helps a web developer to identify your browser conditions.
+      </p>
+      <p>
+        Browser stats info is acquired using the open system details provided by
+        your browser.
+      </p>
+    </footer>
+
+    <script type="text/javascript">
+      window.onload = function () {
+        document.getElementById("stats").value = getStatsHTML();
+
+        document
+          .getElementById("copyBtn")
+          .addEventListener("click", function () {
+            select(document.getElementById("stats"));
+            copy();
+            // alert("browser stats copied to clipboard");
+          });
+      };
+      platform = {};
+      let stats = {
+        language: navigator.language,
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        timeZoneOffset: new Date().getTimezoneOffset(),
+        mimeTypes: Array.from(navigator.mimeTypes)
+          .map((mimeType) => mimeType.type)
+          .join(","),
+
+        name: platform.name,
+        version: platform.version,
+        layout: platform.layout,
+        product: platform.product,
+        manufacturer: platform.manufacturer,
+        description: platform.description,
+
+        ...navigator,
+      };
+
+      function select(elem) {
+        elem.focus();
+        elem.setSelectionRange(0, elem.value.length);
+      }
+
+      function copy() {
+        try {
+          document.execCommand("copy");
+        } catch (err) {
+          console.log(
+            "Oops looks like cant use copy to clipboard feature in your device, try to copy the stats manually!"
+          );
+          console.log(err);
+        }
+      }
+
+      function getStatsHTML() {
+        // let statString = "";
+
+        // for (let key in stats) {
+        //   if (stats[key]) {
+        //     statString += "" + key + " : " + stats[key] + "\n";
+        //     // console.log("" + key + " : " + stats[key]);
+        //   }
+        //   if (stats.hasOwnProperty(key)) {
+        //   }
+        // }
+
+        let final_data = {
+          timeZoneOffset: new Date().getTimezoneOffset(),
+          mimeTypes: Array.from(navigator.mimeTypes)
+            .map((mimeType) => mimeType.type)
+            .join(","),
+          currentTime: Date()
+        };
+
+        for (const key in window.navigator) {
+          const element = window.navigator[key];
+          console.log("" + key + " : " + element);
+
+          if (element && element.toString()) {
+            let value = element.toString();
+
+            if (value.startsWith("function")) continue;
+
+            if (typeof element === "object") {
+              // TODO: Find about other obect info
+              continue;
+            } else {
+            }
+
+            final_data[key] = element.toString();
+          }
+        }
+
+        for (const key in window) {
+          const element = window[key];
+          console.log("" + key + " : " + element);
+
+          if (element && element.toString()) {
+            let value = element.toString();
+
+            if (value.startsWith("function")) continue;
+
+            if (typeof element === "object") {
+              // TODO: Find about other obect info
+              continue;
+            } else {
+            }
+
+            final_data[key] = element.toString();
+          }
+        }
+
+        return JSON.stringify(final_data, null, 4);
+      }
+    </script>
+  </body>
+</html>
