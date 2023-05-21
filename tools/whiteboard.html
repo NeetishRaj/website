@@ -1,276 +1,337 @@
 <!DOCTYPE html>
 <html lang="en-US">
+  <head>
+    <title>Whiteboard</title>
+    <meta charset="UTF-8" />
+    <!--<meta http-equiv="refresh" content="60">-->
+    <meta name="author" content="Neetish Raj" />
+    <meta
+      name="keywords"
+      content="whiteboard, white, board, sketch, sketchboard, free, online, sketch"
+    />
+    <meta
+      name="description"
+      content="Simple and free online Whiteboard for your meetings"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Anton|Lobster"
+      rel="stylesheet"
+    />
 
-<head>
-	<title>Whiteboard</title>
-	<meta charset="UTF-8" />
-	<!--<meta http-equiv="refresh" content="60">-->
-	<meta name="author" content="Neetish Raj" />
-	<meta name="keywords" content="whiteboard, white, board, sketch, sketchboard, free, online, sketch" />
-	<meta name="description" content="Simple and free online Whiteboard for your meetings" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-	<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="../favicons/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../manifest.json" />
+    <link
+      rel="mask-icon"
+      href="../favicons/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="theme-color" content="#ffffff" />
 
-	<link rel="shortcut icon" type="image/x-icon" href="../favicons/favicon.ico" />
-	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
-	<link rel="manifest" href="../manifest.json" />
-	<link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#5bbad5" />
-	<meta name="theme-color" content="#ffffff" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        position: relative;
+      }
 
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		body {
-			position: relative;
-		}
-		
-		body,
-		html {
-			overflow-y: hidden;
-			margin: 0;
-			padding: 0;
-			overscroll-behavior-y: contain;
-		}
+      body,
+      html {
+        overflow-y: hidden;
+        margin: 0;
+        padding: 0;
+        overscroll-behavior-y: contain;
+      }
 
-		:root {
-			--tools-wrapper-width: 70px;
-			--tools-wrapper-height: 400px;
-			--tools-wrapper-br: 100px;
-			--tools-wrapper-border: none;
-			--tools-wrapper-vp: 15px;
-			--tools-wrapper-bg: #FFF8DC;
+      :root {
+        --tools-wrapper-width: 70px;
+        --tools-wrapper-height: 400px;
+        --tools-wrapper-br: 100px;
+        --tools-wrapper-border: none;
+        --tools-wrapper-vp: 15px;
+        --tools-wrapper-bg: #fff8dc;
 
-			--color-picker-height: 180px;
-			--color-picker-width: var(--tools-wrapper-width);
+        --color-picker-height: 180px;
+        --color-picker-width: var(--tools-wrapper-width);
 
-			--tools-icon-border: none;
-			--tools-icon-color: #a52a2aee;
-			--tools-icon-color-hover: #a52a2aff;
-			--tools-icon-width: 45px;
+        --tools-icon-border: none;
+        --tools-icon-color: #a52a2aee;
+        --tools-icon-color-hover: #a52a2aff;
+        --tools-icon-width: 45px;
 
-			--tools-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        --tools-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      }
 
-		}
+      canvas {
+        background-color: #cfcfcf;
+        position: fixed;
 
-		canvas {
-			background-color: #cfcfcf;
-			position: fixed;
+        width: 100vw;
+        height: 100vh;
+        cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==")
+            0 16,
+          pointer;
+      }
 
-			width: 100vw;
-			height: 100vh;
-			cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==") 0 16, pointer;
-		}
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-		.center {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+      .tools-wrapper {
+        border: var(--tools-wrapper-border);
+        border-radius: var(--tools-wrapper-br);
+        background-color: var(--tools-wrapper-bg);
+        box-shadow: var(--tools-box-shadow);
 
-		.tools-wrapper {
-			border: var(--tools-wrapper-border);
-			border-radius: var(--tools-wrapper-br);
-			background-color: var(--tools-wrapper-bg);
-			box-shadow: var(--tools-box-shadow);
+        width: var(--tools-wrapper-width);
+        min-height: var(--tools-wrapper-height);
+        position: fixed;
+        top: calc(100vh / 2 - 200px);
+        left: 10px;
+        z-index: 10;
 
-			width: var(--tools-wrapper-width);
-			min-height: var(--tools-wrapper-height);
-			position: fixed;
-			top: calc(100vh / 2 - 200px);
-			left: 10px;
-			z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			align-items: center;
+        padding-top: var(--tools-wrapper-vp);
+        padding-bottom: var(--tools-wrapper-vp);
+      }
 
-			padding-top: var(--tools-wrapper-vp);
-			padding-bottom: var(--tools-wrapper-vp);
-		}
+      .tools-wrapper .tools-icon {
+        border: var(--tools-icon-border);
+        box-shadow: var(--tools-box-shadow);
 
-		.tools-wrapper .tools-icon {
-			border: var(--tools-icon-border);
-			box-shadow: var(--tools-box-shadow);
+        width: var(--tools-icon-width);
+        height: var(--tools-icon-width);
+        border-radius: 50% 50%;
 
-			
-			width: var(--tools-icon-width);
-			height: var(--tools-icon-width);
-			border-radius: 50% 50%;
+        cursor: pointer;
 
-			cursor: pointer;
+        transition: all 0.2s;
+      }
 
-			transition: all 0.2s;
-		}
+      .tools-wrapper .tools-icon:hover {
+        transform: scale(1.1);
+      }
 
-		.tools-wrapper .tools-icon:hover {
-			transform: scale(1.1);
-		}
-		
-		.tools-wrapper .tools-icon svg {
-			fill: var(--tools-icon-color);
-		}
+      .tools-wrapper .tools-icon svg {
+        fill: var(--tools-icon-color);
+      }
 
-		.tools-wrapper .tools-icon:hover svg {
-			fill: var(--tools-icon-color-hover);
-		}
+      .tools-wrapper .tools-icon:hover svg {
+        fill: var(--tools-icon-color-hover);
+      }
 
-		.tools-wrapper .color-picker {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: relative;
-		}
-		
-		.tools-wrapper .color-picker .selected {
-			display: inline-block;
-			width: 9px;
-			height: 9px;
-			border-radius: 50%;
-			background-color: black;
-		}
+      .tools-wrapper .color-picker {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
 
-		
-		.tools-wrapper .color-picker .selector {
-			height: var(--color-picker-height);
-			width:  calc(var(--color-picker-width) - 20px);
+      .tools-wrapper .color-picker .selected {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: black;
+      }
 
-			padding-top: calc(var(--tools-wrapper-vp) - 7px);
-			padding-bottom: calc(var(--tools-wrapper-vp) - 7px);
+      .tools-wrapper .color-picker .selector {
+        height: var(--color-picker-height);
+        width: calc(var(--color-picker-width) - 20px);
 
-			background-color: var(--tools-wrapper-bg);
+        padding-top: calc(var(--tools-wrapper-vp) - 7px);
+        padding-bottom: calc(var(--tools-wrapper-vp) - 7px);
 
-			border: var(--tools-wrapper-border);
-			border-radius:  var(--tools-wrapper-br);
-			box-shadow: var(--tools-box-shadow);
+        background-color: var(--tools-wrapper-bg);
 
-			position: absolute;
-			right: calc(20px - var(--color-picker-width));
-			top: -calc(var(--color-picker-height) / 2);
-			
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			align-items: center;
+        border: var(--tools-wrapper-border);
+        border-radius: var(--tools-wrapper-br);
+        box-shadow: var(--tools-box-shadow);
 
-			transform: rotateY(90deg) rotateX(90deg) scale(0.1);
-			transform-origin: left;
-			overflow: hidden;
+        position: absolute;
+        right: calc(20px - var(--color-picker-width));
+        top: -calc(var(--color-picker-height) / 2);
 
-			transition: all 0.4s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
-		}
+        transform: rotateY(90deg) rotateX(90deg) scale(0.1);
+        transform-origin: left;
+        overflow: hidden;
 
-		.tools-wrapper .color-picker:hover {
-			border-radius: 50% 0 0 50%;
-		}
-		
-		.tools-wrapper .color-picker:hover .selector {
-			transform: rotateY(0deg) rotateX(0deg);
-		}
+        transition: all 0.4s;
+      }
 
-		.tools-wrapper .color-picker .selector > div {
-			padding: 5px;
-			border: var(--tools-icon-border);
-			border-radius: 50%;
-		}
-		
-		.tools-wrapper .color-picker .selector > div > div {
-			width: 25px;
-			height: 25px;
-			border-radius: 50%;
-		}
+      .tools-wrapper .color-picker:hover {
+        border-radius: 50% 0 0 50%;
+      }
 
-		.tools-wrapper .color-picker .selector > div > div:hover {
-			box-shadow: var(--tools-box-shadow);
-		}
+      .tools-wrapper .color-picker:hover .selector {
+        transform: rotateY(0deg) rotateX(0deg);
+      }
 
+      .tools-wrapper .color-picker .selector > div {
+        padding: 5px;
+        border: var(--tools-icon-border);
+        border-radius: 50%;
+      }
 
-		.tools-wrapper .icon-container {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 6px;
-		}
+      .tools-wrapper .color-picker .selector > div > div {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
 
-		#eraserCircle {
-			display: none;
-			position: fixed;
-			top: 100px;
-			left: 100px;
-			z-index: 12;
-			width: 64px;
-			height: 64px;
-			background-color: transparent;
-			border-radius: 50%;
-			border: 1px solid rgba(0,0,0,0.3);
-			pointer-events: none;
-			box-shadow: inset 1px 1px 10px white, inset -1px -1px 10px white;
+      .tools-wrapper .color-picker .selector > div > div:hover {
+        box-shadow: var(--tools-box-shadow);
+      }
 
-		}
+      .tools-wrapper .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px;
+      }
 
-		@media only screen and (max-width: 450px) {
-			div.tools-wrapper {
-				min-height: var(--tools-wrapper-width);
-				width:calc(100vw - 20px);
-				
-				top: 40px;
-				left: 10px;
+      #eraserCircle {
+        display: none;
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        z-index: 12;
+        width: 64px;
+        height: 64px;
+        background-color: transparent;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+        box-shadow: inset 1px 1px 10px white, inset -1px -1px 10px white;
+      }
 
-				flex-direction: row;
+      @media only screen and (max-width: 450px) {
+        div.tools-wrapper {
+          min-height: var(--tools-wrapper-width);
+          width: calc(100vw - 20px);
 
-				padding: 20px;
-				
-			}
-		}
-		</style>
-</head>
+          top: 40px;
+          left: 10px;
 
-<body>
-	<!-- <canvas id="whiteboard">
+          flex-direction: row;
+
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <canvas id="whiteboard">
     </canvas> -->
-	<!-- https://mui.com/components/material-icons/?query=dot -->
-	<div class="tools-wrapper">
+    <!-- https://mui.com/components/material-icons/?query=dot -->
+    <div class="tools-wrapper">
+      <div
+        class="tools-icon color-picker"
+        title="Toggle Color: Ctrl + Left Click || Pen Size: Ctrl + Mouse wheel"
+      >
+        <span class="icon-container">
+          <span id="currentColorCircle" class="selected"> </span>
 
+          <div class="selector">
+            <div>
+              <div
+                class="color"
+                style="background-color: black"
+                onclick="change_pen_color(PEN_COLOR.BLACK)"
+              ></div>
+            </div>
+            <div>
+              <div
+                class="color"
+                style="background-color: red"
+                onclick="change_pen_color(PEN_COLOR.RED)"
+              ></div>
+            </div>
+            <div>
+              <div
+                class="color"
+                style="background-color: blue"
+                onclick="change_pen_color(PEN_COLOR.BLUE)"
+              ></div>
+            </div>
+            <div>
+              <div
+                class="color"
+                style="background-color: #00ff00"
+                onclick="change_pen_color(PEN_COLOR.GREEN)"
+              ></div>
+            </div>
+          </div>
+        </span>
+      </div>
 
-		<div class="tools-icon color-picker" title="Toggle Color: Ctrl + Left Click || Pen Size: Ctrl + Mouse wheel">
-			<span class="icon-container">
-				<span  id="currentColorCircle" class="selected">
-				</span>
-	
-				<div class="selector">
-					<div><div class="color" style="background-color: black;" onclick="change_pen_color(PEN_COLOR.BLACK)"></div></div>
-					<div><div class="color" style="background-color: red;" onclick="change_pen_color(PEN_COLOR.RED)"></div></div>
-					<div><div class="color" style="background-color: blue;" onclick="change_pen_color(PEN_COLOR.BLUE)"></div></div>
-					<div><div class="color" style="background-color: #00FF00;" onclick="change_pen_color(PEN_COLOR.GREEN)"></div></div>
-				</div>
-	
-			</span>
-		</div>
+      <div
+        class="tools-icon"
+        id="eraserButton"
+        title="Eraser || Change Size: Ctrl + Mouse wheel"
+      >
+        <span class="icon-container">
+          <svg viewBox="0 0 576 512" style="transform: scale(0.9)">
+            <path
+              d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"
+            />
+          </svg>
+        </span>
+      </div>
 
-		<div class="tools-icon" id="eraserButton" title="Eraser || Change Size: Ctrl + Mouse wheel">
-			<span class="icon-container">
-				<svg viewBox="0 0 576 512" style="transform:scale(0.9);">
-					<path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/>
-				</svg>
-			</span>
-		</div>
+      <div class="tools-icon" title="New Whiteboard">
+        <a href="/tools/whiteboard.html" target="_blank">
+          <span class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+              />
+            </svg>
+          </span>
+        </a>
+      </div>
 
-		<div class="tools-icon" title="New Whiteboard">
-			<a href="/tools/whiteboard.html" target="_blank">
-				<span class="icon-container" >
-					<svg  viewBox="0 0 24 24">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-					</svg>
-				</span>
-			</a>
-		</div>
-
-		<!-- <div class="tools-icon">
+      <!-- <div class="tools-icon">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24" data-testid="CreateIcon">
 					<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
@@ -278,22 +339,34 @@
 			</span>
 		</div> -->
 
-		<div class="tools-icon" title="Undo: Ctrl + Z" onclick="whiteboard.undo_stroke()">
-			<span class="icon-container">
-				<svg viewBox="0 0 24 24">
-					<path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
-				</svg>
-			</span>
-		</div>
-		<div class="tools-icon" title="Redo: Ctrl + Y" onclick="whiteboard.redo_stroke()">
-			<span class="icon-container">
-				<svg viewBox="0 0 24 24">
-					<path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"></path>
-				</svg>
-			</span>
-		</div>
+      <div
+        class="tools-icon"
+        title="Undo: Ctrl + Z"
+        onclick="whiteboard.undo_stroke()"
+      >
+        <span class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"
+            />
+          </svg>
+        </span>
+      </div>
+      <div
+        class="tools-icon"
+        title="Redo: Ctrl + Y"
+        onclick="whiteboard.redo_stroke()"
+      >
+        <span class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"
+            ></path>
+          </svg>
+        </span>
+      </div>
 
-		<!-- <div class="tools-icon">
+      <!-- <div class="tools-icon">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24" data-testid="SaveIcon">
 					<path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path>
@@ -301,15 +374,19 @@
 			</span>
 		</div> -->
 
-		<div class="tools-icon" id="downloadWhiteboardButton" title="Download Whiteboard as PNG image">
-			<span class="icon-container">
-				<svg viewBox="0 0 24 24">
-					<path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path>
-				</svg>
-			</span>
-		</div>
+      <div
+        class="tools-icon"
+        id="downloadWhiteboardButton"
+        title="Download Whiteboard as PNG image"
+      >
+        <span class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path>
+          </svg>
+        </span>
+      </div>
 
-		<!-- <div class="tools-icon">
+      <!-- <div class="tools-icon">
 			<span class="icon-container">
 				<svg viewBox="0 0 24 24">
 					<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path>
@@ -317,485 +394,577 @@
 			</span>
 		</div> -->
 
-		<div class="tools-icon" id="clearWhiteboardButton" title="Clear Whiteboard: Ctrl + Space">
-			<span class="icon-container">
-				<svg viewBox="0 0 24 24">
-					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
-				</svg>
-			</span>
-		</div>
-	</div>
-
-	<div id="eraserCircle"></div>
-
-	<script>
-		const { PI, hypot, sqrt, sin, cos, round } = Math;
-
-		const PEN_COLOR = Object.freeze({
-			BLACK: "#000000",
-			RED: "#FF0000",
-			GREEN: "#00FF00",
-			BLUE: "#0000FF",
-			ERASE: "#FFF8DC",
-		});
-
-		class Stroke {
-			constructor(
-				points = [],
-				color = PEN_COLOR.BLACK,
-				pen_size = 3,
-				pen_sharpeness = 2,
-				isLine = false
-			) {
-				this.points = points;
-				this.color = color;
-				this.pen_size = pen_size;
-				this.pen_sharpeness = pen_sharpeness;
-				this.is_line = isLine;
-			}
-
-			static DEFAULT_PEN_SIZE = 3;
-			static DEFAULT_ERASER_SIZE = 32;
-			static DEFAULT_PEN_SHARPNESS = 2;
-		}
-
-		class Whiteboard {
-			constructor(
-				parent = document.body,
-				color = PEN_COLOR.ERASE,
-				is_pen_down = false
-			) {
-				this.parent = parent;
-				this.create_canvas();
-
-				this.color = color;
-				this.is_pen_down = is_pen_down;
-				this.strokes_array = [];
-				this.undo_strokes_array = [];
-
-				this.current_pen_color = 0;
-				this.current_pen_size = Stroke.DEFAULT_PEN_SIZE;
-				this.current_eraser_size = Stroke.DEFAULT_ERASER_SIZE;
-			}
-
-
-			create_canvas = () => {
-				this.board = document.createElement("CANVAS");
-				this.board.setAttribute('id', 'whiteboard');
-				this.ctx = this.board.getContext("2d");
-
-				// Set the Pen color to currently selected color
-				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
-
-				this.board.style.width = this.board.width = window.innerWidth;
-				this.board.style.height = this.board.height = window.innerHeight;
-				this.board.style.cursor = Whiteboard.pen_cursor_black;
-
-				this.parent.appendChild(this.board);
-			}
-
-			draw_dot(x, y, pen_radius = Stroke.DEFAULT_PEN_SIZE) {
-
-				//console.log(`${x}, ${y}, ${pen_radius}`)
-
-				this.ctx.beginPath();
-				this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
-				this.ctx.fill();
-			}
-			
-
-			render_line = (p1, p2, d = Stroke.DEFAULT_PEN_SIZE) => {
-				//console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
-
-				const D = hypot(p2.x - p1.x, p2.y - p1.y);
-
-				var last_stroke = this.strokes_array[this.strokes_array.length - 1];
-				for (let i = 0; i < D; i += Stroke.DEFAULT_PEN_SHARPNESS) {
-					let x0, y0;
-
-					const dt = i;
-					const t = dt / D;
-
-					if (p1.x == p2.x) x0 = p1.x;
-					else x0 = (1 - t) * p1.x + t * p2.x;
-
-					if (p1.y == p2.y) y0 = p1.y;
-					else y0 = (1 - t) * p1.y + t * p2.y;
-
-					this.draw_dot(x0, y0, last_stroke.pen_size);
-
-					last_stroke.points.push({ x: x0, y: y0 });
-				}
-			}
-
-			draw = (e) => {
-
-				// console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
-				// console.log(`x: ${e.clientX}, y: ${e.clientY}`);
-
-				if (e.type === "touchmove" && this.is_pen_down) {
-					const last_stroke_points = this.strokes_array[this.strokes_array.length - 1].points;
-					last_stroke_points.push({
-						 x: e.changedTouches[0].pageX, 
-						 y: e.changedTouches[0].pageY 
-					});
-					
-					if (last_stroke_points.length > 1) {
-						this.render_line(
-							last_stroke_points[last_stroke_points.length - 2],
-							last_stroke_points[last_stroke_points.length - 1]
-						);
-					}
-				} 
-				else if (
-					e.type === "mousemove" &&
-					this.is_pen_down &&
-					e.which === 1 &&
-					e.clientX > 0 &&
-					e.clientX < window.innerWidth &&
-					e.clientY > 0 &&
-					e.clientY < window.innerHeight
-				) {
-					const last_stroke_point = this.strokes_array[this.strokes_array.length - 1].points;
-					last_stroke_point.push({ x: e.clientX, y: e.clientY });
-					
-					if (last_stroke_point.length > 1) {
-						this.render_line(
-							last_stroke_point[last_stroke_point.length - 2],
-							last_stroke_point[last_stroke_point.length - 1]
-						);
-					}
-				} 
-				else if (e.type === "click") {
-					let pen_size = this.is_eraser_enabled()
-						? this.current_eraser_size
-						: this.current_pen_size;
-
-					this.draw_dot(e.clientX, e.clientY, pen_size);
-				} 
-				else if (e.type === "contextmenu") {
-					var last_stroke = this.strokes_array[this.strokes_array.length - 1].points;
-					last_stroke.push({ x: e.clientX, y: e.clientY });
-					if (last_stroke.length > 2) {
-						this.render_line(
-							last_stroke[last_stroke.length - 2],
-							last_stroke[last_stroke.length - 1]
-						);
-					}
-				} 
-			}
-
-			clear_white_board = (undo_mode = false) => {
-				// Draw the canvas background with default color
-				this.ctx.fillStyle = PEN_COLOR.ERASE;
-				this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-				// Change the Pen color back to selected color
-				this.ctx.fillStyle = Whiteboard.supported_pen_colors[this.current_pen_color];
-				
-				if(!undo_mode) {
-					this.strokes_array = [];
-					this.undo_strokes_array = [];
-				}
-			}
-
-			change_marker_color(pen_color) {
-				if (!pen_color) {
-					this.current_pen_color =
-						(this.current_pen_color + 1) %
-						Whiteboard.supported_pen_colors.length;
-					pen_color = Whiteboard.supported_pen_colors[this.current_pen_color];
-					this.color = pen_color;
-				} else {
-					this.current_pen_color = Whiteboard.supported_pen_colors.indexOf(pen_color);
-					this.color = pen_color;
-				}
-
-				this.ctx.fillStyle = pen_color;
-
-				switch (pen_color) {
-					case PEN_COLOR.BLACK:
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
-						break;
-					case PEN_COLOR.RED:
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_red}) 0 16, auto`;
-						break;
-					case PEN_COLOR.GREEN:
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_green}) 0 16, auto`;
-						break;
-					case PEN_COLOR.BLUE:
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_blue}) 0 16, auto`;
-						break;
-					case PEN_COLOR.ERASE:
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_eraser}) 15 28, auto`;
-						break;
-					default:
-						ctx.fillStyle = PEN_COLOR.BLACK;
-						this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
-						break;
-				}
-			}
-
-			pen_up = () => {
-				// console.log("PEN_UP");
-				this.is_pen_down = false;
-				// console.log(this.strokes_array);
-			}
-
-			pen_down = (event) => {
-
-				if(event.ctrlKey) return;
-				
-				// console.log("PEN_DOWN");
-				// Create a new stroke 
-				this.is_pen_down = true;
-
-				let new_stroke;
-				let stroke_pen_size = whiteboard.is_eraser_enabled() 
-					? whiteboard.current_eraser_size
-					: whiteboard.current_pen_size;
-				let stroke_pen_color = whiteboard.is_eraser_enabled()
-					? PEN_COLOR.ERASE
-					: Whiteboard.supported_pen_colors[this.current_pen_color];
-
-				if(event.type === 'touchstart') {
-					new_stroke = new Stroke(
-						[{
-							x: event.changedTouches[0].pageX, 
-							y: event.changedTouches[0].pageY 
-						}],
-						stroke_pen_color,
-						stroke_pen_size
-					);
-				} else if(event.type === 'mousedown') {
-					new_stroke = new Stroke(
-						[{x: event.clientX, y: event.clientY}],
-						stroke_pen_color,
-						stroke_pen_size
-					)
-				}
-
-				this.strokes_array.push(new_stroke);	
-			}
-
-			undo_stroke = () => {
-				console.log("UNDO LAST STROKE!");
-				// console.log(this.strokes_array);
-				const last_stroke = this.strokes_array.pop();
-	
-				if(last_stroke)
-					this.undo_strokes_array.push(last_stroke);
-	
-				this.redraw_strokes();
-			}
-
-			redo_stroke = () => {
-				console.log("REDO LAST UNDO STROKE!");
-				console.log(this.strokes_array);
-				const last_undo_stroke = this.undo_strokes_array.pop();
-	
-				if(last_undo_stroke)
-					this.strokes_array.push(last_undo_stroke);
-	
-				this.redraw_strokes();
-			}
-
-			redraw_strokes = () => {
-				this.clear_white_board(true);
-				// console.log(`redraw_strkoes(): ${this}`);
-
-				for (let i = 0; i < this.strokes_array.length; i++) {
-					const points = this.strokes_array[i].points;
-					this.ctx.fillStyle = this.strokes_array[i].color;
-					// console.log(this.strokes_array[i].color);
-					for (let j = 0; points.length > 0 && j < points.length; j++) {
-						this.draw_dot(points[j].x, points[j].y, this.strokes_array[i].pen_size)
-					}
-				}
-			}
-
-			is_eraser_enabled = () => {
-				return this.ctx.fillStyle.toLowerCase() === PEN_COLOR.ERASE.toLowerCase()
-			}
-
-			increase_pen_size = () => {
-				if(this.is_eraser_enabled()) {
-					this.current_eraser_size += 1;
-				} else {
-					this.current_pen_size += 1;
-				}
-			}
-
-			decrease_pen_size = () => {
-				if(this.is_eraser_enabled() && this.current_eraser_size > 1) {
-					this.current_eraser_size -= 1;
-				} else if(this.current_pen_size > 1) {
-					this.current_pen_size -= 1;
-				}
-			}
-
-			static default_pen_color = PEN_COLOR.BLACK;
-			static supported_pen_colors = [
-				PEN_COLOR.BLACK,
-				PEN_COLOR.RED,
-				PEN_COLOR.GREEN,
-				PEN_COLOR.BLUE,
-			];
-
-			// Designed on https://www.piskelapp.com/p/create/sprite by Neetish Raj
-			static pen_cursor_black =
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==";
-			static pen_cursor_red =
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlJJREFUWEelV1mWxCAIxL7/mYd5CCirzJKPfp1EWYoqMAsWwEIABKC/gPIL++In6Woe54XFE7uXfP/PuotEc7hWi9ijvyIAv6RO9m5bCwER8AsAPozYagEK2RO4xlKN9g/CQU0UF8CHbwTcGYI+2m1lAUYO+PS2c3JMP4QG8UmuN7piZy+S/YFvEch0j6jsFbJ+GER1fDnxYGeOso4mmjiwkzu6+VwJ0Vp2TvjSy4dqTgBnzSSxBei8k3Ar5yHk0j4xRYMsZZ9Za3xzdpLBJp3EllB95TSQkNMQXh3CKdGu8w048bVRlQlB/1oSWto2wkFiOpeTPJHmd5npaXZu4Q/p31tft5qnvGY3GYsr/ZcOTjFQJ2olpzLjJTm9qWHczD1kxy7F4s1q9xioL5tM5JFxu8O6meRqznOL6/GYW9PLLEOGF792zVnKnu2GcE2S8XFedkcwB3ALpQHv5G1y0pkJ783FHuDSXV19lg1Hc7qqU17s63tVS7jL5Ff9WTiaXmmM0Rfd6WyTidPPt4dTpzG/LkEpr6n6PAljuSqND1xw3bZo0e2s2naPcQnplajiec93je1rxCjLnAZnGrfK6+LzLqtDQ7mzPJIk4YeqPo9WFqQjwLYG5kUvrleQs+VCBTWIMfLqkGHoktt+T9Rkeg67bL1nPIXvjLc5j8AkZfMRU5qd3qdNVL4XblNA0eBL8KkZcTesx/GvHPPiX21x5H7u1Jcdtuo8fj/0monzolBBdYr+SWd6Y9BVOgRgb8d+2n89jwcUj0MmtEvmjzKthlYhnW/eFREzmms7QAAAAABJRU5ErkJggg==";
-			static pen_cursor_green =
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlBJREFUWEelV0lyBCEMg/z/zUMKb1jGBibpQ6p6GrzIkiC9/evprbXx7witQZxvg9r6Wcl8kWfFqSN22WAr3pP78L23MT5D01MR9P0UrrfWbYvteEQTAw+YAmPgkIjBcXMCWV520cygNoe0MofwAzPA6VptOq3hRjA/ej7dptHb6J/eZvswwdV94ITOhRHhnRtU9QhCPQj7DPRDQCiiW+ysn/lbmFUQxMZn+oGSc0D5O6dAP9G7Sy5MOyC7FXChoetcekLSUXLtdsER+nevSzJ39TLhPFF88kUHjuSrEARmZYSPewq5eIAX7GAyU8Qnwh2hXI0c9GqONoqyeeZ9qBCgL07B7TLnVWalD/j+VCQaA4fG1KKw6gAgfkX5pOTIE9Sylmso6xCdy8WZ54pBPoTZA2PDyBi9ZVjqcEo7gv3sVWI2uooIrM/CCDhgsCi2HzlQJK0sZthTQWSH863MnK2AuZThWbTtojRgDW83hcSIKIoVoGyWlll8JpB1EM0PfmJ5X7s1WQFBHMMOC/kAR3dCJqZndJoz/MtIruucaKjV6wasxQrb7bEawdHHUtHDaKqr4uaw+2n4ljlkUwIoptk9tQAtQeBQQiK9mCs7cNKIQTHJGneWoxOnFIidvF6urgh42qgRZB1ZjYCSf8lnIAVcWP2MKx4Ie1RNN+hKXt4Jy416GfmD3uGC4qCsjIh15K90y8RKlt7dYZcJh33ZmazJkXL/I0CpSOouXnslYSUhDWD1H5pIP+0yPDhFvJgoZNuWBygTLwkX2Ae3+d4uyx2/EYsLNOiPRfkAAAAASUVORK5CYII=";
-			static pen_cursor_blue =
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAk9JREFUWEedV1mWBCEI07n/mcd5yBYQl5r+qK7XIksg0e6ttdbp0Vob89lbl7cxVwYbDHkXW9zEy721wR7sY1vYZ1zlRdpGXxKa3pMTyXDayVJKRePRqtYiSWt5tU+trVEafZShxfkmpNc6GD+ym1Dws4gbIcKMAQNEefWxtGK08QvFd8qhx+hVAY760jM3v1TeaTKGx7JZsWpywcuMULowaGf7hIzAHqdOuqkz7TOxcU3jqeOPr6H3BQ5ceVj4Uao8B9cRfSobhmpWHpOC4My3VLnWqRMVmkxdUDRREVAPjE7DbIHjSUqA2pTJqgBKEeEMGFSCs1AtK42JSFH5HVzBRvPUshBglSCFz/iOLdRS14hXIm2kBvaV026wlz2/V46MCgOVMBitochY0XNYRD+vVANdlrxd3ubAKG+SoQTf9Fy196rSNy2qHfyDat5LI1UZO/LC4At5mMoQ/CbtAvtUXoAdOH06kRcgXYA5iBzLEns2aVaiC2zDwW1Q7BdTU3C21F+xvBwgLwQVi7dzZi7fp4AxAxE8Hzi5/NQeXObnPuvJO78eLR8otBZ8olVudXmfgCnteinDm9iuV/lauBnyYh72XHUEks15S75e+nnyVRbsQuKnQTy9bg4ZrccLYAHZjgXV3bim1eOw7cxiAlJuEqXQ0wWRCqIbbJDNlQUffLHbjxvoDil/Ri7qYsv3CCcEcysEgbvTsBHNP24tE3jz8WZVBdj+QRIO1noCJw9f9orL5TMDHoToFdXVFfzyDz1IM3CAWZfyd6EOe6xW/3/ydgw1zN04NQAAAABJRU5ErkJggg==";
-			static pen_cursor_eraser = 
-				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAotJREFUWEeVV1mWwzAIM73/met5bGa3p/mZaWILIQROYD0vWGvtfhWsBRufXtbgzjsEY4c18iPeg7X2QOTQwx147TlowtYdPYOnOmmBoVXRBhX8lh/CPSQPiqhquif+rQToeQ3gxO2IYpQmmRy0GuI3BVoWsMmJXPorXuuzIeF3OTgUR46KRRL/aJCmYg/BGfRY3ccAgLU3MZov1wmXhQabk+CGnOqLZiBhtDBPLnFB6tNjG2NxhgEgCdgyHhxNwCd0XxKc6xAUeAhfqy3UJZz1QZxDUMJ7rn4ESv2mKbYXQp1peOawU9CVTf6VUlmiaRs/GBU6D9jnQkB50GbiNABEwriy+KEQMNCz1sFzoBPuVJgqbvjpkHI8iumDNEYwZe5EIjCbAK6FhcS9+Y5rKBEkOq1XZfcXF5Lf3eSxXVMzphOAAVwF/L6OAyfpjl8kMYbN4DyMdLlWNb43uAblhQKiPvfBmTqQEgdVSsEvJAEiwVWTHzUvJRAFvrTbH3UAH6dlVxhNbdPGscGEZh0SliKT+CIJiUnY6IlP8EToCpaDcuP797eoaEJPl58IiaZ/tRxOBJmIAZMgrbyFTm+QaEsScm9Rwlvx42eLhBrcnouRuqCp1GEtxwp1BXvCX9qiMqdro5ht+YDyvSEeyV3QVu10B3pC5P9gu9luF0r7Jg7fzpAxnQIRa6FfATScUH622YDRiXHOzfA2kaO8frNw8kWSs/Kmc+uaSdFId48cztHmLdjbapi5TUdW+VxKuSvxHNSq65lY68p37gOIRwVitfWzSiVNXqhNv9uWPrN/mDBn1L0JTcWLjMP7iWiUmnr6EE5A3bJigarjD204ZNRIrBMugMdU3fBS75ob/wD1aDs32JEreQAAAABJRU5ErkJggg==";
-		}
-
-		let whiteboard;
-
-		function init() {
-			console.log("Initializing default configurations..");
-			whiteboard = new Whiteboard();
-			whiteboard.clear_white_board();
-
-			const update_color_in_color_selector = () => {
-				// Update the color in color selector.
-				const selected = document.querySelector('div.color-picker  span.selected');
-				selected.style.backgroundColor = 
-					Whiteboard.supported_pen_colors[whiteboard.current_pen_color];
-			}
-
-			const update_color_selctor_circle_size = () => {
-				if(!whiteboard.is_eraser_enabled()) {
-					document.getElementById("currentColorCircle").style.width = `${whiteboard.current_pen_size * 3}px`;
-					document.getElementById("currentColorCircle").style.height = `${whiteboard.current_pen_size * 3}px`;
-				}
-			}
-
-			function click_handler(event) {
-				//console.log(event);
-				if (event.ctrlKey) {
-					whiteboard.change_marker_color();
-					update_color_in_color_selector();
-				}
-				else {
-					whiteboard.draw(event);
-				}
-			}
-
-			function dblclick_handler() {
-				console.log("Double click handler!");
-			}
-
-			function contextmenu_handler(e) {
-				e.preventDefault();
-
-				whiteboard.draw(e);
-				console.log("Context Menu Handler");
-			}
-
-			function toggle_eraser() {
-
-				if(whiteboard.is_eraser_enabled()) {
-					whiteboard.change_marker_color(Whiteboard.supported_pen_colors[whiteboard.current_pen_color]);
-				} else {
-					whiteboard.change_marker_color(PEN_COLOR.ERASE);
-				}
-			}
-
-			function download_whiteboard_to_png() {
-				const link = document.createElement('a');
-				link.download = 'whiteboard.png';
-				link.href = document.getElementById('whiteboard').toDataURL()
-				link.click();
-			}
-
-			whiteboard.board.ontouchmove = whiteboard.draw;
-			whiteboard.board.ontouchstart = whiteboard.pen_down;
-			whiteboard.board.ontouchend = whiteboard.pen_up;
-			whiteboard.board.onmousemove = whiteboard.draw;
-			whiteboard.board.onmousedown = whiteboard.pen_down;
-			whiteboard.board.onmouseup = whiteboard.pen_up;
-			whiteboard.board.onclick = click_handler;
-			whiteboard.board.ondblclick = dblclick_handler;
-			whiteboard.board.oncontextmenu = contextmenu_handler;
-
-			eraserButton.onclick = toggle_eraser;
-			downloadWhiteboardButton.onclick = download_whiteboard_to_png;
-			clearWhiteboardButton.onclick = () => {whiteboard.clear_white_board(false);}
-			
-			// CTRL + Mouse wheel
-			whiteboard.board.addEventListener('wheel', (event) => {
-
-				if(event.ctrlKey) {
-					event.preventDefault();
-
-					const is_wheel_up = event.deltaY < 0;
-					const is_wheel_down = event.deltaY > 0;
-
-					if(is_wheel_up) {
-						whiteboard.increase_pen_size();
-					} else if(is_wheel_down) {
-						whiteboard.decrease_pen_size();
-					}
-
-					if(whiteboard.is_eraser_enabled()) {
-						const eraserCircle = document.getElementById('eraserCircle');
-						eraserCircle.style.height = `${whiteboard.current_eraser_size * 2}px`;
-						eraserCircle.style.width = `${whiteboard.current_eraser_size * 2}px`;
-					}
-
-					console.log(whiteboard.current_pen_size);
-					update_color_selctor_circle_size();
-				}
-			})
-
-			// Eraser circle
-			whiteboard.board.addEventListener('mousemove', (event) => {
-				const eraserCircle = document.getElementById('eraserCircle');
-				
-				if(whiteboard.is_eraser_enabled()) {
-					eraserCircle.style.display = 'block';
-					eraserCircle.style.left = `${event.clientX - whiteboard.current_eraser_size}px`;
-					eraserCircle.style.top = `${event.clientY - whiteboard.current_eraser_size}px`;
-					eraserCircle.style.height = `${whiteboard.current_eraser_size * 2}px`;
-					eraserCircle.style.width = `${whiteboard.current_eraser_size * 2}px`;
-				} else {
-					eraserCircle.style.display = 'none';
-				}
-			})
-
-			document.addEventListener('keydown', (event) => {
-				
-				// CTRL + Z
-				if (event.ctrlKey && event.key === 'z') {
-					whiteboard.undo_stroke();
-				}
-
-				// CTRL + Y
-				if (event.ctrlKey && event.key === 'y') {
-					whiteboard.redo_stroke();
-				}
-
-				// CTRL + space
-				if (event.ctrlKey && event.key === ' ') {
-					whiteboard.clear_white_board();
-				}
-			});
-
-			change_pen_color = (color) => {
-				whiteboard.change_marker_color(color);
-				update_color_in_color_selector();
-			}
-
-		}
-
-		window.onload = init;
-	</script>
-</body>
-
+      <div
+        class="tools-icon"
+        id="clearWhiteboardButton"
+        title="Clear Whiteboard: Ctrl + Space"
+      >
+        <span class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+            ></path>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div id="eraserCircle"></div>
+
+    <script>
+      const { PI, hypot, sqrt, sin, cos, round } = Math;
+
+      const PEN_COLOR = Object.freeze({
+        BLACK: "#000000",
+        RED: "#FF0000",
+        GREEN: "#00FF00",
+        BLUE: "#0000FF",
+        ERASE: "#FFF8DC",
+      });
+
+      class Stroke {
+        constructor(
+          points = [],
+          color = PEN_COLOR.BLACK,
+          pen_size = 3,
+          pen_sharpeness = 2,
+          isLine = false
+        ) {
+          this.points = points;
+          this.color = color;
+          this.pen_size = pen_size;
+          this.pen_sharpeness = pen_sharpeness;
+          this.is_line = isLine;
+        }
+
+        static DEFAULT_PEN_SIZE = 3;
+        static DEFAULT_ERASER_SIZE = 32;
+        static DEFAULT_PEN_SHARPNESS = 2;
+      }
+
+      class Whiteboard {
+        constructor(
+          parent = document.body,
+          color = PEN_COLOR.ERASE,
+          is_pen_down = false
+        ) {
+          this.parent = parent;
+          this.create_canvas();
+
+          this.color = color;
+          this.is_pen_down = is_pen_down;
+          this.strokes_array = [];
+          this.undo_strokes_array = [];
+
+          this.current_pen_color = 0;
+          this.current_pen_size = Stroke.DEFAULT_PEN_SIZE;
+          this.current_eraser_size = Stroke.DEFAULT_ERASER_SIZE;
+        }
+
+        create_canvas = () => {
+          this.board = document.createElement("CANVAS");
+          this.board.setAttribute("id", "whiteboard");
+          this.ctx = this.board.getContext("2d");
+
+          // Set the Pen color to currently selected color
+          this.ctx.fillStyle =
+            Whiteboard.supported_pen_colors[this.current_pen_color];
+
+          this.board.style.width = this.board.width = window.innerWidth;
+          this.board.style.height = this.board.height = window.innerHeight;
+          this.board.style.cursor = Whiteboard.pen_cursor_black;
+
+          this.parent.appendChild(this.board);
+
+          this.setup_image_drag_and_drop();
+        };
+
+        setup_image_drag_and_drop = () => {
+          // Provide Image drop support
+          this.board.ondragenter = function (evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            // console.log("DRAGENTER");
+          };
+          this.board.ondragleave = function (evt) {
+            // evt.preventDefault();
+            // console.log("DRAGLEAVE");
+          };
+
+          const ctx = this.ctx;
+          this.board.ondrop = function drop_handler(ev) {
+            // console.log("DROP");
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            Whiteboard.draw_image(ev.dataTransfer.files[0], ctx);
+          };
+
+          this.board.ondragover = function dragover_handler(ev) {
+            console.log("DRAGOVER");
+            ev.stopPropagation();
+            ev.preventDefault();
+            // ev.dataTransfer.dropEffect = "move";
+          };
+        };
+
+        draw_dot(x, y, pen_radius = Stroke.DEFAULT_PEN_SIZE) {
+          //console.log(`${x}, ${y}, ${pen_radius}`)
+
+          this.ctx.beginPath();
+          this.ctx.arc(x, y, pen_radius, 0, 2 * Math.PI, true);
+          this.ctx.fill();
+        }
+
+        render_line = (p1, p2, d = Stroke.DEFAULT_PEN_SIZE) => {
+          //console.log(`p1.x: ${p1.x}, p1.y: ${p1.y}, p2.x: ${p2.x}, p2.y: ${p2.y}`);
+
+          const D = hypot(p2.x - p1.x, p2.y - p1.y);
+
+          var last_stroke = this.strokes_array[this.strokes_array.length - 1];
+          for (let i = 0; i < D; i += Stroke.DEFAULT_PEN_SHARPNESS) {
+            let x0, y0;
+
+            const dt = i;
+            const t = dt / D;
+
+            if (p1.x == p2.x) x0 = p1.x;
+            else x0 = (1 - t) * p1.x + t * p2.x;
+
+            if (p1.y == p2.y) y0 = p1.y;
+            else y0 = (1 - t) * p1.y + t * p2.y;
+
+            this.draw_dot(x0, y0, last_stroke.pen_size);
+
+            last_stroke.points.push({ x: x0, y: y0 });
+          }
+        };
+
+        draw = (e) => {
+          // console.log(`which: ${e.which}, is_pen_down: ${whiteboard.is_pen_down}`);
+          // console.log(`x: ${e.clientX}, y: ${e.clientY}`);
+
+          if (e.type === "touchmove" && this.is_pen_down) {
+            const last_stroke_points =
+              this.strokes_array[this.strokes_array.length - 1].points;
+            last_stroke_points.push({
+              x: e.changedTouches[0].pageX,
+              y: e.changedTouches[0].pageY,
+            });
+
+            if (last_stroke_points.length > 1) {
+              this.render_line(
+                last_stroke_points[last_stroke_points.length - 2],
+                last_stroke_points[last_stroke_points.length - 1]
+              );
+            }
+          } else if (
+            e.type === "mousemove" &&
+            this.is_pen_down &&
+            e.which === 1 &&
+            e.clientX > 0 &&
+            e.clientX < window.innerWidth &&
+            e.clientY > 0 &&
+            e.clientY < window.innerHeight
+          ) {
+            const last_stroke_point =
+              this.strokes_array[this.strokes_array.length - 1].points;
+            last_stroke_point.push({ x: e.clientX, y: e.clientY });
+
+            if (last_stroke_point.length > 1) {
+              this.render_line(
+                last_stroke_point[last_stroke_point.length - 2],
+                last_stroke_point[last_stroke_point.length - 1]
+              );
+            }
+          } else if (e.type === "click") {
+            let pen_size = this.is_eraser_enabled()
+              ? this.current_eraser_size
+              : this.current_pen_size;
+
+            this.draw_dot(e.clientX, e.clientY, pen_size);
+          } else if (e.type === "contextmenu") {
+            var last_stroke =
+              this.strokes_array[this.strokes_array.length - 1].points;
+            last_stroke.push({ x: e.clientX, y: e.clientY });
+            if (last_stroke.length > 2) {
+              this.render_line(
+                last_stroke[last_stroke.length - 2],
+                last_stroke[last_stroke.length - 1]
+              );
+            }
+          }
+        };
+
+        clear_white_board = (undo_mode = false) => {
+          // Draw the canvas background with default color
+          this.ctx.fillStyle = PEN_COLOR.ERASE;
+          this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+          // Change the Pen color back to selected color
+          this.ctx.fillStyle =
+            Whiteboard.supported_pen_colors[this.current_pen_color];
+
+          if (!undo_mode) {
+            this.strokes_array = [];
+            this.undo_strokes_array = [];
+          }
+        };
+
+        change_marker_color(pen_color) {
+          if (!pen_color) {
+            this.current_pen_color =
+              (this.current_pen_color + 1) %
+              Whiteboard.supported_pen_colors.length;
+            pen_color = Whiteboard.supported_pen_colors[this.current_pen_color];
+            this.color = pen_color;
+          } else {
+            this.current_pen_color =
+              Whiteboard.supported_pen_colors.indexOf(pen_color);
+            this.color = pen_color;
+          }
+
+          this.ctx.fillStyle = pen_color;
+
+          switch (pen_color) {
+            case PEN_COLOR.BLACK:
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
+              break;
+            case PEN_COLOR.RED:
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_red}) 0 16, auto`;
+              break;
+            case PEN_COLOR.GREEN:
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_green}) 0 16, auto`;
+              break;
+            case PEN_COLOR.BLUE:
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_blue}) 0 16, auto`;
+              break;
+            case PEN_COLOR.ERASE:
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_eraser}) 15 28, auto`;
+              break;
+            default:
+              ctx.fillStyle = PEN_COLOR.BLACK;
+              this.board.style.cursor = `url(${Whiteboard.pen_cursor_black}) 0 16, auto`;
+              break;
+          }
+        }
+
+        pen_up = () => {
+          // console.log("PEN_UP");
+          this.is_pen_down = false;
+          // console.log(this.strokes_array);
+        };
+
+        pen_down = (event) => {
+          if (event.ctrlKey) return;
+
+          // console.log("PEN_DOWN");
+          // Create a new stroke
+          this.is_pen_down = true;
+
+          let new_stroke;
+          let stroke_pen_size = whiteboard.is_eraser_enabled()
+            ? whiteboard.current_eraser_size
+            : whiteboard.current_pen_size;
+          let stroke_pen_color = whiteboard.is_eraser_enabled()
+            ? PEN_COLOR.ERASE
+            : Whiteboard.supported_pen_colors[this.current_pen_color];
+
+          if (event.type === "touchstart") {
+            new_stroke = new Stroke(
+              [
+                {
+                  x: event.changedTouches[0].pageX,
+                  y: event.changedTouches[0].pageY,
+                },
+              ],
+              stroke_pen_color,
+              stroke_pen_size
+            );
+          } else if (event.type === "mousedown") {
+            new_stroke = new Stroke(
+              [{ x: event.clientX, y: event.clientY }],
+              stroke_pen_color,
+              stroke_pen_size
+            );
+          }
+
+          this.strokes_array.push(new_stroke);
+        };
+
+        undo_stroke = () => {
+          console.log("UNDO LAST STROKE!");
+          // console.log(this.strokes_array);
+          const last_stroke = this.strokes_array.pop();
+
+          if (last_stroke) this.undo_strokes_array.push(last_stroke);
+
+          this.redraw_strokes();
+        };
+
+        redo_stroke = () => {
+          console.log("REDO LAST UNDO STROKE!");
+          console.log(this.strokes_array);
+          const last_undo_stroke = this.undo_strokes_array.pop();
+
+          if (last_undo_stroke) this.strokes_array.push(last_undo_stroke);
+
+          this.redraw_strokes();
+        };
+
+        redraw_strokes = () => {
+          this.clear_white_board(true);
+          // console.log(`redraw_strkoes(): ${this}`);
+
+          for (let i = 0; i < this.strokes_array.length; i++) {
+            const points = this.strokes_array[i].points;
+            this.ctx.fillStyle = this.strokes_array[i].color;
+            // console.log(this.strokes_array[i].color);
+            for (let j = 0; points.length > 0 && j < points.length; j++) {
+              this.draw_dot(
+                points[j].x,
+                points[j].y,
+                this.strokes_array[i].pen_size
+              );
+            }
+          }
+        };
+
+        is_eraser_enabled = () => {
+          return (
+            this.ctx.fillStyle.toLowerCase() === PEN_COLOR.ERASE.toLowerCase()
+          );
+        };
+
+        increase_pen_size = () => {
+          if (this.is_eraser_enabled()) {
+            this.current_eraser_size += 1;
+          } else {
+            this.current_pen_size += 1;
+          }
+        };
+
+        decrease_pen_size = () => {
+          if (this.is_eraser_enabled() && this.current_eraser_size > 1) {
+            this.current_eraser_size -= 1;
+          } else if (this.current_pen_size > 1) {
+            this.current_pen_size -= 1;
+          }
+        };
+
+        static default_pen_color = PEN_COLOR.BLACK;
+        static supported_pen_colors = [
+          PEN_COLOR.BLACK,
+          PEN_COLOR.RED,
+          PEN_COLOR.GREEN,
+          PEN_COLOR.BLUE,
+        ];
+
+        // Designed on https://www.piskelapp.com/p/create/sprite by Neetish Raj
+        static pen_cursor_black =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkNJREFUWEedV90ahSAI0/d/6M6nAm78aJ1uKjUYY6D19vfVW2sPf+2G8HU8j8t90XRcpuWTeUsczFUwzkuGbbbXW+tPdIqoHYCcjo0HAdJaDCyxmQXTW2+PZ+BjPpbdZeURbtbzsE6h66uHQmirPFWwemuPhd7prbXeO8xacmZKXBbJvs1VEtg62L5FGoIG4yhTjERdeE+RkJiTgEZCBiXL9iGYsYpKg97zSV9JGoBFLuK/+bZ5xwB6DdBr5yJIdB6oxbI04eb87YpWdSNRLJQV+agpqyrNsG8+MRelSJwyh3G4CIE2uGjrlHtJvaL3dQziyXrZtJyqPZdNjaRmQHJalMh2vhqaKb1ylY4PTWwJryTumim7uHa5QcFYZJdioVHoFuqBtpMCMRfwXjQBS89z7MXqUSmaY98TkAFHdVZuaZ1/3D1kOWYwt+A3eu1qM0eBtYPasUudosJErh2OU6tj0XlJwQtUeoBY4iF8XPUr6bDFYgXeYgTWAwU9p5P0nwQS5VbRcGfhXSc8bivIX96GrOyyYO4YvTyYUvqeqHEHlEtHE5AODvKTSBjbw1SRDSSqsp63dzdpCwcOdCrTHJ4zMhOlWZmAm2ul1Zaf7ob/9SHeVx1dLqlcoJGKm4Zu5IQqCC7o5yKaqwGIpaKmKbtc16EpQYrwSB1/e0CD6/zkj+ouYWP9hFmWks9w8LAWBBY+5GWnwDiRh+N+GLXnC++GQYEHDQTTRdT+JzUcXxIElSDPPw7yq7cPxbnlDWDN+1UVIz9rBQE3CcffQgAAAABJRU5ErkJggg==";
+        static pen_cursor_red =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlJJREFUWEelV1mWxCAIxL7/mYd5CCirzJKPfp1EWYoqMAsWwEIABKC/gPIL++In6Woe54XFE7uXfP/PuotEc7hWi9ijvyIAv6RO9m5bCwER8AsAPozYagEK2RO4xlKN9g/CQU0UF8CHbwTcGYI+2m1lAUYO+PS2c3JMP4QG8UmuN7piZy+S/YFvEch0j6jsFbJ+GER1fDnxYGeOso4mmjiwkzu6+VwJ0Vp2TvjSy4dqTgBnzSSxBei8k3Ar5yHk0j4xRYMsZZ9Za3xzdpLBJp3EllB95TSQkNMQXh3CKdGu8w048bVRlQlB/1oSWto2wkFiOpeTPJHmd5npaXZu4Q/p31tft5qnvGY3GYsr/ZcOTjFQJ2olpzLjJTm9qWHczD1kxy7F4s1q9xioL5tM5JFxu8O6meRqznOL6/GYW9PLLEOGF792zVnKnu2GcE2S8XFedkcwB3ALpQHv5G1y0pkJ783FHuDSXV19lg1Hc7qqU17s63tVS7jL5Ff9WTiaXmmM0Rfd6WyTidPPt4dTpzG/LkEpr6n6PAljuSqND1xw3bZo0e2s2naPcQnplajiec93je1rxCjLnAZnGrfK6+LzLqtDQ7mzPJIk4YeqPo9WFqQjwLYG5kUvrleQs+VCBTWIMfLqkGHoktt+T9Rkeg67bL1nPIXvjLc5j8AkZfMRU5qd3qdNVL4XblNA0eBL8KkZcTesx/GvHPPiX21x5H7u1Jcdtuo8fj/0monzolBBdYr+SWd6Y9BVOgRgb8d+2n89jwcUj0MmtEvmjzKthlYhnW/eFREzmms7QAAAAABJRU5ErkJggg==";
+        static pen_cursor_green =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAlBJREFUWEelV0lyBCEMg/z/zUMKb1jGBibpQ6p6GrzIkiC9/evprbXx7witQZxvg9r6Wcl8kWfFqSN22WAr3pP78L23MT5D01MR9P0UrrfWbYvteEQTAw+YAmPgkIjBcXMCWV520cygNoe0MofwAzPA6VptOq3hRjA/ej7dptHb6J/eZvswwdV94ITOhRHhnRtU9QhCPQj7DPRDQCiiW+ysn/lbmFUQxMZn+oGSc0D5O6dAP9G7Sy5MOyC7FXChoetcekLSUXLtdsER+nevSzJ39TLhPFF88kUHjuSrEARmZYSPewq5eIAX7GAyU8Qnwh2hXI0c9GqONoqyeeZ9qBCgL07B7TLnVWalD/j+VCQaA4fG1KKw6gAgfkX5pOTIE9Sylmso6xCdy8WZ54pBPoTZA2PDyBi9ZVjqcEo7gv3sVWI2uooIrM/CCDhgsCi2HzlQJK0sZthTQWSH863MnK2AuZThWbTtojRgDW83hcSIKIoVoGyWlll8JpB1EM0PfmJ5X7s1WQFBHMMOC/kAR3dCJqZndJoz/MtIruucaKjV6wasxQrb7bEawdHHUtHDaKqr4uaw+2n4ljlkUwIoptk9tQAtQeBQQiK9mCs7cNKIQTHJGneWoxOnFIidvF6urgh42qgRZB1ZjYCSf8lnIAVcWP2MKx4Ie1RNN+hKXt4Jy416GfmD3uGC4qCsjIh15K90y8RKlt7dYZcJh33ZmazJkXL/I0CpSOouXnslYSUhDWD1H5pIP+0yPDhFvJgoZNuWBygTLwkX2Ae3+d4uyx2/EYsLNOiPRfkAAAAASUVORK5CYII=";
+        static pen_cursor_blue =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAk9JREFUWEedV1mWBCEI07n/mcd5yBYQl5r+qK7XIksg0e6ttdbp0Vob89lbl7cxVwYbDHkXW9zEy721wR7sY1vYZ1zlRdpGXxKa3pMTyXDayVJKRePRqtYiSWt5tU+trVEafZShxfkmpNc6GD+ym1Dws4gbIcKMAQNEefWxtGK08QvFd8qhx+hVAY760jM3v1TeaTKGx7JZsWpywcuMULowaGf7hIzAHqdOuqkz7TOxcU3jqeOPr6H3BQ5ceVj4Uao8B9cRfSobhmpWHpOC4My3VLnWqRMVmkxdUDRREVAPjE7DbIHjSUqA2pTJqgBKEeEMGFSCs1AtK42JSFH5HVzBRvPUshBglSCFz/iOLdRS14hXIm2kBvaV026wlz2/V46MCgOVMBitochY0XNYRD+vVANdlrxd3ubAKG+SoQTf9Fy196rSNy2qHfyDat5LI1UZO/LC4At5mMoQ/CbtAvtUXoAdOH06kRcgXYA5iBzLEns2aVaiC2zDwW1Q7BdTU3C21F+xvBwgLwQVi7dzZi7fp4AxAxE8Hzi5/NQeXObnPuvJO78eLR8otBZ8olVudXmfgCnteinDm9iuV/lauBnyYh72XHUEks15S75e+nnyVRbsQuKnQTy9bg4ZrccLYAHZjgXV3bim1eOw7cxiAlJuEqXQ0wWRCqIbbJDNlQUffLHbjxvoDil/Ri7qYsv3CCcEcysEgbvTsBHNP24tE3jz8WZVBdj+QRIO1noCJw9f9orL5TMDHoToFdXVFfzyDz1IM3CAWZfyd6EOe6xW/3/ydgw1zN04NQAAAABJRU5ErkJggg==";
+        static pen_cursor_eraser =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAotJREFUWEeVV1mWwzAIM73/met5bGa3p/mZaWILIQROYD0vWGvtfhWsBRufXtbgzjsEY4c18iPeg7X2QOTQwx147TlowtYdPYOnOmmBoVXRBhX8lh/CPSQPiqhquif+rQToeQ3gxO2IYpQmmRy0GuI3BVoWsMmJXPorXuuzIeF3OTgUR46KRRL/aJCmYg/BGfRY3ccAgLU3MZov1wmXhQabk+CGnOqLZiBhtDBPLnFB6tNjG2NxhgEgCdgyHhxNwCd0XxKc6xAUeAhfqy3UJZz1QZxDUMJ7rn4ESv2mKbYXQp1peOawU9CVTf6VUlmiaRs/GBU6D9jnQkB50GbiNABEwriy+KEQMNCz1sFzoBPuVJgqbvjpkHI8iumDNEYwZe5EIjCbAK6FhcS9+Y5rKBEkOq1XZfcXF5Lf3eSxXVMzphOAAVwF/L6OAyfpjl8kMYbN4DyMdLlWNb43uAblhQKiPvfBmTqQEgdVSsEvJAEiwVWTHzUvJRAFvrTbH3UAH6dlVxhNbdPGscGEZh0SliKT+CIJiUnY6IlP8EToCpaDcuP797eoaEJPl58IiaZ/tRxOBJmIAZMgrbyFTm+QaEsScm9Rwlvx42eLhBrcnouRuqCp1GEtxwp1BXvCX9qiMqdro5ht+YDyvSEeyV3QVu10B3pC5P9gu9luF0r7Jg7fzpAxnQIRa6FfATScUH622YDRiXHOzfA2kaO8frNw8kWSs/Kmc+uaSdFId48cztHmLdjbapi5TUdW+VxKuSvxHNSq65lY68p37gOIRwVitfWzSiVNXqhNv9uWPrN/mDBn1L0JTcWLjMP7iWiUmnr6EE5A3bJigarjD204ZNRIrBMugMdU3fBS75ob/wD1aDs32JEreQAAAABJRU5ErkJggg==";
+
+        static draw_image(image_file, ctx) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const img = new Image();
+            img.onload = function () {
+							const PADDING_LEFT = 100;
+							const PADDING_RIGHT = 50;
+							const PADDING_TOP = 50;
+							const PADDING_BOTTOM = 50;
+							let pos_x = PADDING_LEFT, pos_y = PADDING_TOP; 
+
+							const AR = img.width / img.height;
+							const SCREEN_AR = window.innerWidth / window.innerHeight;
+							const is_img_landscape = AR > 1;
+							const is_screen_landscape = SCREEN_AR > 1;
+							if(is_img_landscape) {
+								img.width = window.innerWidth - (PADDING_LEFT + PADDING_RIGHT);
+								img.height = img.width / AR;
+								pos_x = PADDING_LEFT;
+								pos_y = PADDING_TOP + (window.innerHeight - (PADDING_TOP + PADDING_BOTTOM + img.height)) / 2; 
+							} else {
+								img.height = window.innerHeight - (PADDING_TOP + PADDING_BOTTOM);
+								img.width = img.height * AR;
+								pos_y = PADDING_TOP;
+								pos_x = PADDING_LEFT + (window.innerWidth - (PADDING_LEFT + PADDING_RIGHT + img.width)) / 2; 
+							}
+
+							// console.log(`IMG_W: ${img.width}, IMG_H: ${img.height}`);
+              ctx.drawImage(img, pos_x, pos_y, img.width, img.height);
+            };
+            img.src = event.target.result;
+          };
+          reader.readAsDataURL(image_file);
+        }
+      }
+
+      let whiteboard;
+
+      function init() {
+        console.log("Initializing default configurations..");
+        whiteboard = new Whiteboard();
+        whiteboard.clear_white_board();
+
+        const update_color_in_color_selector = () => {
+          // Update the color in color selector.
+          const selected = document.querySelector(
+            "div.color-picker  span.selected"
+          );
+          selected.style.backgroundColor =
+            Whiteboard.supported_pen_colors[whiteboard.current_pen_color];
+        };
+
+        const update_color_selctor_circle_size = () => {
+          if (!whiteboard.is_eraser_enabled()) {
+            document.getElementById("currentColorCircle").style.width = `${
+              whiteboard.current_pen_size * 3
+            }px`;
+            document.getElementById("currentColorCircle").style.height = `${
+              whiteboard.current_pen_size * 3
+            }px`;
+          }
+        };
+
+        function click_handler(event) {
+          //console.log(event);
+          if (event.ctrlKey) {
+            whiteboard.change_marker_color();
+            update_color_in_color_selector();
+          } else {
+            whiteboard.draw(event);
+          }
+        }
+
+        function dblclick_handler() {
+          console.log("Double click handler!");
+        }
+
+        function contextmenu_handler(e) {
+          e.preventDefault();
+
+          whiteboard.draw(e);
+          console.log("Context Menu Handler");
+        }
+
+        function toggle_eraser() {
+          if (whiteboard.is_eraser_enabled()) {
+            whiteboard.change_marker_color(
+              Whiteboard.supported_pen_colors[whiteboard.current_pen_color]
+            );
+          } else {
+            whiteboard.change_marker_color(PEN_COLOR.ERASE);
+          }
+        }
+
+        function download_whiteboard_to_png() {
+          const link = document.createElement("a");
+          link.download = "whiteboard.png";
+          link.href = document.getElementById("whiteboard").toDataURL();
+          link.click();
+        }
+
+        whiteboard.board.ontouchmove = whiteboard.draw;
+        whiteboard.board.ontouchstart = whiteboard.pen_down;
+        whiteboard.board.ontouchend = whiteboard.pen_up;
+        whiteboard.board.onmousemove = whiteboard.draw;
+        whiteboard.board.onmousedown = whiteboard.pen_down;
+        whiteboard.board.onmouseup = whiteboard.pen_up;
+        whiteboard.board.onclick = click_handler;
+        whiteboard.board.ondblclick = dblclick_handler;
+        whiteboard.board.oncontextmenu = contextmenu_handler;
+
+        eraserButton.onclick = toggle_eraser;
+        downloadWhiteboardButton.onclick = download_whiteboard_to_png;
+        clearWhiteboardButton.onclick = () => {
+          whiteboard.clear_white_board(false);
+        };
+
+        // CTRL + Mouse wheel
+        whiteboard.board.addEventListener("wheel", (event) => {
+          if (event.ctrlKey) {
+            event.preventDefault();
+
+            const is_wheel_up = event.deltaY < 0;
+            const is_wheel_down = event.deltaY > 0;
+
+            if (is_wheel_up) {
+              whiteboard.increase_pen_size();
+            } else if (is_wheel_down) {
+              whiteboard.decrease_pen_size();
+            }
+
+            if (whiteboard.is_eraser_enabled()) {
+              const eraserCircle = document.getElementById("eraserCircle");
+              eraserCircle.style.height = `${
+                whiteboard.current_eraser_size * 2
+              }px`;
+              eraserCircle.style.width = `${
+                whiteboard.current_eraser_size * 2
+              }px`;
+            }
+
+            console.log(whiteboard.current_pen_size);
+            update_color_selctor_circle_size();
+          }
+        });
+
+        // Eraser circle
+        whiteboard.board.addEventListener("mousemove", (event) => {
+          const eraserCircle = document.getElementById("eraserCircle");
+
+          if (whiteboard.is_eraser_enabled()) {
+            eraserCircle.style.display = "block";
+            eraserCircle.style.left = `${
+              event.clientX - whiteboard.current_eraser_size
+            }px`;
+            eraserCircle.style.top = `${
+              event.clientY - whiteboard.current_eraser_size
+            }px`;
+            eraserCircle.style.height = `${
+              whiteboard.current_eraser_size * 2
+            }px`;
+            eraserCircle.style.width = `${
+              whiteboard.current_eraser_size * 2
+            }px`;
+          } else {
+            eraserCircle.style.display = "none";
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          // CTRL + Z
+          if (event.ctrlKey && event.key === "z") {
+            whiteboard.undo_stroke();
+          }
+
+          // CTRL + Y
+          if (event.ctrlKey && event.key === "y") {
+            whiteboard.redo_stroke();
+          }
+
+          // CTRL + space
+          if (event.ctrlKey && event.key === " ") {
+            whiteboard.clear_white_board();
+          }
+        });
+
+        change_pen_color = (color) => {
+          whiteboard.change_marker_color(color);
+          update_color_in_color_selector();
+        };
+      }
+
+      window.onload = init;
+    </script>
+  </body>
 </html>
