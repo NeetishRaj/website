@@ -8,16 +8,17 @@
       body {
         font-family: chess;
         margin: 0;
-        background-color: #000;
+        background-color: #504e4e;
       }
 
       .square {
-        background: rgb(18, 73, 18);
+        background: rgb(10, 10, 10);
         display: inline-block;
         border: 1px solid #a09c9c;
         text-align: center;
         position: absolute;
         cursor: pointer;
+        padding: 5px;
       }
 
     </style>
@@ -145,15 +146,15 @@
           for (var n = 0; n < 64; n++) {
             if (Math.floor(n / 8) % 2 === 0) {
               if (n % 2 === 0) {
-                sqs[n].style.background = "#9ff";
+                sqs[n].style.background = "#efc";
               } else {
-                sqs[n].style.background = "#5fa";
+                sqs[n].style.background = "#3da";
               }
             } else {
               if (n % 2 === 1) {
-                sqs[n].style.background = "#9ff";
+                sqs[n].style.background = "#efc";
               } else {
-                sqs[n].style.background = "#5fa";
+                sqs[n].style.background = "#3da";
               }
             }
           }
